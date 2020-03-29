@@ -1,0 +1,57 @@
+on:
+  push:
+    paths:
+      - "backend/**"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest] #, windows-latest, macos-latest]
+        node: [12.x]
+    env:
+      CI: true
+      npm-prefix: backend/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Cache node modules
+        id: npm-cache
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm --prefix ${{ env.npm-prefix }} install ${{ env.npm-prefix }}
+
+      - name: Format
+        run: npm run --prefix ${{ env.npm-prefix }} ci-format
+
+      - name: Lint
+        run: npm run --prefix ${{ env.npm-prefix }} ci-lint
+
+      - name: Build
+        run: npm run --prefix ${{ env.npm-prefix }} build
+
+      - name: Test modules
+        run: npm run --prefix ${{ env.npm-prefix }} test:cov
+
+      - name: Test e2e
+        run: npm run --prefix ${{ env.npm-prefix }} test:e2e
