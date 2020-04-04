@@ -1,6 +1,7 @@
 import {CommandBus as InMemoryCommandBus} from "@nestjs/cqrs";
-import {ExternalCommandBus, ExternalCommandHandlerType} from "../../../application/external-command-bus";
+import {ExternalCommandBus} from "../../../application/external-command-bus";
 import {ExternalCommand} from "../../../presentation/messages/command/external-command";
+import {ExternalCommandHandler} from "../../../application/external-command-handler";
 
 export class NestInMemoryCommandBus implements ExternalCommandBus {
 
@@ -11,7 +12,7 @@ export class NestInMemoryCommandBus implements ExternalCommandBus {
         return this.inMemoryCommandBus.execute(command);
     }
 
-    register(handlers: ExternalCommandHandlerType[] = []) {
+    register(handlers: ExternalCommandHandler<ExternalCommand>[] = []) {
         return this.inMemoryCommandBus.register(handlers);
     }
 }
