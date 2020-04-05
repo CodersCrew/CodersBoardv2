@@ -1,5 +1,5 @@
 import {EventStreamVersion} from './event-stream-version.valueobject';
-import {StorageDomainEventEntry} from "../../bounded-context/shared-kernel/infrastructure/event-sourcing/storage-domain-event-entry";
+import {StorageDomainEventEntry} from "./storage-domain-event-entry";
 
 export abstract class EventStorage {
 

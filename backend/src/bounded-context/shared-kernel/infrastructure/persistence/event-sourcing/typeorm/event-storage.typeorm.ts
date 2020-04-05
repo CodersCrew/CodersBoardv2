@@ -1,12 +1,12 @@
 import {EventStorage} from '../event-storage';
-import {TimeProvider} from '../../../bounded-context/shared-kernel/domain/time.provider';
+import {TimeProvider} from '../../../../domain/time.provider';
 import * as moment from 'moment';
 import {Inject, Injectable} from '@nestjs/common';
 import {EventStreamVersion} from '../event-stream-version.valueobject';
 import {InjectRepository} from '@nestjs/typeorm';
 import {DomainEventEntity} from './event.typeorm-entity';
-import {Repository} from 'src/libraries/event-storage/typeorm';
-import {StorageDomainEventEntry} from "../../../bounded-context/shared-kernel/infrastructure/event-sourcing/storage-domain-event-entry";
+import {StorageDomainEventEntry} from "../storage-domain-event-entry";
+import {Repository} from "typeorm";
 
 @Injectable()
 export class TypeOrmEventStorage implements EventStorage {

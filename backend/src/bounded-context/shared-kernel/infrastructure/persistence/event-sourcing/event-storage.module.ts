@@ -1,9 +1,9 @@
 import {Module} from '@nestjs/common';
 import {EventStorage} from './event-storage';
 import {TypeOrmEventStorage} from './typeorm/event-storage.typeorm';
-import {InMemoryEventStore} from './embedded/event-store.embedded';
-import {TimeProvider} from '../../bounded-context/shared-kernel/domain/time.provider';
-import {SystemTimeProvider} from './system-time-provider.service';
+import {InMemoryEventStore} from './in-memory/event-store.in-memory';
+import {TimeProvider} from '../../../domain/time.provider';
+import {SystemTimeProvider} from '../../time/system-time-provider.service';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {DomainEventEntity} from './typeorm/event.typeorm-entity';
 

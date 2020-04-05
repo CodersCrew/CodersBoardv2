@@ -2,7 +2,7 @@ import {
     Entity,
     Column, PrimaryColumn, Index,
 } from 'typeorm';
-import {StorageDomainEventEntry} from "../../../bounded-context/shared-kernel/infrastructure/event-sourcing/storage-domain-event-entry";
+import {StorageDomainEventEntry} from "../storage-domain-event-entry";
 
 @Entity({name: 'eventsourcing_domain_events', orderBy: {occurredAt: 'ASC'}})
 @Index(['aggregateId', 'order'], {unique: true})
