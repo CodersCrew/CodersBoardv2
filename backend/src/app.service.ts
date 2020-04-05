@@ -1,10 +1,9 @@
-import {Inject, Injectable} from '@nestjs/common';
-import {ExternalCommandBus} from "./bounded-context/shared-kernel/application/external-command-bus";
+import {Injectable} from '@nestjs/common';
 
 @Injectable()
 export class AppService {
 
-    constructor(@Inject('EXTERNAL_COMMAND_BUS') private readonly externalCommandBus: ExternalCommandBus) {
+    constructor() {
     }
 
     getHello(): string {

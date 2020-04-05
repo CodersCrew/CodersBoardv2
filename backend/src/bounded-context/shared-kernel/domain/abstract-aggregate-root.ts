@@ -1,0 +1,51 @@
+import {DomainEvent} from "./domain-event";
+import {AggregateId} from "./aggregate-id.valueobject";
+import {TimeProvider} from "./time.provider";
+
+const INTERNAL_EVENTS = Symbol();
+
+export abstract class AbstractAggregateRoot<I extends AggregateId> {
+
+    readonly id: I;
+    private readonly [INTERNAL_EVENTS]: DomainEvent[] = [];
+    private readonly timeProvider: TimeProvider;
+
+    protected constructor(id: I, timeProvider: TimeProvider) {
+        this.id = id;
+        this.timeProvider = timeProvider;
+    }
+
+    private get currentDate() {
+        return this.timeProvider.currentDate();
+    }
+
+    getUncommittedEvents(): DomainEvent[] {
+        return this[INTERNAL_EVENTS];
+    }
+
+    clearUncommittedEvents() {
+        this[INTERNAL_EVENTS].length = 0;
+    }
+
+    loadFromHistory(history: DomainEvent[]) {
+        history.forEach(event => this.apply(event, true));
+    }
+
+    apply(event: DomainEvent, isFromHistory = false) {
+        if (!isFromHistory) {
+            this[INTERNAL_EVENTS].push(event);
+        }
+        const handler = this.getEventHandler(event);
+        handler && handler.call(this, event);
+    }
+
+    private getEventHandler(event: DomainEvent): Function | undefined {
+        const handler = `on${this.getEventName(event)}`;
+        return this[handler];
+    }
+
+    protected getEventName(event): string {
+        const {constructor} = Object.getPrototypeOf(event);
+        return constructor.name as string;
+    }
+}
