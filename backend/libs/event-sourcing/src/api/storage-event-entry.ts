@@ -1,4 +1,4 @@
-export interface StorageDomainEventEntry {
+export interface StorageEventEntry {
     readonly eventId: string;
     readonly eventType: string;
     readonly occurredAt: Date;

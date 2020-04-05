@@ -2,11 +2,11 @@ import {
     Entity,
     Column, PrimaryColumn, Index,
 } from 'typeorm';
-import {StorageDomainEventEntry} from "../storage-domain-event-entry";
+import {StorageEventEntry} from "../../api/storage-event-entry";
 
 @Entity({name: 'eventsourcing_domain_events', orderBy: {occurredAt: 'ASC'}})
 @Index(['aggregateId', 'order'], {unique: true})
-export class DomainEventEntity implements StorageDomainEventEntry {
+export class DomainEventEntity implements StorageEventEntry {
     @PrimaryColumn()
     readonly eventId: string;
 

@@ -8,7 +8,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug '0.0.0.0:9229' --watch",
@@ -61,12 +61,22 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/src/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "@coders-board-library/event-sourcing/(.*)": "<rootDir>/libs/event-sourcing/src/$1",
+      "@coders-board-library/event-sourcing": "<rootDir>/libs/event-sourcing/src",
+      "@coders-board-library/time-provider/(.*)": "<rootDir>/libs/time-provider/src/$1",
+      "@coders-board-library/time-provider": "<rootDir>/libs/time-provider/src"
+    }
   }
 }

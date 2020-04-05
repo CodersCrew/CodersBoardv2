@@ -1,10 +1,10 @@
 import {EventBus} from '@nestjs/cqrs';
-import {AbstractAggregateRoot} from "../../../domain/abstract-aggregate-root";
-import {AggregateId} from "../../../domain/aggregate-id.valueobject";
-import {AggregateRootRepository} from "../../../domain/aggregate-root.repository";
-import {DomainEvent} from "../../../domain/domain-event";
-import {EventStorage} from "./event-storage";
-import {StorageDomainEventEntry} from "./storage-domain-event-entry";
+import {AbstractAggregateRoot} from "../../domain/abstract-aggregate-root";
+import {AggregateId} from "../../domain/aggregate-id.valueobject";
+import {AggregateRootRepository} from "../../domain/aggregate-root.repository";
+import {DomainEvent} from "../../domain/domain-event";
+import {EventStorage} from "@coders-board-library/event-sourcing/event-storage/event-storage";
+import {StorageEventEntry} from "@coders-board-library/event-sourcing/api/storage-event-entry";
 
 export abstract class EventSourcedAggregateRootRepository<I extends AggregateId, T extends AbstractAggregateRoot<I>> implements AggregateRootRepository<I, T> {
 
@@ -26,7 +26,7 @@ export abstract class EventSourcedAggregateRootRepository<I extends AggregateId,
 
     protected abstract newAggregate(): T;
 
-    protected abstract recreateEventFromStored(event: StorageDomainEventEntry): DomainEvent;
+    protected abstract recreateEventFromStored(event: StorageEventEntry): DomainEvent;
 
     save(aggregate: T): Promise<void> {
         const uncommitedEvents = aggregate.getUncommittedEvents()
@@ -36,7 +36,7 @@ export abstract class EventSourcedAggregateRootRepository<I extends AggregateId,
             .then(() => aggregate.clearUncommittedEvents());
     }
 
-    private static toStorageDomainEventEntry(event: DomainEvent): StorageDomainEventEntry {
+    private static toStorageDomainEventEntry(event: DomainEvent): StorageEventEntry {
         return {
             eventId: event.eventId.raw,
             aggregateId: event.aggregateId.raw,

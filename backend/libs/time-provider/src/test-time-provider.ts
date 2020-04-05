@@ -1,4 +1,4 @@
-import {TimeProvider} from '../../domain/time.provider';
+import {TimeProvider} from '../../../src/bounded-context/shared-kernel/domain/time.provider';
 
 export abstract class TestTimeProvider extends TimeProvider {
 

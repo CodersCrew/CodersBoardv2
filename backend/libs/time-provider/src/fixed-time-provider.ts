@@ -1,14 +1,14 @@
 import {Injectable} from '@nestjs/common';
-import {TimeProvider} from '../../domain/time.provider';
-import {TestTimeProvider} from './test-time-provider.service';
+import {TimeProvider} from '../../../src/bounded-context/shared-kernel/domain/time.provider';
+import {TestTimeProvider} from './test-time-provider';
 
 @Injectable()
 export class FixedTimeProvider implements TimeProvider, TestTimeProvider {
 
-    constructor(private date: Date) {
+    private constructor(private date: Date) {
     }
 
-    static withFixedDate(date: Date) {
+    static withFixedDate(date: Date = new Date()) {
         return new FixedTimeProvider(date);
     }
 
