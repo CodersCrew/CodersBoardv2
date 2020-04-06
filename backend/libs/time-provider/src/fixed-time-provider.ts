@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {TimeProviderPort} from '../../../src/bounded-context/shared-kernel/domain/time-provider.port';
+import {TimeProviderPort} from '../../../src/write-side/shared-kernel/domain/time-provider.port';
 import {TestTimeProvider} from './test-time-provider';
 
 @Injectable()

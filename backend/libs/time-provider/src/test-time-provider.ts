@@ -1,4 +1,4 @@
-import {TimeProviderPort} from '../../../src/bounded-context/shared-kernel/domain/time-provider.port';
+import {TimeProviderPort} from '../../../src/write-side/shared-kernel/domain/time-provider.port';
 
 export abstract class TestTimeProvider extends TimeProviderPort {
 

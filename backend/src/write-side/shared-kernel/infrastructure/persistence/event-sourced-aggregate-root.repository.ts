@@ -5,10 +5,12 @@ import {AggregateRootRepository} from "../../domain/aggregate-root.repository";
 import {DomainEvent} from "../../domain/domain-event";
 import {EventStorage} from "@coders-board-library/event-sourcing/event-storage/event-storage";
 import {StorageEventEntry} from "@coders-board-library/event-sourcing/api/storage-event-entry";
+import {TimeProviderPort} from "../../domain/time-provider.port";
 
 export abstract class EventSourcedAggregateRootRepository<I extends AggregateId, T extends AbstractAggregateRoot<I>> implements AggregateRootRepository<I, T> {
 
     protected constructor(
+        protected readonly timeProvider: TimeProviderPort,
         private readonly eventStorage: EventStorage,
         private readonly eventBus: EventBus,
     ) {
@@ -20,13 +22,13 @@ export abstract class EventSourcedAggregateRootRepository<I extends AggregateId,
             return Promise.resolve(null);
         }
         const aggregate = this.newAggregate();
-        aggregate.loadFromHistory(events.map(this.recreateEventFromStored));
+        aggregate.loadFromHistory(events.map(this.recreateEventFromStorage));
         return Promise.resolve(aggregate);
     }
 
     protected abstract newAggregate(): T;
 
-    protected abstract recreateEventFromStored(event: StorageEventEntry): DomainEvent;
+    protected abstract recreateEventFromStorage(event: StorageEventEntry): DomainEvent;
 
     save(aggregate: T): Promise<void> {
         const uncommitedEvents = aggregate.getUncommittedEvents()
