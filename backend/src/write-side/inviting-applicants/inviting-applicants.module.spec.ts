@@ -16,10 +16,11 @@ describe('Feature: Inviting applicants', () => {
                 setModuleRef: jest.fn(),
                 register: jest.fn(),
                 publish: jest.fn(),
-                publishAll: jest.fn()
+                publishAll: jest.fn(),
+                registerSagas: jest.fn()
             })
             .compile();
-
+        await app.init();
         sut = app.get<InvitingApplicantsFacade>(InvitingApplicantsFacade);
     });
 
