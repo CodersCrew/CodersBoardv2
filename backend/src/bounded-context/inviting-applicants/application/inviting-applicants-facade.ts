@@ -1,6 +1,8 @@
 import {Injectable} from "@nestjs/common";
-import {InviteApplicantToAssociation} from "../presentation/messages/command/invite-applicant-to-association.external-command";
 import {CommandBus} from "@nestjs/cqrs";
+import {ApplicantInvitationCommand} from "../presentation/messages/command/applicant-invitation.command";
+import InviteApplicantToAssociation = ApplicantInvitationCommand.InviteApplicantToAssociation;
+import CancelApplicantInvitation = ApplicantInvitationCommand.CancelApplicantInvitation;
 
 @Injectable()
 export class InvitingApplicantsFacade {
@@ -8,7 +10,11 @@ export class InvitingApplicantsFacade {
     constructor(private commandBus: CommandBus) {
     }
 
-    execute(command: InviteApplicantToAssociation) {
+    inviteApplicantToAssociation(command: InviteApplicantToAssociation) {
+        return this.commandBus.execute(command);
+    }
+
+    cancelApplicantInvitation(command: CancelApplicantInvitation) {
         return this.commandBus.execute(command);
     }
 

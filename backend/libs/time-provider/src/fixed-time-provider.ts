@@ -1,9 +1,9 @@
 import {Injectable} from '@nestjs/common';
-import {TimeProvider} from '../../../src/bounded-context/shared-kernel/domain/time.provider';
+import {TimeProviderPort} from '../../../src/bounded-context/shared-kernel/domain/time-provider.port';
 import {TestTimeProvider} from './test-time-provider';
 
 @Injectable()
-export class FixedTimeProvider implements TimeProvider, TestTimeProvider {
+export class FixedTimeProvider implements TimeProviderPort, TestTimeProvider {
 
     private constructor(private date: Date) {
     }

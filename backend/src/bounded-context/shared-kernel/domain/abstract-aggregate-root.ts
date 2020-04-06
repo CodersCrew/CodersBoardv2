@@ -1,21 +1,20 @@
 import {DomainEvent} from "./domain-event";
 import {AggregateId} from "./aggregate-id.valueobject";
-import {TimeProvider} from "./time.provider";
+import {TimeProviderPort} from "./time-provider.port";
 
 const INTERNAL_EVENTS = Symbol();
 
 export abstract class AbstractAggregateRoot<I extends AggregateId> {
 
-    readonly id: I;
+    protected id: I;
     private readonly [INTERNAL_EVENTS]: DomainEvent[] = [];
-    private readonly timeProvider: TimeProvider;
+    private readonly timeProvider: TimeProviderPort;
 
-    protected constructor(id: I, timeProvider: TimeProvider) {
-        this.id = id;
+    protected constructor(timeProvider: TimeProviderPort) {
         this.timeProvider = timeProvider;
     }
 
-    private get currentDate() {
+    protected get currentDate() {
         return this.timeProvider.currentDate();
     }
 
@@ -31,7 +30,7 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
         history.forEach(event => this.apply(event, true));
     }
 
-    apply(event: DomainEvent, isFromHistory = false) {
+    protected apply(event: DomainEvent, isFromHistory = false) {
         if (!isFromHistory) {
             this[INTERNAL_EVENTS].push(event);
         }
