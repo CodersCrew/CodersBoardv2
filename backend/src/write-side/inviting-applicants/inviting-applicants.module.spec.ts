@@ -20,9 +20,11 @@ describe('Feature: Inviting applicants', () => {
         const command = new InviteApplicantToAssociation("email@email.com", "Jan", "Kowalski");
 
         describe('When: Invite the applicant', () => {
+
             it('Then: Applicant should be invited', () => {
                 expect(sut.inviteApplicantToAssociation(command)).toBe('Hello World!');
             });
+
         })
     });
 });

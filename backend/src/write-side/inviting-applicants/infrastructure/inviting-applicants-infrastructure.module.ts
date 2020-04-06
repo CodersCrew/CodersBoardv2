@@ -4,8 +4,11 @@ import {SharedKernelInfrastructureModule} from "../../shared-kernel/infrastructu
 
 @Module({
     imports: [SharedKernelInfrastructureModule],
-    providers: [ApplicantInvitationEventSourcedRepository],
-    exports: [ApplicantInvitationEventSourcedRepository]
+    providers: [{
+        provide: "APPLICANT_INVITATION_REPOSITORY",
+        useClass: ApplicantInvitationEventSourcedRepository
+    }],
+    exports: [ApplicantInvitationEventSourcedRepository, SharedKernelInfrastructureModule]
 })
 export class InvitingApplicantsInfrastructureModule {
 

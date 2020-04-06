@@ -42,8 +42,11 @@ const eventSourcingModule = EventSourcingModule.registerAsync({
 
 @Module({
     imports: [CqrsModule, timeProviderModule, eventSourcingModule],
-    providers: [CodersBoardTimeProviderAdapter],
-    exports: [CqrsModule, CodersBoardTimeProviderAdapter, eventSourcingModule, timeProviderModule]
+    providers: [{
+        provide: "TIME_PROVIDER",
+        useClass: CodersBoardTimeProviderAdapter
+    }],
+    exports: [CqrsModule, "TIME_PROVIDER", eventSourcingModule, timeProviderModule]
 })
 export class SharedKernelInfrastructureModule {
 

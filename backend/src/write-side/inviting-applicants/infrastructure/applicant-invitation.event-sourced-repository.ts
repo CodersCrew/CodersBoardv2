@@ -1,7 +1,7 @@
 import {EventSourcedAggregateRootRepository} from "../../shared-kernel/infrastructure/persistence/event-sourced-aggregate-root.repository";
 import {ApplicantInvitationId} from "../domain/applicant-invitation-id.valueobject";
 import {ApplicantInvitation} from "../domain/applicant-invitation.aggregate-root";
-import {Injectable} from "@nestjs/common";
+import {Inject, Injectable} from "@nestjs/common";
 import {EventStorage} from "@coders-board-library/event-sourcing/event-storage/event-storage";
 import {EventBus} from "@nestjs/cqrs";
 import {TimeProviderPort} from "../../shared-kernel/domain/time-provider.port";
@@ -13,7 +13,7 @@ import {DomainEventId} from "../../shared-kernel/domain/domain-event-id.valueobj
 @Injectable()
 export class ApplicantInvitationEventSourcedRepository extends EventSourcedAggregateRootRepository<ApplicantInvitationId, ApplicantInvitation> {
 
-    constructor(timeProvider: TimeProviderPort, eventStorage: EventStorage, eventBus: EventBus) {
+    constructor(@Inject("TIME_PROVIDER") timeProvider: TimeProviderPort, eventStorage: EventStorage, eventBus: EventBus) {
         super(timeProvider, eventStorage, eventBus);
     }
 
