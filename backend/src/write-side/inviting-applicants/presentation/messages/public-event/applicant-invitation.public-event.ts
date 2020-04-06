@@ -16,7 +16,7 @@ export namespace ApplicantInvitationPublicEvent {
         }
 
         get aggregateType(): string {
-            return ApplicantInvitation.constructor.name;
+            return "ApplicantInvitation";
         }
     }
 

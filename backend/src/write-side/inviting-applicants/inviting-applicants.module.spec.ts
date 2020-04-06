@@ -3,6 +3,7 @@ import {InvitingApplicantsFacade} from "./application/inviting-applicants-facade
 import {InvitingApplicantsModule} from "./inviting-applicants.module";
 import {ApplicantInvitationCommand} from "./presentation/messages/command/applicant-invitation.command";
 import InviteApplicantToAssociation = ApplicantInvitationCommand.InviteApplicantToAssociation;
+import {EventBus} from "@nestjs/cqrs";
 
 describe('Feature: Inviting applicants', () => {
     let sut: InvitingApplicantsFacade;
@@ -10,7 +11,14 @@ describe('Feature: Inviting applicants', () => {
     beforeEach(async () => {
         const app: TestingModule = await Test.createTestingModule({
             imports: [InvitingApplicantsModule],
-        }).compile();
+        }).overrideProvider(EventBus)
+            .useValue({
+                setModuleRef: jest.fn(),
+                register: jest.fn(),
+                publish: jest.fn(),
+                publishAll: jest.fn()
+            })
+            .compile();
 
         sut = app.get<InvitingApplicantsFacade>(InvitingApplicantsFacade);
     });
@@ -21,8 +29,14 @@ describe('Feature: Inviting applicants', () => {
 
         describe('When: Invite the applicant', () => {
 
+            let result;
+
+            beforeEach(() => {
+                result = sut.inviteApplicantToAssociation(command)
+            });
+
             it('Then: Applicant should be invited', () => {
-                expect(sut.inviteApplicantToAssociation(command)).toBe('Hello World!');
+                expect(result).resolves.toBeDefined();
             });
 
         })
