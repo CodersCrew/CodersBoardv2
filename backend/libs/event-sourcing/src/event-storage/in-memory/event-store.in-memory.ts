@@ -1,7 +1,6 @@
 import {EventStorage} from '../event-storage';
-import {TimeProvider} from '../../../../../src/bounded-context/shared-kernel/domain/time.provider';
 import * as moment from 'moment';
-import {Inject, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {EventStreamVersion} from '../../api/event-stream-version.valueobject';
 import {StorageEventEntry} from "../../api/storage-event-entry";
 import {Time} from "../../time.type";
@@ -14,18 +13,25 @@ export class InMemoryEventStore implements EventStorage {
     constructor(private readonly time: Time) {
     }
 
-    store(event: StorageEventEntry, expectedVersion?: EventStreamVersion): Promise<void> {
+    store(event: StorageEventEntry, expectedVersion: EventStreamVersion = EventStreamVersion.any()): Promise<void> {
         const foundStream = this.eventStreams[event.aggregateId];
+        const aggregateEvents = !foundStream ? 0 : foundStream.length;
         if (!foundStream) {
+            if (expectedVersion && expectedVersion.raw !== 0) {
+                throw new Error(`Event stream for aggregate was modified! Expected version: ${expectedVersion.raw}, but actual is: ${aggregateEvents}`);
+            }
             this.eventStreams[event.aggregateId] = [event];
         } else {
+            if (expectedVersion && expectedVersion.raw !== aggregateEvents) {
+                throw new Error(`Event stream for aggregate was modified! Expected version: ${expectedVersion.raw}, but actual is: ${aggregateEvents}`);
+            }
             this.eventStreams[event.aggregateId].push(event);
         }
         return Promise.resolve();
     }
 
-    storeAll(events: StorageEventEntry[]): Promise<void> {
-        return Promise.all(events.map(it => this.store(it))).then();
+    storeAll(events: StorageEventEntry[], expectedVersion: EventStreamVersion = EventStreamVersion.any()): Promise<void> {
+        return Promise.all(events.map((value, index) => this.store(value, expectedVersion ? (expectedVersion.raw + index) : EventStreamVersion.any()))).then();
     }
 
     readEvents(aggregateId: string, toDate?: Date) {

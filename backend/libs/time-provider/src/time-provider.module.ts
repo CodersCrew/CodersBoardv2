@@ -6,10 +6,14 @@ import {TimeProvider} from "@coders-board-library/time-provider/time-provider";
 
 //TODO: Add custom logging with config and time
 
+/**
+ * Single source of truth for time.
+ * Should be used in every place where current Date is needed.
+ */
 @Module({})
 export class TimeProviderModule {
 
-    static forRoot(config: TimeProviderModuleConfig = {source: "system"}): DynamicModule {
+    static register(config: TimeProviderModuleConfig = {source: "system"}): DynamicModule {
         const timeProvider = {
             provide: TimeProvider,
             useFactory: () => {
