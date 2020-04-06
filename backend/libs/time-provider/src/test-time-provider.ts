@@ -1,6 +1,6 @@
-import {TimeProviderPort} from '../../../src/write-side/shared-kernel/domain/time-provider.port';
+import {TimeProvider} from "@coders-board-library/time-provider/time-provider";
 
-export abstract class TestTimeProvider extends TimeProviderPort {
+export abstract class TestTimeProvider extends TimeProvider {
 
     abstract moveCurrentDateTo(date: Date);
 }
