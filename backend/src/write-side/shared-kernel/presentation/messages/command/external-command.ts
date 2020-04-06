@@ -1,2 +1,2 @@
-export interface ExternalCommand {
+export interface ExternalCommand  {
 }

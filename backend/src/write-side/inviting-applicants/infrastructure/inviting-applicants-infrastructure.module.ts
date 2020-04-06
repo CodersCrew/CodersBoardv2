@@ -8,7 +8,7 @@ import {SharedKernelInfrastructureModule} from "../../shared-kernel/infrastructu
         provide: "APPLICANT_INVITATION_REPOSITORY",
         useClass: ApplicantInvitationEventSourcedRepository
     }],
-    exports: [ApplicantInvitationEventSourcedRepository, SharedKernelInfrastructureModule]
+    exports: ["APPLICANT_INVITATION_REPOSITORY", SharedKernelInfrastructureModule]
 })
 export class InvitingApplicantsInfrastructureModule {
 

@@ -9,5 +9,4 @@ import {ApplicantInvitationCommandHandler} from "./applicant-invitation.command-
     exports: [InvitingApplicantsFacade]
 })
 export class InvitingApplicantsApplicationModule {
-
 }
