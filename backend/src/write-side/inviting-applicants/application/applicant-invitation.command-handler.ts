@@ -12,7 +12,7 @@ import {Inject} from "@nestjs/common";
 export namespace ApplicantInvitationCommandHandler {
 
     @CommandHandler(ApplicantInvitationCommand.InviteApplicantToAssociation)
-    export class InviteApplicantToAssociation implements ICommandHandler<ApplicantInvitationCommand.InviteApplicantToAssociation> {
+    class InviteApplicantToAssociation implements ICommandHandler<ApplicantInvitationCommand.InviteApplicantToAssociation> {
 
         constructor(
             @Inject("TIME_PROVIDER") private readonly timeProvider: TimeProviderPort,
@@ -35,7 +35,7 @@ export namespace ApplicantInvitationCommandHandler {
     }
 
     @CommandHandler(ApplicantInvitationCommand.CancelApplicantInvitation)
-    export class CancelApplicantInvitation implements ICommandHandler<ApplicantInvitationCommand.CancelApplicantInvitation> {
+    class CancelApplicantInvitation implements ICommandHandler<ApplicantInvitationCommand.CancelApplicantInvitation> {
 
         constructor(
             @Inject("APPLICANT_INVITATION_REPOSITORY") private readonly repository: ApplicantInvitationRepository

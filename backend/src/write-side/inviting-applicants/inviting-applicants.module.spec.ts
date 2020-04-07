@@ -4,24 +4,17 @@ import {InvitingApplicantsModule} from "./inviting-applicants.module";
 import {ApplicantInvitationCommand} from "@coders-board-public-messages/public-messages/inviting-applicants/command/applicant-invitation.command";
 import InviteApplicantToAssociation = ApplicantInvitationCommand.InviteApplicantToAssociation;
 import {EventBus} from "@nestjs/cqrs";
+import {ApplicantInvitationPublicEvent} from "@coders-board-public-messages/public-messages";
+import ApplicantInvited = ApplicantInvitationPublicEvent.ApplicantInvited;
 
-const EventAppender = {
-    events: [],
-    publishAll(events) {
-        this.events.push(events)
-    },
-    publish(event) {
-        this.events.push(event)
-    },
-    isPublished(eventType: any) {
-        return this.events.findIndex(e => e.eventType === eventType)
-    }
-};
-
+/**
+ * Test of InvitingApplicants. In tests of logic we bypass presentation layer.
+ * We treat the module as a black-box. The test checks expected output (published event) based on input (command).
+ */
 describe('Feature: Inviting applicants', () => {
     let sut: InvitingApplicantsFacade;
     let eventBus: EventBus;
-    const eventAppender = EventAppender;
+    let eventBusPublishSpy;
 
     beforeEach(async () => {
         const app: TestingModule = await Test.createTestingModule({
@@ -30,8 +23,7 @@ describe('Feature: Inviting applicants', () => {
         await app.init();
         sut = app.get<InvitingApplicantsFacade>(InvitingApplicantsFacade);
         eventBus = app.get<EventBus>(EventBus);
-        eventBus.publishAll = eventAppender.publishAll;
-        eventBus.publish = eventAppender.publish;
+        eventBusPublishSpy = jest.spyOn(eventBus, 'publish')
     });
 
     describe('Given: Applicant to invite', () => {
@@ -42,14 +34,22 @@ describe('Feature: Inviting applicants', () => {
 
             let result;
 
-            beforeEach(() => {
-                result = sut.inviteApplicantToAssociation(command)
+            beforeEach(async () => {
+                result = await sut.inviteApplicantToAssociation(command)
             });
 
             it('Then: Applicant should be invited', () => {
-                expect(result).resolves.toBeDefined();
-                expect(this.eventAppender.isPublished("ApplicantInvited")).toBeTruthy();
+                expect(result).toBeDefined();
+                const publishedEvent = eventBusPublishSpy.mock.calls[0][0];
+                expect(publishedEvent.constructor).toBe(ApplicantInvited);
+                expect(publishedEvent.payload.personalEmail).toBe(command.personalEmail);
+                expect(publishedEvent.payload.firstName).toBe(command.firstName);
+                expect(publishedEvent.payload.lastName).toBe(command.lastName);
             });
+
+            afterEach(() => {
+                eventBusPublishSpy.mockClear();
+            })
 
         })
     });
