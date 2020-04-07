@@ -26,7 +26,7 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
   }
 
   loadFromHistory(history: DomainEvent[]) {
-    history.forEach((event) => this.apply(event, true));
+    history.forEach(event => this.apply(event, true));
   }
 
   protected apply(event: DomainEvent, isFromHistory = false) {
