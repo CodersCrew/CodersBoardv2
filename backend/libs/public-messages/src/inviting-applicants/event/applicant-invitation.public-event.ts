@@ -1,5 +1,5 @@
-import {PublicEvent} from "../../../../shared-kernel/presentation/messages/public-event/public-event";
-import {ApplicantInvitation} from "../../../domain/applicant-invitation.aggregate-root";
+import {PublicEvent} from "@coders-board-public-messages/public-messages/shared/event/public-event";
+import {ApplicantInvitation} from "../../../../../src/write-side/inviting-applicants/domain/applicant-invitation.aggregate-root";
 
 export namespace ApplicantInvitationPublicEvent {
 

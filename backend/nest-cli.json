@@ -28,6 +28,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/in-memory-transport/tsconfig.lib.json"
       }
+    },
+    "public-messages": {
+      "type": "library",
+      "root": "libs/public-messages",
+      "entryFile": "index",
+      "sourceRoot": "libs/public-messages/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/public-messages/tsconfig.lib.json"
+      }
     }
   },
   "compilerOptions": {

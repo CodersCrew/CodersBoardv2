@@ -15,7 +15,7 @@ export class ApplicantInvitation extends AbstractAggregateRoot<ApplicantInvitati
     }
 
     invite(id: ApplicantInvitationId, command: { personalEmail: PersonalEmail, firstName: FirstName, lastName: LastName }) {
-        if (this.status) {
+        if (this.status !== undefined) {
             throw new Error("Applicant already invited!");
         }
         this.apply(ApplicantInvitationDomainEvent.ApplicantInvited.newFrom(id, this.currentDate, {...command}))

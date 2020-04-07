@@ -1,4 +1,4 @@
-import {ExternalCommand} from "../../../../shared-kernel/presentation/messages/command/external-command";
+import {ExternalCommand} from "../../shared/command/external-command";
 
 export namespace ApplicantInvitationCommand {
 

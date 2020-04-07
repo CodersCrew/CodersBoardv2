@@ -82,7 +82,9 @@
       "@coders-board-library/time-provider/(.*)": "<rootDir>/libs/time-provider/src/$1",
       "@coders-board-library/time-provider": "<rootDir>/libs/time-provider/src",
       "@coders-board-in-memory-transport/in-memory-transport/(.*)": "<rootDir>/libs/in-memory-transport/src/$1",
-      "@coders-board-in-memory-transport/in-memory-transport": "<rootDir>/libs/in-memory-transport/src"
+      "@coders-board-in-memory-transport/in-memory-transport": "<rootDir>/libs/in-memory-transport/src",
+      "@coders-board-public-messages/public-messages/(.*)": "<rootDir>/libs/public-messages/src/$1",
+      "@coders-board-public-messages/public-messages": "<rootDir>/libs/public-messages/src"
     }
   }
 }

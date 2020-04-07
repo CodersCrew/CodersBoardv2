@@ -1,6 +1,6 @@
 import {Inject, Injectable} from "@nestjs/common";
 import {CommandBus} from "@nestjs/cqrs";
-import {ApplicantInvitationCommand} from "../presentation/messages/command/applicant-invitation.command";
+import {ApplicantInvitationCommand} from "@coders-board-public-messages/public-messages/inviting-applicants/command/applicant-invitation.command";
 import InviteApplicantToAssociation = ApplicantInvitationCommand.InviteApplicantToAssociation;
 import CancelApplicantInvitation = ApplicantInvitationCommand.CancelApplicantInvitation;
 

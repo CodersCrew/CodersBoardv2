@@ -1,27 +1,37 @@
 import {Test, TestingModule} from "@nestjs/testing";
 import {InvitingApplicantsFacade} from "./application/inviting-applicants-facade";
 import {InvitingApplicantsModule} from "./inviting-applicants.module";
-import {ApplicantInvitationCommand} from "./presentation/messages/command/applicant-invitation.command";
+import {ApplicantInvitationCommand} from "@coders-board-public-messages/public-messages/inviting-applicants/command/applicant-invitation.command";
 import InviteApplicantToAssociation = ApplicantInvitationCommand.InviteApplicantToAssociation;
 import {EventBus} from "@nestjs/cqrs";
 
+const EventAppender = {
+    events: [],
+    publishAll(events) {
+        this.events.push(events)
+    },
+    publish(event) {
+        this.events.push(event)
+    },
+    isPublished(eventType: any) {
+        return this.events.findIndex(e => e.eventType === eventType)
+    }
+};
+
 describe('Feature: Inviting applicants', () => {
     let sut: InvitingApplicantsFacade;
+    let eventBus: EventBus;
+    const eventAppender = EventAppender;
 
     beforeEach(async () => {
         const app: TestingModule = await Test.createTestingModule({
             imports: [InvitingApplicantsModule],
-        }).overrideProvider(EventBus)
-            .useValue({
-                setModuleRef: jest.fn(),
-                register: jest.fn(),
-                publish: jest.fn(),
-                publishAll: jest.fn(),
-                registerSagas: jest.fn()
-            })
-            .compile();
+        }).compile();
         await app.init();
         sut = app.get<InvitingApplicantsFacade>(InvitingApplicantsFacade);
+        eventBus = app.get<EventBus>(EventBus);
+        eventBus.publishAll = eventAppender.publishAll;
+        eventBus.publish = eventAppender.publish;
     });
 
     describe('Given: Applicant to invite', () => {
@@ -38,6 +48,7 @@ describe('Feature: Inviting applicants', () => {
 
             it('Then: Applicant should be invited', () => {
                 expect(result).resolves.toBeDefined();
+                expect(this.eventAppender.isPublished("ApplicantInvited")).toBeTruthy();
             });
 
         })
