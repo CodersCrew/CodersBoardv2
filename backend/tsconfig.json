@@ -23,12 +23,6 @@
       "@coders-board-library/time-provider/*": [
         "libs/time-provider/src/*"
       ],
-      "@coders-board-in-memory-transport/in-memory-transport": [
-        "libs/in-memory-transport/src"
-      ],
-      "@coders-board-in-memory-transport/in-memory-transport/*": [
-        "libs/in-memory-transport/src/*"
-      ],
       "@coders-board-public-messages/public-messages": [
         "libs/public-messages/src"
       ],

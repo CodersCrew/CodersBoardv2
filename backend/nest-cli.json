@@ -20,15 +20,6 @@
         "tsConfigPath": "libs/time-provider/tsconfig.lib.json"
       }
     },
-    "in-memory-transport": {
-      "type": "library",
-      "root": "libs/in-memory-transport",
-      "entryFile": "index",
-      "sourceRoot": "libs/in-memory-transport/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/in-memory-transport/tsconfig.lib.json"
-      }
-    },
     "public-messages": {
       "type": "library",
       "root": "libs/public-messages",
