@@ -12,17 +12,19 @@ export namespace EventPropagator {
   @EventsHandler(ApplicantInvited)
   class ApplicantInvited
     implements IEventHandler<ApplicantInvitationDomainEvent.ApplicantInvited> {
-    constructor(private readonly eventBus: EventBus) {}
+    constructor(private readonly eventBus: EventBus) {
+    }
 
-    handle({
-      aggregateId,
-      aggregateType,
-      eventId,
-      eventType,
-      occurredAt,
-      payload,
-    }: ApplicantInvitationDomainEvent.ApplicantInvited) {
+    handle(event: ApplicantInvitationDomainEvent.ApplicantInvited) {
       //TODO: Saving in outbox and publishing after in batches
+      const {
+        aggregateId,
+        aggregateType,
+        eventId,
+        eventType,
+        occurredAt,
+        payload,
+      } = event;
       this.eventBus.publish(
         new ApplicantInvitationPublicEvent.ApplicantInvited(
           eventId.raw,
