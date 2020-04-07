@@ -13,7 +13,6 @@ import ApplicantInvited = ApplicantInvitationPublicEvent.ApplicantInvited;
  */
 describe('Feature: Inviting applicants', () => {
     let sut: InvitingApplicantsFacade;
-    let eventBus: EventBus;
     let eventBusPublishSpy;
 
     beforeEach(async () => {
@@ -22,7 +21,7 @@ describe('Feature: Inviting applicants', () => {
         }).compile();
         await app.init();
         sut = app.get<InvitingApplicantsFacade>(InvitingApplicantsFacade);
-        eventBus = app.get<EventBus>(EventBus);
+        const eventBus = app.get<EventBus>(EventBus);
         eventBusPublishSpy = jest.spyOn(eventBus, 'publish')
     });
 
