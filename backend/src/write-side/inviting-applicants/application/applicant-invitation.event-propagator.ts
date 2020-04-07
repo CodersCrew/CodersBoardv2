@@ -12,8 +12,7 @@ export namespace EventPropagator {
   @EventsHandler(ApplicantInvited)
   class ApplicantInvited
     implements IEventHandler<ApplicantInvitationDomainEvent.ApplicantInvited> {
-    constructor(private readonly eventBus: EventBus) {
-    }
+    constructor(private readonly eventBus: EventBus) {}
 
     handle(event: ApplicantInvitationDomainEvent.ApplicantInvited) {
       //TODO: Saving in outbox and publishing after in batches
@@ -25,6 +24,11 @@ export namespace EventPropagator {
         occurredAt,
         payload,
       } = event;
+      //FIXME: Bug - Event publikuje się 2 razy, raz dane są nie wypełnione. Nie wiem skąd to wynika. Ale pewnie to wina JavaScriptu.
+      //Chwała temu kto znajdzie przyczynę. Na razie workaround poniżej
+      if (!event.eventId) {
+        return;
+      }
       this.eventBus.publish(
         new ApplicantInvitationPublicEvent.ApplicantInvited(
           eventId.raw,
