@@ -36,7 +36,7 @@ export abstract class EventSourcedAggregateRootRepository<
   save(aggregate: T): Promise<void> {
     const uncommitedEvents = aggregate
       .getUncommittedEvents()
-      .map((it) =>
+      .map(it =>
         EventSourcedAggregateRootRepository.toStorageDomainEventEntry(
           it as DomainEvent,
         ),

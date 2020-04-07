@@ -53,7 +53,7 @@ export class InMemoryEventStore implements EventStorage {
 
   readEvents(aggregateId: string, toDate?: Date) {
     const maxEventDate = toDate ? toDate : this.time();
-    const events = this.getEventsBy(aggregateId).filter((it) =>
+    const events = this.getEventsBy(aggregateId).filter(it =>
       moment(it.occurredAt).isSameOrBefore(moment(maxEventDate)),
     );
     return Promise.resolve(events);

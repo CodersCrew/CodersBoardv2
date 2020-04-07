@@ -11,7 +11,7 @@ export class InvitingApplicantsFacade {
   inviteApplicantToAssociation(
     command: InviteApplicantToAssociation,
   ): Promise<string> {
-    return this.commandBus.execute(command).then((id) => id.raw);
+    return this.commandBus.execute(command).then(id => id.raw);
   }
 
   cancelApplicantInvitation(command: CancelApplicantInvitation) {

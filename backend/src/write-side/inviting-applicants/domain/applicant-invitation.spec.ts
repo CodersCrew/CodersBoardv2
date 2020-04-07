@@ -39,7 +39,7 @@ describe('Feature: Applicant invitation', () => {
           expect(
             applicantInvitation
               .getUncommittedEvents()
-              .map((it) => it.constructor),
+              .map(it => it.constructor),
           ).toContain(ApplicantInvited);
         });
       });
@@ -91,7 +91,7 @@ describe('Feature: Applicant invitation', () => {
           expect(
             applicantInvitation
               .getUncommittedEvents()
-              .map((it) => it.constructor),
+              .map(it => it.constructor),
           ).toContain(InvitationCancelled);
         });
       });

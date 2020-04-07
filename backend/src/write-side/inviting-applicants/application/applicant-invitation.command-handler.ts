@@ -53,7 +53,7 @@ export namespace ApplicantInvitationCommandHandler {
       return executeCommand(
         this.repository,
         ApplicantInvitationId.of(applicantInvitationId),
-        (invitation) => invitation.cancel(),
+        invitation => invitation.cancel(),
       );
     }
   }
