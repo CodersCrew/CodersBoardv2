@@ -1,7 +1,7 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { EventStorage } from './event-storage/event-storage';
 import { TypeOrmEventStorage } from './event-storage/typeorm/event-storage.typeorm';
-import { InMemoryEventStore } from './event-storage/in-memory/event-store.in-memory';
+import { InMemoryEventStorage } from './event-storage/in-memory/event-storage.in-memory';
 import { DomainEventEntity } from './event-storage/typeorm/event.typeorm-entity';
 import { EventSourcingModuleConfig } from './event-sourcing.module-config';
 import { Repository } from 'typeorm';
@@ -42,7 +42,7 @@ export class EventSourcingModule {
         {
           provide: EventStorage,
           useFactory: (config: EventSourcingModuleConfig) =>
-            new InMemoryEventStore(config.time),
+            new InMemoryEventStorage(config.time),
           inject: [EVENT_SOURCING_CONFIG],
         },
       ],
@@ -59,7 +59,7 @@ export class EventSourcingModule {
         {
           provide: EventStorage,
           useFactory: (config: EventSourcingModuleConfig) =>
-            new InMemoryEventStore(config.time),
+            new InMemoryEventStorage(config.time),
           inject: [EVENT_SOURCING_CONFIG],
         },
       ],

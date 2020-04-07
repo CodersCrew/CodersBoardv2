@@ -6,7 +6,7 @@ import { StorageEventEntry } from '../../api/storage-event-entry';
 import { Time } from '../../time.type';
 
 @Injectable()
-export class InMemoryEventStore implements EventStorage {
+export class InMemoryEventStorage implements EventStorage {
   private eventStreams: { [key: string]: StorageEventEntry[] } = {};
 
   constructor(private readonly time: Time) {}
@@ -16,17 +16,22 @@ export class InMemoryEventStore implements EventStorage {
     expectedVersion: EventStreamVersion = EventStreamVersion.any(),
   ): Promise<void> {
     const foundStream = this.eventStreams[event.aggregateId];
+    if (foundStream && foundStream.find(e => e.eventId === event.eventId)) {
+      return Promise.reject(
+        `Event stream already contains this event with id ${event.eventId}!`,
+      );
+    }
     const aggregateEvents = !foundStream ? 0 : foundStream.length;
     if (!foundStream) {
       if (expectedVersion && expectedVersion.raw !== 0) {
-        throw new Error(
+        return Promise.reject(
           `Event stream for aggregate was modified! Expected version: ${expectedVersion.raw}, but actual is: ${aggregateEvents}`,
         );
       }
       this.eventStreams[event.aggregateId] = [event];
     } else {
       if (expectedVersion && expectedVersion.raw !== aggregateEvents) {
-        throw new Error(
+        return Promise.reject(
           `Event stream for aggregate was modified! Expected version: ${expectedVersion.raw}, but actual is: ${aggregateEvents}`,
         );
       }
