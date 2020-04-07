@@ -1,5 +1,3 @@
 export interface TimeProviderPort {
-
-    currentDate(): Date;
-
+  currentDate(): Date;
 }

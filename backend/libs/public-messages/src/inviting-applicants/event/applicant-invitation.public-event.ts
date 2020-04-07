@@ -1,40 +1,58 @@
-import {PublicEvent} from "@coders-board-public-messages/public-messages/shared/event/public-event";
-import {ApplicantInvitation} from "../../../../../src/write-side/inviting-applicants/domain/applicant-invitation.aggregate-root";
+import { PublicEvent } from '@coders-board-public-messages/public-messages/shared/event/public-event';
+import { ApplicantInvitation } from '../../../../../src/write-side/inviting-applicants/domain/applicant-invitation.aggregate-root';
 
 export namespace ApplicantInvitationPublicEvent {
+  abstract class AbstractPublicEvent<P extends any = any>
+    implements PublicEvent<P> {
+    protected constructor(
+      readonly eventId: string,
+      readonly occurredAt: Date,
+      readonly aggregateId: string,
+      readonly payload: P,
+    ) {}
 
-    abstract class AbstractPublicEvent<P extends any = any> implements PublicEvent<P> {
-
-        protected constructor(readonly eventId: string,
-                              readonly occurredAt: Date,
-                              readonly aggregateId: string,
-                              readonly payload: P) {
-        }
-
-        get eventType(): string {
-            return Object.getPrototypeOf(this).constructor.name;
-        }
-
-        get aggregateType(): string {
-            return "ApplicantInvitation";
-        }
+    get eventType(): string {
+      return Object.getPrototypeOf(this).constructor.name;
     }
 
-
-    export type ApplicantInvitedPayload = { personalEmail: string, firstName: string, lastName: string }
-    export class ApplicantInvited extends AbstractPublicEvent<ApplicantInvitedPayload> {
-
-        constructor(eventId: string, occurredAt: Date, aggregateId: string, payload: ApplicantInvitationPublicEvent.ApplicantInvitedPayload) {
-            super(eventId, occurredAt, aggregateId, payload);
-        }
+    get aggregateType(): string {
+      return 'ApplicantInvitation';
     }
+  }
 
-    export type ApplicantInvitationCancelledPayload = { personalEmail: string, firstName: string, lastName: string }
-    export class ApplicantInvitationCancelled extends AbstractPublicEvent<ApplicantInvitationCancelledPayload> {
-
-        constructor(eventId: string, occurredAt: Date, aggregateId: string, payload: ApplicantInvitationPublicEvent.ApplicantInvitationCancelledPayload) {
-            super(eventId, occurredAt, aggregateId, payload);
-        }
+  export type ApplicantInvitedPayload = {
+    personalEmail: string;
+    firstName: string;
+    lastName: string;
+  };
+  export class ApplicantInvited extends AbstractPublicEvent<
+    ApplicantInvitedPayload
+  > {
+    constructor(
+      eventId: string,
+      occurredAt: Date,
+      aggregateId: string,
+      payload: ApplicantInvitationPublicEvent.ApplicantInvitedPayload,
+    ) {
+      super(eventId, occurredAt, aggregateId, payload);
     }
+  }
 
+  export type ApplicantInvitationCancelledPayload = {
+    personalEmail: string;
+    firstName: string;
+    lastName: string;
+  };
+  export class ApplicantInvitationCancelled extends AbstractPublicEvent<
+    ApplicantInvitationCancelledPayload
+  > {
+    constructor(
+      eventId: string,
+      occurredAt: Date,
+      aggregateId: string,
+      payload: ApplicantInvitationPublicEvent.ApplicantInvitationCancelledPayload,
+    ) {
+      super(eventId, occurredAt, aggregateId, payload);
+    }
+  }
 }

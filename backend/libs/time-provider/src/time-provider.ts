@@ -1,3 +1,3 @@
 export abstract class TimeProvider {
-    abstract currentDate(): Date;
+  abstract currentDate(): Date;
 }

@@ -1,3 +1,3 @@
 export interface AggregateId {
-    readonly raw: string;
+  readonly raw: string;
 }

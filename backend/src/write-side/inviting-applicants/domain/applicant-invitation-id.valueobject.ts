@@ -1,19 +1,18 @@
 import uuid = require('uuid');
-import {AggregateId} from "../../shared-kernel/domain/aggregate-id.valueobject";
+import { AggregateId } from '../../shared-kernel/domain/aggregate-id.valueobject';
 
 export class ApplicantInvitationId implements AggregateId {
-    private constructor(readonly raw: string) {
-    }
+  private constructor(readonly raw: string) {}
 
-    static generate() {
-        return new ApplicantInvitationId(uuid.v4());
-    }
+  static generate() {
+    return new ApplicantInvitationId(uuid.v4());
+  }
 
-    static of(raw: string) {
-        return new ApplicantInvitationId(raw);
-    }
+  static of(raw: string) {
+    return new ApplicantInvitationId(raw);
+  }
 
-    toString() {
-        return this.raw;
-    }
+  toString() {
+    return this.raw;
+  }
 }

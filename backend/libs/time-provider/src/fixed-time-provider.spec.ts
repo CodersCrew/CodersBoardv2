@@ -1,21 +1,15 @@
-import {TimeProviderPort} from "../../../src/write-side/shared-kernel/domain/time-provider.port";
-import {FixedTimeProvider} from "@coders-board-library/time-provider/fixed-time-provider";
+import { TimeProviderPort } from '../../../src/write-side/shared-kernel/domain/time-provider.port';
+import { FixedTimeProvider } from '@coders-board-library/time-provider/fixed-time-provider';
 
 describe('Feature: Fixed time provider', () => {
+  const date = new Date();
+  const timeProvider: TimeProviderPort = FixedTimeProvider.withFixedDate(date);
 
-    const date = new Date();
-    const timeProvider: TimeProviderPort = FixedTimeProvider.withFixedDate(date);
-
-    describe('Given: Fixed time provider with certain date', () => {
-
-        describe('When: Wait a little time', () => {
-
-            it('Then: The date should stay same as previous', () => {
-                expect(timeProvider.currentDate()).toEqual(date);
-            })
-
-        })
-
-    })
-
+  describe('Given: Fixed time provider with certain date', () => {
+    describe('When: Wait a little time', () => {
+      it('Then: The date should stay same as previous', () => {
+        expect(timeProvider.currentDate()).toEqual(date);
+      });
+    });
+  });
 });
