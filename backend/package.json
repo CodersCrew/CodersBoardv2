@@ -81,8 +81,8 @@
       "@coders-board-library/event-sourcing": "<rootDir>/libs/event-sourcing/src",
       "@coders-board-library/time-provider/(.*)": "<rootDir>/libs/time-provider/src/$1",
       "@coders-board-library/time-provider": "<rootDir>/libs/time-provider/src",
-      "@coders-board-public-messages/public-messages/(.*)": "<rootDir>/libs/public-messages/src/$1",
-      "@coders-board-public-messages/public-messages": "<rootDir>/libs/public-messages/src"
+      "@coders-board-library/public-messages/(.*)": "<rootDir>/libs/public-messages/src/$1",
+      "@coders-board-library/public-messages": "<rootDir>/libs/public-messages/src"
     }
   }
 }

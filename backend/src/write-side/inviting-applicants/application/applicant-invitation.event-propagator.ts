@@ -1,6 +1,6 @@
 import { EventBus, EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { ApplicantInvitationDomainEvent } from '../domain/applicant-invitation.domain-event';
-import { ApplicantInvitationPublicEvent } from '@coders-board-public-messages/public-messages';
+import { ApplicantInvitationPublicEvent } from '@coders-board-library/public-messages';
 
 /**
  * Each domain event which should be available for read-models and other context on the write-side need

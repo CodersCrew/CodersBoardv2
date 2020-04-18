@@ -1,9 +1,9 @@
-import { TimeProviderPort } from '../../../src/write-side/shared-kernel/domain/time-provider.port';
 import { FixedTimeProvider } from '@coders-board-library/time-provider/fixed-time-provider';
+import { TimeProvider } from '@coders-board-library/time-provider/time-provider';
 
 describe('Feature: Fixed time provider', () => {
   const date = new Date();
-  const timeProvider: TimeProviderPort = FixedTimeProvider.withFixedDate(date);
+  const timeProvider: TimeProvider = FixedTimeProvider.withFixedDate(date);
 
   describe('Given: Fixed time provider with certain date', () => {
     describe('When: Wait a little time', () => {

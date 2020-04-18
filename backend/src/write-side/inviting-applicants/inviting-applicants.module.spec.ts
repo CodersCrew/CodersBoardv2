@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { InvitingApplicantsFacade } from './application/inviting-applicants-facade';
 import { InvitingApplicantsModule } from './inviting-applicants.module';
-import { ApplicantInvitationCommand } from '@coders-board-public-messages/public-messages/inviting-applicants/command/applicant-invitation.command';
+import { ApplicantInvitationCommand } from '@coders-board-library/public-messages/inviting-applicants/command/applicant-invitation.command';
 import InviteApplicantToAssociation = ApplicantInvitationCommand.InviteApplicantToAssociation;
 import { EventBus } from '@nestjs/cqrs';
-import { ApplicantInvitationPublicEvent } from '@coders-board-public-messages/public-messages';
+import { ApplicantInvitationPublicEvent } from '@coders-board-library/public-messages';
 import ApplicantInvited = ApplicantInvitationPublicEvent.ApplicantInvited;
 
 /**

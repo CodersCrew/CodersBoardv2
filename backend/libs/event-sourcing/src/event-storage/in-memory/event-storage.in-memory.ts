@@ -65,7 +65,6 @@ export class InMemoryEventStorage implements EventStorage {
   }
 
   private getEventsBy(aggregateId: string): StorageEventEntry[] {
-    const foundStream = this.eventStreams[aggregateId];
-    return foundStream ? foundStream : [];
+    return this.eventStreams[aggregateId] || [];
   }
 }

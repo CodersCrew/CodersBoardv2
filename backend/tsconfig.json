@@ -15,10 +15,10 @@
       "@coders-board-library/event-sourcing/*": ["libs/event-sourcing/src/*"],
       "@coders-board-library/time-provider": ["libs/time-provider/src"],
       "@coders-board-library/time-provider/*": ["libs/time-provider/src/*"],
-      "@coders-board-public-messages/public-messages": [
+      "@coders-board-library/public-messages": [
         "libs/public-messages/src"
       ],
-      "@coders-board-public-messages/public-messages/*": [
+      "@coders-board-library/public-messages/*": [
         "libs/public-messages/src/*"
       ]
     }

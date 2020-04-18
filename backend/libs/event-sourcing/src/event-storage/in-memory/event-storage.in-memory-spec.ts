@@ -92,8 +92,8 @@ describe('Feature: In memory event storage', () => {
       });
 
       it('Then: The event cannot be stored twice', async () => {
-        expect(eventStorage.store(events.aggregate1.event1)).rejects.toMatch(
-          `Event stream already contains this event with id ${events.aggregate1.event1}!`,
+        await expect(eventStorage.store(events.aggregate1.event1)).rejects.toMatch(
+          `Event stream already contains this event with id ${events.aggregate1.event1.eventId}!`,
         );
       });
 
@@ -106,7 +106,7 @@ describe('Feature: In memory event storage', () => {
           occurredAt: time['1540'],
           payload: {},
         };
-        expect(
+        await expect(
           eventStorage.store(anotherEvent2, EventStreamVersion.exactly(1)),
         ).rejects.toMatch(
           `Event stream for aggregate was modified! Expected version: 1, but actual is: 2`,

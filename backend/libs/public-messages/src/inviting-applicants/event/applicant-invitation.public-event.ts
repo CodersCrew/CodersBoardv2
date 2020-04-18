@@ -1,5 +1,4 @@
-import { PublicEvent } from '@coders-board-public-messages/public-messages/shared/event/public-event';
-import { ApplicantInvitation } from '../../../../../src/write-side/inviting-applicants/domain/applicant-invitation.aggregate-root';
+import { PublicEvent } from '@coders-board-library/public-messages/shared/event/public-event';
 
 export namespace ApplicantInvitationPublicEvent {
   abstract class AbstractPublicEvent<P extends any = any>

@@ -1,4 +1,4 @@
-import { ApplicantInvitationCommand } from '@coders-board-public-messages/public-messages/inviting-applicants/command/applicant-invitation.command';
+import { ApplicantInvitationCommand } from '@coders-board-library/public-messages/inviting-applicants/command/applicant-invitation.command';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ApplicantInvitationRepository } from '../domain/applicant-invitation.repository';
 import { TimeProviderPort } from '../../shared-kernel/domain/time-provider.port';
