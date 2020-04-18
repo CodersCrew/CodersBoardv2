@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { InvitingApplicantsFacade } from './application/inviting-applicants-facade';
 import { InvitingApplicantsModule } from './inviting-applicants.module';
 import { ApplicantInvitationCommand } from '@coders-board-library/public-messages/inviting-applicants/command/applicant-invitation.command';
 import InviteApplicantToAssociation = ApplicantInvitationCommand.InviteApplicantToAssociation;
-import { EventBus } from '@nestjs/cqrs';
+import { CommandBus, EventBus } from '@nestjs/cqrs';
 import { ApplicantInvitationPublicEvent } from '@coders-board-library/public-messages';
 import ApplicantInvited = ApplicantInvitationPublicEvent.ApplicantInvited;
 
@@ -12,7 +11,7 @@ import ApplicantInvited = ApplicantInvitationPublicEvent.ApplicantInvited;
  * We treat the module as a black-box. The test checks expected output (published event) based on input (command).
  */
 describe('Feature: Inviting applicants', () => {
-  let sut: InvitingApplicantsFacade;
+  let commandBus: CommandBus;
   let eventBusPublishSpy;
 
   beforeEach(async () => {
@@ -20,7 +19,7 @@ describe('Feature: Inviting applicants', () => {
       imports: [InvitingApplicantsModule],
     }).compile();
     await app.init();
-    sut = app.get<InvitingApplicantsFacade>(InvitingApplicantsFacade);
+    commandBus = app.get<CommandBus>(CommandBus);
     const eventBus = app.get<EventBus>(EventBus);
     eventBusPublishSpy = jest.spyOn(eventBus, 'publish');
   });
@@ -36,7 +35,7 @@ describe('Feature: Inviting applicants', () => {
       let result;
 
       beforeEach(async () => {
-        result = await sut.inviteApplicantToAssociation(command);
+        result = await commandBus.execute(command);
       });
 
       it('Then: Applicant should be invited', () => {

@@ -9,12 +9,15 @@ import { StorageEventEntry } from '@coders-board-library/event-sourcing/api/stor
 import { DomainEvent } from '../../shared-kernel/domain/domain-event';
 import { ApplicantInvitationDomainEvent } from '../domain/applicant-invitation.domain-event';
 import { DomainEventId } from '../../shared-kernel/domain/domain-event-id.valueobject';
+import { ApplicantInvitationRepository } from '../domain/applicant-invitation.repository';
 
 @Injectable()
-export class ApplicantInvitationEventSourcedRepository extends EventSourcedAggregateRootRepository<
-  ApplicantInvitationId,
-  ApplicantInvitation
-> {
+export class ApplicantInvitationEventSourcedRepository
+  extends EventSourcedAggregateRootRepository<
+    ApplicantInvitationId,
+    ApplicantInvitation
+  >
+  implements ApplicantInvitationRepository {
   constructor(
     @Inject('TIME_PROVIDER') timeProvider: TimeProviderPort,
     eventStorage: EventStorage,
