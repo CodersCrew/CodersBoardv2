@@ -21,6 +21,10 @@ export namespace EventPropagator {
 
     handle(event: ApplicantInvitationDomainEvent.ApplicantInvited) {
       //TODO: Saving in outbox and publishing after in batches
+      if(!event.eventId){
+        console.log(`Wrong event ${JSON.stringify(event)}. Find out why and fix it!`)
+        return; //FIXME: Investigate this error!
+      }
       this.eventBus.publish(
         new ApplicantInvitationPublicEvent.ApplicantInvited(
           event.eventId.raw,
