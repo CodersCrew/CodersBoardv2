@@ -41,9 +41,9 @@ describe('Feature: Inviting applicants', () => {
 
   describe('Given: Applicant to invite', () => {
     const inviteCommand = new InviteApplicantToAssociation(
-      'email@email.com',
-      'Jan',
-      'Kowalski',
+      person.janKowalski.personalEmail,
+      person.janKowalski.firstName,
+      person.janKowalski.lastName,
     );
 
     describe('When: Invite the applicant', () => {
