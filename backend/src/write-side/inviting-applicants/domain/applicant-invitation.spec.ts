@@ -8,6 +8,7 @@ import { ApplicantInvitationId } from './applicant-invitation-id.valueobject';
 import { ApplicantInvitationDomainEvent } from './applicant-invitation.domain-event';
 import ApplicantInvited = ApplicantInvitationDomainEvent.ApplicantInvited;
 import InvitationCancelled = ApplicantInvitationDomainEvent.InvitationCancelled;
+import { expectDomainEvent } from '../../shared-kernel/domain/aggregate-root.test-utils';
 
 const person = {
   janKowalski: {
@@ -36,11 +37,10 @@ describe('Feature: Applicant invitation', () => {
         });
 
         it('Then: The applicant should be invited', () => {
-          expect(
-            applicantInvitation
-              .getUncommittedEvents()
-              .map(it => it.constructor),
-          ).toContain(ApplicantInvited);
+          expectDomainEvent(applicantInvitation, {
+            type: ApplicantInvited,
+            payload: { ...person.janKowalski },
+          });
         });
       });
     });
@@ -88,15 +88,12 @@ describe('Feature: Applicant invitation', () => {
         });
 
         it('Then: The applicant invitation should be cancelled', () => {
-          expect(
-            applicantInvitation
-              .getUncommittedEvents()
-              .map(it => it.constructor),
-          ).toContain(InvitationCancelled);
+          expectDomainEvent(applicantInvitation, {
+            type: InvitationCancelled,
+            payload: {},
+          });
         });
       });
     });
-
   });
-
 });

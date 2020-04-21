@@ -2,7 +2,7 @@ import { ApplicantInvitationCommand } from '@coders-board-library/public-message
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   APPLICANT_INVITATION_REPOSITORY,
-  ApplicantInvitationRepository
+  ApplicantInvitationRepository,
 } from '../domain/applicant-invitation.repository';
 import { TimeProviderPort } from '../../shared-kernel/domain/time-provider.port';
 import { ApplicantInvitationId } from '../domain/applicant-invitation-id.valueobject';

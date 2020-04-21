@@ -10,6 +10,15 @@ export namespace ApplicantInvitationDomainEvent {
   abstract class AbstractApplicantInvitationDomainEvent<
     P = any
   > extends AbstractDomainEvent<ApplicantInvitationId, P> {
+    constructor(
+      eventId: DomainEventId,
+      occurredAt: Date,
+      aggregateId: ApplicantInvitationId,
+      payload: P,
+    ) {
+      super(eventId, occurredAt, aggregateId, payload);
+    }
+
     get aggregateType(): string {
       return 'ApplicantInvitation';
     }

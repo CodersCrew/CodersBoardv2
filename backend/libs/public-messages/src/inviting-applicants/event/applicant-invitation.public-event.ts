@@ -1,14 +1,14 @@
-import {AbstractPublicEvent} from '@coders-board-library/public-messages/shared/event/public-event';
+import { AbstractPublicEvent } from '@coders-board-library/public-messages/shared/event/public-event';
 
 export namespace ApplicantInvitationPublicEvent {
-  export abstract class ApplicantInvitationAbstractPublicEvent<P extends any = any>
-    extends AbstractPublicEvent<P> {
-
-    protected constructor(
-        eventId: string,
-        occurredAt: Date,
-        aggregateId: string,
-        payload: P,
+  export abstract class ApplicantInvitationAbstractPublicEvent<
+    P extends any = any
+  > extends AbstractPublicEvent<P> {
+    constructor(
+      eventId: string,
+      occurredAt: Date,
+      aggregateId: string,
+      payload: P,
     ) {
       super(eventId, occurredAt, aggregateId, payload);
     }

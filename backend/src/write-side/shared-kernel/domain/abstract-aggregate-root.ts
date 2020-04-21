@@ -34,7 +34,10 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
       this[INTERNAL_EVENTS].push(event);
     }
     const handler = this.getEventHandler(event);
-    handler && handler.call(this, event);
+    if (!handler) {
+      throw new Error(`Handler for domain event ${event.eventType} not found!`);
+    }
+    handler.call(this, event);
   }
 
   private getEventHandler(event: DomainEvent): Function | undefined {

@@ -9,7 +9,10 @@ import { ApplicantInvitationDomainEvent } from './applicant-invitation.domain-ev
 export class ApplicantInvitation extends AbstractAggregateRoot<
   ApplicantInvitationId
 > {
-  status: InvitationStatus;
+  private _status: InvitationStatus;
+  private _personalEmail: PersonalEmail;
+  private _firstName: FirstName;
+  private _lastName: LastName;
 
   constructor(timeProvider: TimeProviderPort) {
     super(timeProvider);
@@ -23,7 +26,7 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
       lastName: LastName;
     },
   ) {
-    if (this.status !== undefined) {
+    if (this._status !== undefined) {
       throw new Error('Applicant already invited!');
     }
     this.apply(
@@ -37,11 +40,14 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
 
   onApplicantInvited(event: ApplicantInvitationDomainEvent.ApplicantInvited) {
     this.id = event.aggregateId;
-    this.status = InvitationStatus.INVITED;
+    this._status = InvitationStatus.INVITED;
+    this._personalEmail = event.payload.personalEmail;
+    this._firstName = event.payload.firstName;
+    this._lastName = event.payload.lastName;
   }
 
   cancel() {
-    if (this.status === InvitationStatus.CANCELLED) {
+    if (this._status === InvitationStatus.CANCELLED) {
       throw new Error('Applicant invitation already cancelled!');
     }
     this.apply(
@@ -57,7 +63,23 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
     event: ApplicantInvitationDomainEvent.InvitationCancelled,
   ) {
     this.id = event.aggregateId;
-    this.status = InvitationStatus.CANCELLED;
+    this._status = InvitationStatus.CANCELLED;
+  }
+
+  get status(): InvitationStatus {
+    return this._status;
+  }
+
+  get personalEmail(): PersonalEmail {
+    return this._personalEmail;
+  }
+
+  get firstName(): FirstName {
+    return this._firstName;
+  }
+
+  get lastName(): LastName {
+    return this._lastName;
   }
 }
 

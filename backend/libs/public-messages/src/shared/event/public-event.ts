@@ -8,17 +8,17 @@ export interface PublicEvent<P extends any = any> {
 }
 
 export abstract class AbstractPublicEvent<P extends any = any>
-    implements PublicEvent<P> {
+  implements PublicEvent<P> {
   protected constructor(
-      readonly eventId: string,
-      readonly occurredAt: Date,
-      readonly aggregateId: string,
-      readonly payload: P,
+    readonly eventId: string,
+    readonly occurredAt: Date,
+    readonly aggregateId: string,
+    readonly payload: P,
   ) {}
 
   get eventType(): string {
     return Object.getPrototypeOf(this).constructor.name;
   }
 
-  abstract get aggregateType(): string
+  abstract get aggregateType(): string;
 }
