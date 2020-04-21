@@ -1,7 +1,7 @@
 import { EventStreamVersion } from '../api/event-stream-version.valueobject';
 import { StorageEventEntry } from '../api/storage-event-entry';
 
-export const EVENT_STORAGE = "EventStorage";
+export const EVENT_STORAGE = 'EventStorage';
 
 export interface EventStorage {
   store(
@@ -16,8 +16,5 @@ export interface EventStorage {
     expectedVersion?: EventStreamVersion,
   ): Promise<void>;
 
-  readEvents(
-    aggregateId: string,
-    toDate?: Date,
-  ): Promise<StorageEventEntry[]>;
+  readEvents(aggregateId: string, toDate?: Date): Promise<StorageEventEntry[]>;
 }

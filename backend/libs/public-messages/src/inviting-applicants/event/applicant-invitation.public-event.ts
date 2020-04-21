@@ -1,7 +1,7 @@
 import { PublicEvent } from '@coders-board-library/public-messages/shared/event/public-event';
 
 export namespace ApplicantInvitationPublicEvent {
-  abstract class AbstractPublicEvent<P extends any = any>
+  export abstract class AbstractPublicEvent<P extends any = any>
     implements PublicEvent<P> {
     protected constructor(
       readonly eventId: string,

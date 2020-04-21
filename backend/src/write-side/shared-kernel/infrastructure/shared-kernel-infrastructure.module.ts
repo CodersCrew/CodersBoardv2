@@ -60,11 +60,6 @@ const eventSourcingModule = EventSourcingModule.registerAsync({
       useClass: CodersBoardTimeProviderAdapter,
     },
   ],
-  exports: [
-    CqrsModule,
-    TIME_PROVIDER,
-    eventSourcingModule,
-    timeProviderModule,
-  ],
+  exports: [CqrsModule, TIME_PROVIDER, eventSourcingModule, timeProviderModule],
 })
 export class SharedKernelInfrastructureModule {}

@@ -1,5 +1,5 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
-import {EVENT_STORAGE, EventStorage} from './event-storage/event-storage';
+import { EVENT_STORAGE, EventStorage } from './event-storage/event-storage';
 import { TypeOrmEventStorage } from './event-storage/typeorm/event-storage.typeorm';
 import { InMemoryEventStorage } from './event-storage/in-memory/event-storage.in-memory';
 import { DomainEventEntity } from './event-storage/typeorm/event.typeorm-entity';

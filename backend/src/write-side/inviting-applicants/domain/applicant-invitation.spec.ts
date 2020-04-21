@@ -96,5 +96,7 @@ describe('Feature: Applicant invitation', () => {
         });
       });
     });
+
   });
+
 });
