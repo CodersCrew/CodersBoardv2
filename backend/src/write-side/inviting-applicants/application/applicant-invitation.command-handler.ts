@@ -29,7 +29,7 @@ export namespace ApplicantInvitationCommandHandler {
       lastName,
       personalEmail,
     }: ApplicantInvitationCommand.InviteApplicantToAssociation): Promise<
-      ApplicantInvitationId
+      string
     > {
       const invitation = new ApplicantInvitation(this.timeProvider);
       const id = ApplicantInvitationId.generate();
@@ -38,7 +38,7 @@ export namespace ApplicantInvitationCommandHandler {
         firstName: FirstName.from(firstName),
         lastName: LastName.from(lastName),
       });
-      return this.repository.save(invitation).then(() => id);
+      return this.repository.save(invitation).then(() => id.raw);
     }
   }
 

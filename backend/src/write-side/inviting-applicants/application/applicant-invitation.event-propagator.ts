@@ -21,28 +21,15 @@ export namespace EventPropagator {
 
     handle(event: ApplicantInvitationDomainEvent.ApplicantInvited) {
       //TODO: Saving in outbox and publishing after in batches
-      const {
-        aggregateId,
-        aggregateType,
-        eventId,
-        eventType,
-        occurredAt,
-        payload,
-      } = event;
-      //FIXME: Bug - Event publikuje się 2 razy, raz dane są nie wypełnione. Nie wiem skąd to wynika. Ale pewnie to wina JavaScriptu.
-      //Chwała temu kto znajdzie przyczynę. Na razie workaround poniżej
-      if (!event.eventId) {
-        return;
-      }
       this.eventBus.publish(
         new ApplicantInvitationPublicEvent.ApplicantInvited(
-          eventId.raw,
-          occurredAt,
-          aggregateId.raw,
+          event.eventId.raw,
+          event.occurredAt,
+          event.aggregateId.raw,
           {
-            personalEmail: payload.personalEmail.raw,
-            firstName: payload.firstName.raw,
-            lastName: payload.lastName.raw,
+            personalEmail: event.payload.personalEmail.raw,
+            firstName: event.payload.firstName.raw,
+            lastName: event.payload.lastName.raw,
           },
         ),
       );
@@ -60,25 +47,14 @@ export namespace EventPropagator {
     ) {}
 
     async handle(event: ApplicantInvitationDomainEvent.InvitationCancelled) {
-      const {
-        aggregateId,
-        aggregateType,
-        eventId,
-        eventType,
-        occurredAt,
-        payload,
-      } = event;
-      if (!event.eventId) {
-        return;
-      }
       const invitation = await this.applicantInvitationRepository.findById(
-        aggregateId,
+        event.aggregateId,
       );
       this.eventBus.publish(
         new ApplicantInvitationPublicEvent.ApplicantInvitationCancelled(
-          eventId.raw,
-          occurredAt,
-          aggregateId.raw,
+          event.eventId.raw,
+          event.occurredAt,
+          event.aggregateId.raw,
           {
             personalEmail: invitation.personalEmail.raw, //TODO: Find better way to enhance events without exposing getters
             firstName: invitation.firstName.raw,

@@ -29,13 +29,12 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
     if (this._status !== undefined) {
       throw new Error('Applicant already invited!');
     }
-    this.apply(
-      ApplicantInvitationDomainEvent.ApplicantInvited.newFrom(
-        id,
-        this.currentDate,
-        { ...command },
-      ),
+    const event = ApplicantInvitationDomainEvent.ApplicantInvited.newFrom(
+      id,
+      this.currentDate,
+      { ...command },
     );
+    this.apply(event);
   }
 
   onApplicantInvited(event: ApplicantInvitationDomainEvent.ApplicantInvited) {
