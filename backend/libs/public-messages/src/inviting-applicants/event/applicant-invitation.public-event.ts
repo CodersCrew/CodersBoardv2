@@ -1,17 +1,16 @@
-import { PublicEvent } from '@coders-board-library/public-messages/shared/event/public-event';
+import {AbstractPublicEvent} from '@coders-board-library/public-messages/shared/event/public-event';
 
 export namespace ApplicantInvitationPublicEvent {
-  export abstract class AbstractPublicEvent<P extends any = any>
-    implements PublicEvent<P> {
-    protected constructor(
-      readonly eventId: string,
-      readonly occurredAt: Date,
-      readonly aggregateId: string,
-      readonly payload: P,
-    ) {}
+  export abstract class ApplicantInvitationAbstractPublicEvent<P extends any = any>
+    extends AbstractPublicEvent<P> {
 
-    get eventType(): string {
-      return Object.getPrototypeOf(this).constructor.name;
+    protected constructor(
+        eventId: string,
+        occurredAt: Date,
+        aggregateId: string,
+        payload: P,
+    ) {
+      super(eventId, occurredAt, aggregateId, payload);
     }
 
     get aggregateType(): string {
@@ -24,7 +23,7 @@ export namespace ApplicantInvitationPublicEvent {
     firstName: string;
     lastName: string;
   };
-  export class ApplicantInvited extends AbstractPublicEvent<
+  export class ApplicantInvited extends ApplicantInvitationAbstractPublicEvent<
     ApplicantInvitedPayload
   > {
     constructor(
@@ -42,7 +41,7 @@ export namespace ApplicantInvitationPublicEvent {
     firstName: string;
     lastName: string;
   };
-  export class ApplicantInvitationCancelled extends AbstractPublicEvent<
+  export class ApplicantInvitationCancelled extends ApplicantInvitationAbstractPublicEvent<
     ApplicantInvitationCancelledPayload
   > {
     constructor(
