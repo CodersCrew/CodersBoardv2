@@ -1,19 +1,22 @@
 import { EventStreamVersion } from '../api/event-stream-version.valueobject';
 import { StorageEventEntry } from '../api/storage-event-entry';
 
-//TODO: Consider interface change to return stored events and errors or leave only method for store one event
-export abstract class EventStorage {
-  abstract store(
+export const EVENT_STORAGE = "EventStorage";
+
+export interface EventStorage {
+  store(
     event: StorageEventEntry,
     expectedVersion?: EventStreamVersion,
   ): Promise<void>;
 
-  abstract storeAll(
+  //TODO: Consider interface change to return stored events and errors
+  // or leave only method for store one event or do storeAll in one transaction
+  storeAll(
     events: StorageEventEntry[],
     expectedVersion?: EventStreamVersion,
   ): Promise<void>;
 
-  abstract readEvents(
+  readEvents(
     aggregateId: string,
     toDate?: Date,
   ): Promise<StorageEventEntry[]>;

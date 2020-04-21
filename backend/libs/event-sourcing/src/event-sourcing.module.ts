@@ -1,5 +1,5 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
-import { EventStorage } from './event-storage/event-storage';
+import {EVENT_STORAGE, EventStorage} from './event-storage/event-storage';
 import { TypeOrmEventStorage } from './event-storage/typeorm/event-storage.typeorm';
 import { InMemoryEventStorage } from './event-storage/in-memory/event-storage.in-memory';
 import { DomainEventEntity } from './event-storage/typeorm/event.typeorm-entity';
@@ -26,12 +26,12 @@ export class EventSourcingModule {
         imports: [...optionalImports],
         providers: [
           {
-            provide: EventStorage,
+            provide: EVENT_STORAGE,
             useFactory: (typeOrmRepository: Repository<DomainEventEntity>) =>
               new TypeOrmEventStorage(config.time, typeOrmRepository),
           },
         ],
-        exports: [EventStorage],
+        exports: [EVENT_STORAGE],
       };
     }
 
@@ -40,13 +40,13 @@ export class EventSourcingModule {
       providers: [
         configProvider,
         {
-          provide: EventStorage,
+          provide: EVENT_STORAGE,
           useFactory: (config: EventSourcingModuleConfig) =>
             new InMemoryEventStorage(config.time),
           inject: [EVENT_SOURCING_CONFIG],
         },
       ],
-      exports: [EventStorage],
+      exports: [EVENT_STORAGE],
     };
   }
 
@@ -57,13 +57,13 @@ export class EventSourcingModule {
       providers: [
         this.createAsyncProviders(config),
         {
-          provide: EventStorage,
+          provide: EVENT_STORAGE,
           useFactory: (config: EventSourcingModuleConfig) =>
             new InMemoryEventStorage(config.time),
           inject: [EVENT_SOURCING_CONFIG],
         },
       ],
-      exports: [EventStorage],
+      exports: [EVENT_STORAGE],
     };
   }
 

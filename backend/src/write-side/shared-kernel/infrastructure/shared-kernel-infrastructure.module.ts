@@ -2,6 +2,7 @@ import { DynamicModule, ForwardReference, Module, Type } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CodersBoardTimeProviderAdapter } from './time/coders-board-time-provider.adapter';
 import {
+  TIME_PROVIDER,
   TimeProvider,
   TimeProviderModule,
 } from '@coders-board-library/time-provider';
@@ -55,13 +56,13 @@ const eventSourcingModule = EventSourcingModule.registerAsync({
   imports: [CqrsModule, timeProviderModule, eventSourcingModule],
   providers: [
     {
-      provide: 'TIME_PROVIDER',
+      provide: TIME_PROVIDER,
       useClass: CodersBoardTimeProviderAdapter,
     },
   ],
   exports: [
     CqrsModule,
-    'TIME_PROVIDER',
+    TIME_PROVIDER,
     eventSourcingModule,
     timeProviderModule,
   ],
