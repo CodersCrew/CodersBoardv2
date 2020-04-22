@@ -13,7 +13,7 @@ export class InMemoryEventStorage implements EventStorage {
 
   store(
     event: StorageEventEntry,
-    expectedVersion: EventStreamVersion = EventStreamVersion.any(),
+    expectedVersion: EventStreamVersion | undefined = undefined,
   ): Promise<void> {
     const foundStream = this.eventStreams[event.aggregateId];
     if (foundStream && foundStream.find(e => e.eventId === event.eventId)) {
@@ -42,15 +42,15 @@ export class InMemoryEventStorage implements EventStorage {
 
   storeAll(
     events: StorageEventEntry[],
-    expectedVersion: EventStreamVersion = EventStreamVersion.any(),
+    expectedVersion: EventStreamVersion | undefined = undefined,
   ): Promise<void> {
     return Promise.all(
       events.map((value, index) =>
         this.store(
           value,
           expectedVersion
-            ? expectedVersion.raw + index
-            : EventStreamVersion.any(),
+            ? EventStreamVersion.exactly(expectedVersion.raw + index)
+            : expectedVersion,
         ),
       ),
     ).then();

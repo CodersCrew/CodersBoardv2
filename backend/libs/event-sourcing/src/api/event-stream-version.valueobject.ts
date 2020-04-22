@@ -5,7 +5,4 @@ export class EventStreamVersion {
     return new EventStreamVersion(raw);
   }
 
-  static any() {
-    return undefined;
-  }
 }
