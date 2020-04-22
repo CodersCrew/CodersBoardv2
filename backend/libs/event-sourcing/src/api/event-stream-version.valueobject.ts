@@ -4,5 +4,4 @@ export class EventStreamVersion {
   static exactly(raw: number) {
     return new EventStreamVersion(raw);
   }
-
 }
