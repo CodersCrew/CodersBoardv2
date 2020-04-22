@@ -1,4 +1,4 @@
-import { DynamicModule, ForwardReference, Module, Type } from '@nestjs/common';
+import {DynamicModule, ForwardReference, Inject, Module, Type} from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CodersBoardTimeProviderAdapter } from './time/coders-board-time-provider.adapter';
 import {

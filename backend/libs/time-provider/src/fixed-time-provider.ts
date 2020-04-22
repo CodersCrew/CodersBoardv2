@@ -1,9 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { TestTimeProvider } from './test-time-provider';
+import { MoveableTimeProvider } from './moveable-time-provider';
 import { TimeProvider } from '@coders-board-library/time-provider/time-provider';
 
-@Injectable()
-export class FixedTimeProvider implements TimeProvider, TestTimeProvider {
+export class FixedTimeProvider implements TimeProvider, MoveableTimeProvider {
   private constructor(private date: Date) {}
 
   static withFixedDate(date: Date = new Date()) {

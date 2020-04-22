@@ -1,9 +1,9 @@
 import { FixedTimeProvider } from '@coders-board-library/time-provider/fixed-time-provider';
-import { TestTimeProvider } from '@coders-board-library/time-provider/test-time-provider';
+import { MoveableTimeProvider } from '@coders-board-library/time-provider/moveable-time-provider';
 
 describe('Feature: Test time provider', () => {
   let date: Date;
-  let timeProvider: TestTimeProvider;
+  let timeProvider: MoveableTimeProvider;
 
   beforeEach(() => {
     date = new Date();
