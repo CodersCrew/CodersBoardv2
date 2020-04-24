@@ -1,4 +1,4 @@
-import React, { ReactText, useState } from 'react';
+import React, { useState } from 'react';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Table as UserTable, Avatar, Button, Modal, Spin, message } from 'antd';
 import { ColumnProps } from 'antd/es/table';
