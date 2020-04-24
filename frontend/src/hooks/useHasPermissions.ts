@@ -8,7 +8,7 @@ export const useHasPermissions = (value: UseHasPermissionsArg) => {
   const { permissions } = useMe()!;
 
   if (Array.isArray(value)) {
-    return permissions.some(p => value.includes(p));
+    return permissions.some((p) => value.includes(p));
   }
-  return permissions.some(p => p === value);
+  return permissions.some((p) => p === value);
 };

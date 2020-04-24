@@ -16,7 +16,7 @@ export const Container = styled.main`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: ${props => props.theme.colors.background};
+  background-color: ${(props) => props.theme.colors.background};
 `;
 
 export const Heading = styled.h1`
@@ -56,7 +56,7 @@ export const LogoWrapper = styled.div`
   height: 80px;
   padding: 24px;
   border-radius: 4px;
-  background-color: ${props => props.theme.colors.black};
+  background-color: ${(props) => props.theme.colors.black};
 
   svg {
     width: 100%;
@@ -79,12 +79,8 @@ const initialValues = {
 type SignInFormValues = typeof initialValues;
 
 const signInSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Błędny adres e-mail')
-    .required('Email jest wymagany'),
-  password: Yup.string()
-    .min(8, 'Hasło musi mieć co najmniej 8 znaków')
-    .required('Hasło jest wymagane'),
+  email: Yup.string().email('Błędny adres e-mail').required('Email jest wymagany'),
+  password: Yup.string().min(8, 'Hasło musi mieć co najmniej 8 znaków').required('Hasło jest wymagane'),
 });
 
 const SignIn = () => {

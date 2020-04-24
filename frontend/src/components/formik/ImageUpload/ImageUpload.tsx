@@ -35,7 +35,8 @@ interface State {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getStatus = (
   form: FormikProps<any>,
-  errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[]) => {
+  errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[],
+) => {
   if (errorMessage) {
     return 'error';
   }
@@ -65,7 +66,7 @@ const compressFile = (file: File, { width, height }: Dimensions) =>
   });
 
 const getImageRatio = (file: File) =>
-  new Promise<number>(resolve => {
+  new Promise<number>((resolve) => {
     const fr = new FileReader();
 
     fr.onload = () => {
@@ -284,7 +285,9 @@ export class ImageUpload extends PureComponent<ImageUploadProps, State> {
             showUploadList={false}
             action={(file: File) => this.handleChange(file)}
             beforeUpload={this.beforeUpload}
-            customRequest={() => {}}
+            customRequest={() => {
+              'TODO';
+            }}
           >
             {imageUrl ? <img src={imageUrl} alt={name} /> : this.uploadButton(uploadText)}
           </ImageUploadBase>

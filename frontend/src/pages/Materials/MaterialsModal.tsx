@@ -27,9 +27,7 @@ const materialsModalSchema = Yup.object().shape({
     .required('Nazwa materiału jest wymagana')
     .min(8, 'Nazwa materiału nie powinna zawierać mniej niż 8 znaków')
     .max(80, 'Nazwa materiału nie powinna być dłusza niż 80 znaków'),
-  url: Yup.string()
-    .url('Wprowadzony adres URL jest niepoprawny')
-    .required('Adres URL jest wymagany'),
+  url: Yup.string().url('Wprowadzony adres URL jest niepoprawny').required('Adres URL jest wymagany'),
 });
 
 const parseMaterialTagsToOptions = (tags: MaterialTag[]): OptionProps[] =>
@@ -79,7 +77,7 @@ const MaterialsModal = ({ values, destroyModal }: MaterialsModalProps) => {
             <Field name="name" component={Input} label="Nazwa materiału" required />
             <Field name="url" component={Input} label="Adres URL" required />
             <Field name="tags" component={Select} label="Tagi" mode="tags" loading={loading}>
-              {tagsOptions.map(option => (
+              {tagsOptions.map((option) => (
                 <Option key={option.value} {...option} />
               ))}
             </Field>

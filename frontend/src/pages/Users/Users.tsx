@@ -1,4 +1,4 @@
-import React, {ReactText, useState} from 'react';
+import React, { ReactText, useState } from 'react';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Table as UserTable, Avatar, Button, Modal, Spin, message } from 'antd';
 import { ColumnProps } from 'antd/es/table';
@@ -139,10 +139,6 @@ const getAdminColumns = (openEditModal: () => void, deleteUser: (variables: obje
   ];
 };
 
-
-
-
-
 const Users = () => {
   const hasPermissions = useHasPermissions(['OWNER', 'ADMIN']);
   const refetchUsers = { refetchQueries: [{ query: UsersDocument }] };
@@ -190,13 +186,15 @@ const Users = () => {
 
   // [TO DO] dorobić funkcjonalność edycji wielu userów
   const rowSelection: object = {
-    onChange: (newSelectedRowKeys: string[] | number[] , selectedRows: UsersQuery['users']) => {
+    onChange: (newSelectedRowKeys: string[] | number[], selectedRows: UsersQuery['users']) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
       setSelectedRowKeys(newSelectedRowKeys);
     },
   };
   const hasSelected = selectedRowKeys.length > 0;
-  const handleEditMany = () => {};
+  const handleEditMany = () => {
+    'TODO';
+  };
 
   const handleAdd = () => {
     setInitialValues(InitialValuesEmptyForm);
@@ -204,34 +202,41 @@ const Users = () => {
   };
 
   if (hasPermissions) {
-    return <>
-      <div style={{ marginBottom: 16 }}>
-        <Button type="primary" onClick={handleEditMany} disabled={!hasSelected}>
-          Edytuj wielu
-        </Button>
-        <span style={{ marginLeft: 8 }}>{hasSelected ? `Wybrano ${selectedRowKeys.length} elementów` : ''}</span>
-        <Button onClick={handleAdd} type="primary" style={{ marginBottom: 16, float: 'right' }} icon={<PlusOutlined />}>
-          Dodaj członka
-        </Button>
-      </div>
-      <UserTable
-        rowSelection={rowSelection}
-        style={{ backgroundColor: 'white' }}
-        columns={getAdminColumns(openEditModal, deleteUser, setInitialValues)}
-        dataSource={userList}
-        rowKey={record => record.id}
-        pagination={false}
-        size="middle"
-      />
-      <UsersModal type={modalType} visible={visible} closeModal={closeModal} initialValues={initialValues} />
-    </>;
+    return (
+      <>
+        <div style={{ marginBottom: 16 }}>
+          <Button type="primary" onClick={handleEditMany} disabled={!hasSelected}>
+            Edytuj wielu
+          </Button>
+          <span style={{ marginLeft: 8 }}>{hasSelected ? `Wybrano ${selectedRowKeys.length} elementów` : ''}</span>
+          <Button
+            onClick={handleAdd}
+            type="primary"
+            style={{ marginBottom: 16, float: 'right' }}
+            icon={<PlusOutlined />}
+          >
+            Dodaj członka
+          </Button>
+        </div>
+        <UserTable
+          rowSelection={rowSelection}
+          style={{ backgroundColor: 'white' }}
+          columns={getAdminColumns(openEditModal, deleteUser, setInitialValues)}
+          dataSource={userList}
+          rowKey={(record) => record.id}
+          pagination={false}
+          size="middle"
+        />
+        <UsersModal type={modalType} visible={visible} closeModal={closeModal} initialValues={initialValues} />
+      </>
+    );
   }
   return (
     <UserTable
       style={{ backgroundColor: 'white' }}
       columns={columns}
       dataSource={userList}
-      rowKey={record => record.id}
+      rowKey={(record) => record.id}
       pagination={false}
       size="middle"
     />

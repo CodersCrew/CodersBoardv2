@@ -66,7 +66,7 @@ const AppWrapper = ({ children, location }: AppWrapperProps) => {
 
   return (
     <StyledAppWrapper hasSider={!isCollapsed}>
-      <Sidebar onCollapse={collapsed => setIsCollapsed(collapsed)} />
+      <Sidebar onCollapse={(collapsed) => setIsCollapsed(collapsed)} />
       <Layout>
         <Header />
         <Content>{children}</Content>

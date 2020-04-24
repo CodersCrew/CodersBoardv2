@@ -41,9 +41,7 @@ const UsersModalSchema = Yup.object().shape({
     .required('Imię i nazwisko jest wymagane')
     .min(8, 'Imię i nazwisko nie powinno zawierać mniej niż 8 znaków')
     .max(80, 'Imię i nazwisko nie powinno być dłusze niż 80 znaków'),
-  email: Yup.string()
-    .email('Wprowadzony email jest niepoprawny')
-    .required('Adres email jest wymagany'),
+  email: Yup.string().email('Wprowadzony email jest niepoprawny').required('Adres email jest wymagany'),
 });
 
 const permissions = Object.values(Permission);
@@ -101,7 +99,7 @@ export const UsersModal = (props: UsersModalProps) => {
           departments: values.departments,
           permissions: values.permissions,
         },
-      }).catch(error => {
+      }).catch((error) => {
         console.log('Error', error.message);
       });
       hideLoading();
@@ -157,23 +155,27 @@ export const UsersModal = (props: UsersModalProps) => {
             <Form>
               <Field component={Input} size="large" name="name" label="Imię i nazwisko" required />
               <Field component={Select} size="large" name="roles" label="Rola w CodersCrew">
-                {roles.map(option => (
-                  <Option value = {option.value} key={option.value}>
-                    {option.children }
+                {roles.map((option) => (
+                  <Option value={option.value} key={option.value}>
+                    {option.children}
                   </Option>
                 ))}
               </Field>
               <Field component={Select} size="large" name="departments" label="Obszar">
-                {departments.map(option => (
-                  <Option value = {option.value} key={option.value}>{option.children}</Option>
+                {departments.map((option) => (
+                  <Option value={option.value} key={option.value}>
+                    {option.children}
+                  </Option>
                 ))}
               </Field>
               <Field component={Input} size="large" name="email" label="E-mail" required />
               <Field component={Input} size="large" name="phone" label="Telefon" />
               {props.type === 'edit' ? profileUrlField() : null}
               <Field component={Select} size="large" name="permissions" label="Rodzaj dostępu">
-                {permissions.map(option => (
-                  <Option value = {option} key={option}>{option}</Option>
+                {permissions.map((option) => (
+                  <Option value={option} key={option}>
+                    {option}
+                  </Option>
                 ))}
               </Field>
             </Form>

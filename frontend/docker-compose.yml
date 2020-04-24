@@ -21,6 +21,7 @@ services:
       - coders-board-network
     stdin_open: true
     tty: true
+    command: /bin/sh
 networks:
   coders-board-network:
     name: coders-board-network

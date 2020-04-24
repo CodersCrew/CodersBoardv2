@@ -38,23 +38,31 @@ export const Credentials = () => {
   if (loading) {
     return null;
   }
-  return <>
-    <Row  justify="end">
-      <Col>
-        <Button style={{ marginBottom: '32px' }} type="primary" icon={<PlusOutlined />} size="large" onClick={openAddModal}>
-          <span>Dodaj dostęp</span>
-        </Button>
-      </Col>
-    </Row>
-    <CredentialsModal initialValues={modal} closeModal={closeModal} visible={Boolean(modal)} type={type} />
-    <Row gutter={16}>
-      {data!.credentials.map(credential => (
-        <CredentialsCard
-          key={credential.id}
-          openEditModal={() => openEditModal(credential)}
-          credential={credential}
-        />
-      ))}
-    </Row>
-  </>;
+  return (
+    <>
+      <Row justify="end">
+        <Col>
+          <Button
+            style={{ marginBottom: '32px' }}
+            type="primary"
+            icon={<PlusOutlined />}
+            size="large"
+            onClick={openAddModal}
+          >
+            <span>Dodaj dostęp</span>
+          </Button>
+        </Col>
+      </Row>
+      <CredentialsModal initialValues={modal} closeModal={closeModal} visible={Boolean(modal)} type={type} />
+      <Row gutter={16}>
+        {data!.credentials.map((credential) => (
+          <CredentialsCard
+            key={credential.id}
+            openEditModal={() => openEditModal(credential)}
+            credential={credential}
+          />
+        ))}
+      </Row>
+    </>
+  );
 };

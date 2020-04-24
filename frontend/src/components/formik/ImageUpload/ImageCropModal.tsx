@@ -81,7 +81,7 @@ class ImageCropModal extends Component<ImageCropModalProps, ImageCropModalState>
       crop.height * scaleY,
     );
 
-    canvas.toBlob(blob => {
+    canvas.toBlob((blob) => {
       const newFile = new File([blob!], file.name, {
         type: file.type,
         lastModified: Date.now(),
@@ -102,6 +102,7 @@ class ImageCropModal extends Component<ImageCropModalProps, ImageCropModalState>
   onChange = (crop: Crop) => this.setState({ crop });
 
   render() {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const onCancel = this.props.cropData ? this.props.cropData.reject : () => {};
 
     return (

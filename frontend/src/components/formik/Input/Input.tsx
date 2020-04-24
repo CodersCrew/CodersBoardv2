@@ -12,8 +12,9 @@ const FormItem = Form.Item;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getStatus = (
-    form: FormikProps<any>,
-    errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[]) => {
+  form: FormikProps<any>,
+  errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[],
+) => {
   if (errorMessage) {
     return 'error';
   }

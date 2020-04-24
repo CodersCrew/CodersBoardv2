@@ -31,7 +31,7 @@ const Image = styled.div<{ src: string }>`
   position: relative;
   width: 136px;
   min-width: 136px;
-  background: url("${props => props.src}") no-repeat center/cover;
+  background: url("${(props) => props.src}") no-repeat center/cover;
   border-radius: 4px 0 0 4px;
 
   + ${Content} {
@@ -87,7 +87,7 @@ const MaterialItem = (material: Material) => {
         <Name>{name}</Name>
         {tags && (
           <Tags>
-            {tags.map(tag => (
+            {tags.map((tag) => (
               <Tag key={tag.id}>#{tag.name}</Tag>
             ))}
           </Tags>

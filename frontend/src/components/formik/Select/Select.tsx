@@ -14,7 +14,8 @@ const FormItem = Form.Item;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getStatus = (
   form: FormikProps<any>,
-  errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[]) => {
+  errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[],
+) => {
   if (errorMessage) {
     return 'error';
   }
@@ -61,7 +62,6 @@ export const Select = ({
   };
 
   const inputProps = {
-
     ...rest,
     name,
     onChange: handleChange,
@@ -70,7 +70,7 @@ export const Select = ({
     loading: rest.loading || status === 'validating',
     id: rest.id || name,
     maxTagTextLength: 20,
-    style: { width: '100%', ...style }
+    style: { width: '100%', ...style },
   };
 
   return (

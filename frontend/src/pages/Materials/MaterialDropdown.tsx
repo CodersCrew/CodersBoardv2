@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { Menu, Dropdown } from 'antd';
 import styled from 'styled-components';
 import { pick } from 'lodash';
 import { Material, MaterialTag } from 'generated/graphql';
-import { EllipsisOutlined  } from '@ant-design/icons';
+
 import MaterialsModal from './MaterialsModal';
 import { showDeleteConfirm } from './utils';
 import { MaterialFormValues } from './types';
@@ -57,7 +57,7 @@ const MaterialDropdown = ({ material }: MaterialDropdownProps) => {
   return (
     <>
       <MaterialDropdownContainer overlay={menu(editMaterial, deleteMaterial)} trigger={['click']}>
-        <MoreIcon  />
+        <MoreIcon />
       </MaterialDropdownContainer>
       {isModalOpen && <MaterialsModal values={parseMaterialToValues(material)} destroyModal={destroyModal} />}
     </>

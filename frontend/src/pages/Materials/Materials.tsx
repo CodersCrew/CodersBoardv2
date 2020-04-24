@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Row, Col, Button } from 'antd';
 import styled from 'styled-components';
 import { useMaterialsQuery } from 'generated/graphql';
+import { PlusOutlined } from '@ant-design/icons';
 import MaterialItem from './MaterialItem';
 import MaterialsModal from './MaterialsModal';
-import { PlusOutlined } from '@ant-design/icons';
 
 const MaterialsContainer = styled.div`
   display: flex;

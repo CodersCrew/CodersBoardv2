@@ -53,7 +53,7 @@ const initialValues = {
 type FormValues = typeof initialValues;
 
 const wait = (time = 2000) =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     setTimeout(resolve, time);
   });
 
