@@ -6,7 +6,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "check:lint": "eslint \"*/**/*.{js,ts,tsx}\" --fix",
+    "check:lint": "eslint \"*/**/*.{js,ts,tsx}\"",
     "check:types": "tsc --noEmit",
     "check-all": "yarn check:lint && yarn check:types",
     "generate:translations": "ts-node --skip-project ./src/generators/translations.ts && eslint \"./src/generated/**/*.{tsx,ts}\" --fix",
