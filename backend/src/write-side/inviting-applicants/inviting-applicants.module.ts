@@ -32,9 +32,10 @@ export class InvitingApplicantsModule implements OnModuleInit {
     this.commandBus
       .execute(inviteCommand)
       .then(r =>
-        this.commandBus
-          .execute(new CancelApplicantInvitation(r))
-          .then(r => console.log(r)),
+          setTimeout(()=>{
+            this.commandBus
+                .execute(new CancelApplicantInvitation(r)).then()
+          },2000)
       );
   }
 }

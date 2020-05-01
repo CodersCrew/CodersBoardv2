@@ -31,10 +31,10 @@ export class EventStoreEventStorage implements EventStorage {
       metadata: {}
     };
     return this.httpService
-      .post(`${this.baseUrl}/streams/${streamId.raw}`, eventRequestBody, {
+      .post(`${this.baseUrl}/streams/${streamId.raw}`, [eventRequestBody], {
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.eventstore.atom+json',
+          'Content-Type': 'application/vnd.eventstore.atom+json',
           'ES-EventType': eventRequestBody.eventType,
           'ES-EventId': eventRequestBody.eventId,
           'ES-CurrentVersion': expectedVersion
