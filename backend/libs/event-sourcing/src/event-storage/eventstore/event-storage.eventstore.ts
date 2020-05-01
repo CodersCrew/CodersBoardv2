@@ -91,8 +91,8 @@ export class EventStoreEventStorage implements EventStorage {
               eventId: it.eventId,
               eventType: it.eventType,
               occurredAt: it.updated,
-              aggregateId: it.streamId,
-              aggregateType: streamId.aggregateType, //TODO: Get for eventStreamId
+              aggregateId: EventStreamId.fromRaw(it.streamId).aggregateId,
+              aggregateType: EventStreamId.fromRaw(it.streamId).aggregateType,
               payload: it.data,
             };
           }),
