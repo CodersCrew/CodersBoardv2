@@ -48,5 +48,4 @@ export class ApplicantInvitationEventSourcedRepository
   }
 
   aggregateType = ApplicantInvitation.name;
-
 }

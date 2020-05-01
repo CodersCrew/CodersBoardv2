@@ -6,13 +6,12 @@ import { DomainEvent } from '../../domain/domain-event';
 import { EventStorage } from '@coders-board-library/event-sourcing/api/event-storage';
 import { StorageEventEntry } from '@coders-board-library/event-sourcing/api/storage-event-entry';
 import { TimeProviderPort } from '../../domain/time-provider.port';
-import {EventStreamId} from "@coders-board-library/event-sourcing/api/event-stream-id.valueboject";
+import { EventStreamId } from '@coders-board-library/event-sourcing/api/event-stream-id.valueboject';
 
 export abstract class EventSourcedAggregateRootRepository<
   I extends AggregateId,
   T extends AbstractAggregateRoot<I>
 > implements AggregateRootRepository<I, T> {
-
   protected abstract aggregateType: string;
 
   protected constructor(
@@ -22,7 +21,12 @@ export abstract class EventSourcedAggregateRootRepository<
   ) {}
 
   async findById(id: I): Promise<T | null> {
-    const events = await this.eventStorage.readEvents(EventStreamId.props({aggregateId: id.raw, aggregateType: this.aggregateType}));
+    const events = await this.eventStorage.readEvents(
+      EventStreamId.props({
+        aggregateId: id.raw,
+        aggregateType: this.aggregateType,
+      }),
+    );
     if (events.length === 0) {
       return Promise.resolve(null);
     }
@@ -46,7 +50,13 @@ export abstract class EventSourcedAggregateRootRepository<
         ),
       );
     return this.eventStorage
-      .storeAll(EventStreamId.props({aggregateId: aggregate.aggregateId.raw, aggregateType: this.aggregateType}), uncommitedEvents)
+      .storeAll(
+        EventStreamId.props({
+          aggregateId: aggregate.aggregateId.raw,
+          aggregateType: this.aggregateType,
+        }),
+        uncommitedEvents,
+      )
       .then(() => this.eventBus.publishAll(aggregate.getUncommittedEvents()))
       .then(() => aggregate.clearUncommittedEvents());
   }
@@ -63,5 +73,4 @@ export abstract class EventSourcedAggregateRootRepository<
       payload: event.payload,
     };
   }
-
 }

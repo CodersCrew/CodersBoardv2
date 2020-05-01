@@ -1,9 +1,9 @@
-import {Module, OnModuleInit} from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { InvitingApplicantsApplicationModule } from './application/inviting-applicants-application.module';
 import { InvitingApplicantsInfrastructureModule } from './infrastructure/inviting-applicants-infrastructure.module';
-import {ApplicantInvitationCommand} from "@coders-board-library/public-messages";
+import { ApplicantInvitationCommand } from '@coders-board-library/public-messages';
 import InviteApplicantToAssociation = ApplicantInvitationCommand.InviteApplicantToAssociation;
-import {CommandBus} from "@nestjs/cqrs";
+import { CommandBus } from '@nestjs/cqrs';
 import CancelApplicantInvitation = ApplicantInvitationCommand.CancelApplicantInvitation;
 
 @Module({
@@ -12,10 +12,8 @@ import CancelApplicantInvitation = ApplicantInvitationCommand.CancelApplicantInv
     InvitingApplicantsInfrastructureModule,
   ],
 })
-export class InvitingApplicantsModule implements OnModuleInit{
-
-  constructor(private readonly commandBus: CommandBus) {
-  }
+export class InvitingApplicantsModule implements OnModuleInit {
+  constructor(private readonly commandBus: CommandBus) {}
 
   //FIXME: Delete. Just to init some data.
   onModuleInit(): any {
@@ -27,11 +25,16 @@ export class InvitingApplicantsModule implements OnModuleInit{
       },
     };
     const inviteCommand = new InviteApplicantToAssociation(
-        person.janKowalski.personalEmail,
-        person.janKowalski.firstName,
-        person.janKowalski.lastName,
+      person.janKowalski.personalEmail,
+      person.janKowalski.firstName,
+      person.janKowalski.lastName,
     );
-    this.commandBus.execute(inviteCommand).then(r => this.commandBus.execute(new CancelApplicantInvitation(r)).then(r => console.log(r)));
-
+    this.commandBus
+      .execute(inviteCommand)
+      .then(r =>
+        this.commandBus
+          .execute(new CancelApplicantInvitation(r))
+          .then(r => console.log(r)),
+      );
   }
 }

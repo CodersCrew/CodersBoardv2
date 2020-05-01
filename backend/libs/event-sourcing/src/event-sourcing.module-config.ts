@@ -1,7 +1,6 @@
-import {Time} from './time.type';
+import { Time } from './time.type';
 
-export type EventSourcingModuleConfig =
-    {
-      eventStorageName?: string;
-      time: Time;
-    };
+export type EventSourcingModuleConfig = {
+  eventStorageName?: string;
+  time: Time;
+};

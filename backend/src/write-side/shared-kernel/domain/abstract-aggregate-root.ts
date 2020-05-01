@@ -50,8 +50,7 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
     return constructor.name as string;
   }
 
-  get aggregateId(){
+  get aggregateId() {
     return this.id;
   }
-
 }
