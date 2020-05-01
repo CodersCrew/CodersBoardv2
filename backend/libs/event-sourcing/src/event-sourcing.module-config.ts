@@ -1,12 +1,7 @@
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Time } from './time.type';
+import {Time} from './time.type';
 
 export type EventSourcingModuleConfig =
-  | {
+    {
+      eventStorageName?: string;
       time: Time;
-      eventStorage: 'in-memory';
-    }
-  | {
-      time: Time;
-      eventStorage: 'typeorm';
     };

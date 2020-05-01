@@ -4,6 +4,7 @@ import { InvitingApplicantsInfrastructureModule } from './infrastructure/invitin
 import {ApplicantInvitationCommand} from "@coders-board-library/public-messages";
 import InviteApplicantToAssociation = ApplicantInvitationCommand.InviteApplicantToAssociation;
 import {CommandBus} from "@nestjs/cqrs";
+import CancelApplicantInvitation = ApplicantInvitationCommand.CancelApplicantInvitation;
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ export class InvitingApplicantsModule implements OnModuleInit{
         person.janKowalski.firstName,
         person.janKowalski.lastName,
     );
-    this.commandBus.execute(inviteCommand).then(r => console.log(r));
+    this.commandBus.execute(inviteCommand).then(r => this.commandBus.execute(new CancelApplicantInvitation(r)).then(r => console.log(r)));
+
   }
 }
