@@ -1,7 +1,7 @@
 import { DomainEvent } from './domain-event';
 import { AggregateId } from './aggregate-id.valueobject';
 import { TimeProviderPort } from './time-provider.port';
-import {AggregateVersion} from "./aggregate-version.valueobject";
+import { AggregateVersion } from './aggregate-version.valueobject';
 
 const INTERNAL_EVENTS = Symbol();
 
@@ -35,7 +35,7 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
     if (!isFromHistory) {
       this[INTERNAL_EVENTS].push(event);
     }
-    if(isFromHistory){
+    if (isFromHistory) {
       this.version = this.version.increase();
     }
     const handler = this.getEventHandler(event);

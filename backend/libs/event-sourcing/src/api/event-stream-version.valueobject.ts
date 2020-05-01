@@ -1,8 +1,7 @@
 export class EventStreamVersion {
   private readonly TYPE = 'EventStreamVersion';
 
-  constructor(readonly raw: number) {
-  }
+  constructor(readonly raw: number) {}
 
   static exactly(raw: number) {
     return new EventStreamVersion(raw);
