@@ -1,5 +1,5 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
-import { EVENT_STORAGE } from './event-storage/event-storage';
+import {DynamicModule, HttpModule, Module, Provider} from '@nestjs/common';
+import { EVENT_STORAGE } from './api/event-storage';
 import { TypeOrmEventStorage } from './event-storage/typeorm/event-storage.typeorm';
 import { InMemoryEventStorage } from './event-storage/in-memory/event-storage.in-memory';
 import { DomainEventEntity } from './event-storage/typeorm/event.typeorm-entity';
@@ -47,6 +47,23 @@ export class EventSourcingModule {
     return {
       module: EventSourcingModule,
       imports: config.imports || [],
+      providers: [
+        this.createAsyncProviders(config),
+        {
+          provide: EVENT_STORAGE,
+          useFactory: (config: EventSourcingModuleConfig) => new InMemoryEventStorage(config.time),
+          inject: [EVENT_SOURCING_CONFIG],
+        },
+      ],
+      exports: [EVENT_STORAGE],
+    };
+  }
+
+  static registerEventStoreAsync(config: EventSourcingModuleAsyncConfig): DynamicModule{
+    const eventStoreApiBaseUrl = "http://127.0.0.1:2113"
+    return {
+      module: EventSourcingModule,
+      imports: [...config.imports, HttpModule] || [],
       providers: [
         this.createAsyncProviders(config),
         {

@@ -49,4 +49,9 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
     const { constructor } = Object.getPrototypeOf(event);
     return constructor.name as string;
   }
+
+  get aggregateId(){
+    return this.id;
+  }
+
 }

@@ -16,6 +16,8 @@ export class InvitingApplicantsModule implements OnModuleInit{
 
   constructor(private readonly commandBus: CommandBus) {
   }
+
+  //FIXME: Delete. Just to init some data.
   onModuleInit(): any {
     const person = {
       janKowalski: {
