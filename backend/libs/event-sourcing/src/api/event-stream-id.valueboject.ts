@@ -13,6 +13,6 @@ export class EventStreamId {
   }
 
   get raw() {
-    return `${this.aggregateId}-${this.aggregateType}`;
+    return `${this.aggregateType}-${this.aggregateId}`;
   }
 }

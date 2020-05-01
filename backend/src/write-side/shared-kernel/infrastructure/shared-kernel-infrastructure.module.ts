@@ -51,10 +51,20 @@ const inMemoryEventSourcingModule = EventSourcingModule.registerInMemoryAsync({
   },
 });
 
+const eventStoreEventSourcingModule = EventSourcingModule.registerEventStoreAsync({
+  imports: [timeProviderModule],
+  inject: [TimeProvider],
+  useFactory: (timeProvider: TimeProvider) => {
+    return {
+      time: timeProvider.currentDate,
+    };
+  },
+});
+
 const eventSourcingModule =
-  'typeorm' === process.env.DATABASE_MODE
+  'typeorm' === process.env.EVENTSOURCING_MODE
     ? typeOrmEventSourcingModule
-    : inMemoryEventSourcingModule;
+    : "eventstore" === process.env.EVENTSOURCING_MODE ? eventStoreEventSourcingModule : inMemoryEventSourcingModule;
 
 @Module({
   imports: [CqrsModule, timeProviderModule, eventSourcingModule],
