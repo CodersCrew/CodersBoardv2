@@ -1,4 +1,4 @@
-type PostEventRequestBody = {
+type StorageEventDto = {
   eventId: string;
   eventType: string;
   data: unknown;

@@ -82,16 +82,23 @@ export class EventSourcingModule {
   static registerEventStoreAsync(
     config: EventSourcingModuleAsyncConfig,
   ): DynamicModule {
-    const eventStoreApiBaseUrl = 'http://127.0.0.1:2113';
+    const eventStoreApiBaseUrl = 'http://127.0.0.1:2113'; //TODO: Create config service for this
     return {
       module: EventSourcingModule,
-      imports: [...config.imports, HttpModule] || [],
+      imports: [...config.imports, HttpModule.register({
+        baseURL: eventStoreApiBaseUrl,
+        withCredentials: true,
+        auth: {
+          username: "admin",
+          password: "changeit"
+        }
+      })] || [],
       providers: [
         this.createAsyncProviders(config),
         {
           provide: EVENT_STORAGE,
           useFactory: (config: EventSourcingModuleConfig, httpService: HttpService) =>
-            new EventStoreEventStorage(config.time, eventStoreApiBaseUrl, httpService),
+            new EventStoreEventStorage(config.time, httpService),
           inject: [EVENT_SOURCING_CONFIG, HttpService],
         },
       ],

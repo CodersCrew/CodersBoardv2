@@ -1,6 +1,7 @@
 import { DomainEvent } from './domain-event';
 import { AggregateId } from './aggregate-id.valueobject';
 import { TimeProviderPort } from './time-provider.port';
+import {AggregateVersion} from "./aggregate-version.valueobject";
 
 const INTERNAL_EVENTS = Symbol();
 
@@ -8,6 +9,7 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
   protected id: I;
   private readonly [INTERNAL_EVENTS]: DomainEvent[] = [];
   private readonly timeProvider: TimeProviderPort;
+  private version = AggregateVersion.new();
 
   protected constructor(timeProvider: TimeProviderPort) {
     this.timeProvider = timeProvider;
@@ -33,6 +35,9 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
     if (!isFromHistory) {
       this[INTERNAL_EVENTS].push(event);
     }
+    if(isFromHistory){
+      this.version = this.version.increase();
+    }
     const handler = this.getEventHandler(event);
     if (!handler) {
       throw new Error(`Handler for domain event ${event.eventType} not found!`);
@@ -52,5 +57,9 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
 
   get aggregateId() {
     return this.id;
+  }
+
+  get aggregateVersion() {
+    return this.version;
   }
 }
