@@ -1,7 +1,5 @@
 import {
   DynamicModule,
-  HttpModule,
-  HttpService,
   Module,
   Provider,
 } from '@nestjs/common';
@@ -14,7 +12,6 @@ import { Connection, createConnection } from 'typeorm';
 import { EventSourcingModuleAsyncConfig } from '@coders-board-library/event-sourcing/event-sourcing.module-async-config';
 import { EventSourcingModuleConfigFactory } from '@coders-board-library/event-sourcing/event-sourcing.module-config-factory';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { EventStoreEventStorage } from '@coders-board-library/event-sourcing/event-storage/eventstore/event-storage.eventstore';
 
 const EVENT_SOURCING_CONFIG = Symbol();
 const DEFAULT_EVENT_STORAGE_NAME = 'public';
@@ -79,39 +76,6 @@ export class EventSourcingModule {
           useFactory: (config: EventSourcingModuleConfig) =>
             new InMemoryEventStorage(config.time),
           inject: [EVENT_SOURCING_CONFIG],
-        },
-      ],
-      exports: [EVENT_STORAGE],
-    };
-  }
-
-  static registerEventStoreAsync(
-    config: EventSourcingModuleAsyncConfig,
-  ): DynamicModule {
-    const eventStoreApiBaseUrl = 'http://127.0.0.1:2113'; //TODO: Create config service for this
-    return {
-      module: EventSourcingModule,
-      imports:
-        [
-          ...config.imports,
-          HttpModule.register({
-            baseURL: eventStoreApiBaseUrl,
-            withCredentials: true,
-            auth: {
-              username: 'admin',
-              password: 'changeit',
-            },
-          }),
-        ] || [],
-      providers: [
-        this.createAsyncProviders(config),
-        {
-          provide: EVENT_STORAGE,
-          useFactory: (
-            config: EventSourcingModuleConfig,
-            httpService: HttpService,
-          ) => new EventStoreEventStorage(config.time, httpService),
-          inject: [EVENT_SOURCING_CONFIG, HttpService],
         },
       ],
       exports: [EVENT_STORAGE],
