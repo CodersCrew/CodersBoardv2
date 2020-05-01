@@ -78,26 +78,6 @@ export class EventSourcingModule {
     };
   }
 
-  static registerEventStoreAsync(
-    config: EventSourcingModuleAsyncConfig,
-  ): DynamicModule {
-    const eventStoreApiBaseUrl = 'http://127.0.0.1:2113';
-    return {
-      module: EventSourcingModule,
-      imports: [...config.imports, HttpModule] || [],
-      providers: [
-        this.createAsyncProviders(config),
-        {
-          provide: EVENT_STORAGE,
-          useFactory: (config: EventSourcingModuleConfig) =>
-            new InMemoryEventStorage(config.time),
-          inject: [EVENT_SOURCING_CONFIG],
-        },
-      ],
-      exports: [EVENT_STORAGE],
-    };
-  }
-
   private static createAsyncProviders(
     config: EventSourcingModuleAsyncConfig,
   ): Provider {
