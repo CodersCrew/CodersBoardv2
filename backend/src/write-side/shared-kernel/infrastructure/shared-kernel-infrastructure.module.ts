@@ -34,26 +34,25 @@ if ('typeorm' === process.env.DATABASE_MODE) {
       ? process.env.DATABASE_PASSWORD
       : 'postgres',
     database: 'coders-board',
-    entities: [__dirname + '/**/*.typeorm-entity{.ts,.js}'],
+    entities: [__dirname + '/**/*.typeorm-entity{.ts,.js}', DomainEventEntity],
     synchronize: true,
   });
-  modules.push(typeOrmModule);
+  modules.push(typeOrmModule, TypeOrmModule.forFeature([DomainEventEntity]));
 }
 
 const timeProviderModule = TimeProviderModule.register({ source: 'system' });
 const eventSourcingModule = EventSourcingModule.registerAsync({
-  imports: [timeProviderModule],
+  imports: [timeProviderModule, ...modules],
   inject: [TimeProvider],
   useFactory: (timeProvider: TimeProvider) => {
     return 'typeorm' === process.env.DATABASE_MODE
       ? {
           time: timeProvider.currentDate,
-          eventStorage: 'in-memory',
+          eventStorage: 'typeorm',
         }
       : {
           time: timeProvider.currentDate,
-          eventStorage: 'typeorm',
-          typeOrmModule: TypeOrmModule.forFeature([DomainEventEntity]),
+          eventStorage: 'in-memory',
         };
   },
 });

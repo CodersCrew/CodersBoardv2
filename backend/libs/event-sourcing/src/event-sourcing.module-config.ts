@@ -9,5 +9,4 @@ export type EventSourcingModuleConfig =
   | {
       time: Time;
       eventStorage: 'typeorm';
-      typeOrmModule: TypeOrmModule;
     };

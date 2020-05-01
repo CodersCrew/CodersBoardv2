@@ -8,12 +8,14 @@ import { Repository } from 'typeorm';
 import { EventSourcingModuleAsyncConfig } from '@coders-board-library/event-sourcing/event-sourcing.module-async-config';
 import { Time } from '@coders-board-library/event-sourcing/time.type';
 import { EventSourcingModuleConfigFactory } from '@coders-board-library/event-sourcing/event-sourcing.module-config-factory';
+import {getRepositoryToken} from "@nestjs/typeorm";
+import {Domain} from "domain";
 
 const EVENT_SOURCING_CONFIG = Symbol();
 
 @Module({})
 export class EventSourcingModule {
-  static register(config: EventSourcingModuleConfig): DynamicModule {
+  /*static register(config: EventSourcingModuleConfig): DynamicModule {
     const configProvider: Provider = {
       provide: EVENT_SOURCING_CONFIG,
       useValue: config,
@@ -48,7 +50,7 @@ export class EventSourcingModule {
       ],
       exports: [EVENT_STORAGE],
     };
-  }
+  }*/
 
   static registerAsync(config: EventSourcingModuleAsyncConfig): DynamicModule {
     return {
@@ -58,9 +60,9 @@ export class EventSourcingModule {
         this.createAsyncProviders(config),
         {
           provide: EVENT_STORAGE,
-          useFactory: (config: EventSourcingModuleConfig) =>
-            new InMemoryEventStorage(config.time),
-          inject: [EVENT_SOURCING_CONFIG],
+          useFactory: (config: EventSourcingModuleConfig, typeOrmRepository: Repository<DomainEventEntity>) =>
+              config.eventStorage === 'typeorm' ? new TypeOrmEventStorage(config.time, typeOrmRepository) : new InMemoryEventStorage(config.time),
+          inject: [EVENT_SOURCING_CONFIG, getRepositoryToken(DomainEventEntity)],
         },
       ],
       exports: [EVENT_STORAGE],
