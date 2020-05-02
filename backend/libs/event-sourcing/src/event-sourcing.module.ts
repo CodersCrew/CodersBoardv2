@@ -1,8 +1,4 @@
-import {
-  DynamicModule,
-  Module,
-  Provider,
-} from '@nestjs/common';
+import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { EVENT_STORAGE } from './api/event-storage';
 import { TypeOrmEventStorage } from './event-storage/typeorm/event-storage.typeorm';
 import { InMemoryEventStorage } from './event-storage/in-memory/event-storage.in-memory';

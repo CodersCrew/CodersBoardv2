@@ -1,6 +1,4 @@
-import {
-  Module,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CodersBoardTimeProviderAdapter } from './time/coders-board-time-provider.adapter';
 import {
