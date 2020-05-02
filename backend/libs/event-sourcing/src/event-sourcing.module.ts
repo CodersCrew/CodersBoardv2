@@ -88,18 +88,17 @@ export class EventSourcingModule {
   static registerEventStoreAsync(
     config: EventSourcingModuleAsyncConfig,
   ): DynamicModule {
-    const eventStoreApiBaseUrl = 'http://127.0.0.1:2113'; //TODO: Create config service for this
     return {
       module: EventSourcingModule,
       imports:
         [
           ...config.imports,
           HttpModule.register({
-            baseURL: eventStoreApiBaseUrl,
+            baseURL: process.env.EVENTSTORE_URL,
             withCredentials: true,
             auth: {
-              username: 'admin',
-              password: 'changeit',
+              username: process.env.EVENTSTORE_USERNAME,
+              password: process.env.EVENTSTORE_PASSWORD,
             },
           }),
         ] || [],
