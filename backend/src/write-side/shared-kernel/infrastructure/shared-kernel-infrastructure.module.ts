@@ -5,7 +5,7 @@ import {
   Module,
   Type,
 } from '@nestjs/common';
-import { CqrsModule } from '@nestjs/cqrs';
+import {CqrsModule, EventBus} from '@nestjs/cqrs';
 import { CodersBoardTimeProviderAdapter } from './time/coders-board-time-provider.adapter';
 import {
   TIME_PROVIDER,
@@ -13,6 +13,12 @@ import {
   TimeProviderModule,
 } from '@coders-board-library/time-provider';
 import { EventSourcingModule } from '@coders-board-library/event-sourcing';
+import {DOMAIN_EVENT_PUBLISHER} from "./domaineventpublisher/domain-event-publisher";
+import {NestJsDomainEventPublisher} from "./domaineventpublisher/nestjs-domain-event-publisher";
+import {LoggingDomainEventPublisher} from "./domaineventpublisher/logging-domain-event-publisher";
+import {EXTERNAL_EVENT_PUBLISHER} from "./externaleventpublisher/external-event-publisher";
+import {LoggingExternalEventPublisher} from "./externaleventpublisher/logging-external-event-publisher";
+import {NestJsExternalEventPublisher} from "./externaleventpublisher/nest-js-external-event-publisher";
 
 const timeProviderModule = TimeProviderModule.register({ source: 'system' });
 const typeOrmEventSourcingModule = EventSourcingModule.registerTypeOrmAsync(
@@ -77,7 +83,17 @@ const eventSourcingModule =
       provide: TIME_PROVIDER,
       useClass: CodersBoardTimeProviderAdapter,
     },
+    {
+      provide: DOMAIN_EVENT_PUBLISHER,
+      inject: [EventBus],
+      useFactory: (eventBus: EventBus) => new LoggingDomainEventPublisher(new NestJsDomainEventPublisher(eventBus))
+    },
+    {
+      provide: EXTERNAL_EVENT_PUBLISHER,
+      inject: [EventBus],
+      useFactory: (eventBus: EventBus) => new LoggingExternalEventPublisher(new NestJsExternalEventPublisher(eventBus))
+    }
   ],
-  exports: [CqrsModule, TIME_PROVIDER, eventSourcingModule, timeProviderModule],
+  exports: [CqrsModule, TIME_PROVIDER, eventSourcingModule, timeProviderModule, DOMAIN_EVENT_PUBLISHER, EXTERNAL_EVENT_PUBLISHER],
 })
 export class SharedKernelInfrastructureModule {}
