@@ -19,7 +19,7 @@ export class EventStoreEventStorage implements EventStorage {
   ) {}
 
   store(
-    streamId: EventStreamId,
+    eventStreamId: EventStreamId,
     event: StorageEventEntry,
     expectedVersion: EventStreamVersion | undefined = undefined,
   ): Promise<any> {
@@ -30,7 +30,7 @@ export class EventStoreEventStorage implements EventStorage {
       metadata: {},
     };
     return this.httpService
-      .post(`/streams/${streamId.raw}`, [storageEventDto], {
+      .post(`/streams/${eventStreamId.raw}`, [storageEventDto], {
         headers: {
           Accept: 'application/vnd.eventstore.atom+json',
           'Content-Type': 'application/vnd.eventstore.atom+json',
@@ -44,16 +44,16 @@ export class EventStoreEventStorage implements EventStorage {
 
   //TODO: Change to 1 API CALL
   storeAll(
-    streamId: EventStreamId,
+    eventStreamId: EventStreamId,
     events: StorageEventEntry[],
     expectedVersion: EventStreamVersion | undefined = undefined,
   ): Promise<void> {
     return Promise.all(
       events
-        .filter(event => event.aggregateId === streamId.aggregateId)
+        .filter(event => event.aggregateId === eventStreamId.streamId)
         .map((value, index) =>
           this.store(
-            streamId,
+            eventStreamId,
             value,
             expectedVersion
               ? EventStreamVersion.exactly(expectedVersion.raw + index)
@@ -63,18 +63,20 @@ export class EventStoreEventStorage implements EventStorage {
     ).then();
   }
 
-  readEvents(streamId: EventStreamId, toDate?: Date) {
+  readEvents(eventStreamId: EventStreamId, toDate?: Date) {
     const maxEventDate = toDate ? toDate : this.time();
-    return this.getEventsBy(streamId).then(events =>
+    return this.getEventsBy(eventStreamId).then(events =>
       events.filter(it =>
         moment(it.occurredAt).isSameOrBefore(moment(maxEventDate)),
       ),
     );
   }
 
-  private getEventsBy(streamId: EventStreamId): Promise<StorageEventEntry[]> {
+  private getEventsBy(
+    eventStreamId: EventStreamId,
+  ): Promise<StorageEventEntry[]> {
     return this.httpService
-      .get(`/streams/${streamId.raw}?embed=body`, {
+      .get(`/streams/${eventStreamId.raw}?embed=body`, {
         headers: {
           Accept: 'application/vnd.eventstore.atom+json',
         },
@@ -86,8 +88,8 @@ export class EventStoreEventStorage implements EventStorage {
               eventId: it.eventId,
               eventType: it.eventType,
               occurredAt: it.updated,
-              aggregateId: EventStreamId.fromRaw(it.streamId).aggregateId,
-              aggregateType: EventStreamId.fromRaw(it.streamId).aggregateType,
+              aggregateId: EventStreamId.fromRaw(it.streamId).streamId,
+              aggregateType: EventStreamId.fromRaw(it.streamId).streamGroup,
               payload: it.data,
             };
           }),
