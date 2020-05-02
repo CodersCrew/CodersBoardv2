@@ -25,7 +25,7 @@ services:
       DATABASE_PASSWORD: postgres
       EVENTSTORE_USERNAME: admin
       EVENTSTORE_PASSWORD: changeit
-      EVENTSTORE_URL: http://127.0.0.1:2113
+      EVENTSTORE_URL: http://eventstore:2113
     command:
       - start:debug
     networks:
@@ -46,7 +46,8 @@ services:
     #volumes:
     # - ../pgdata:/var/lib/postgresql/data #keep data outside container
 
-  eventstore.db:
+  eventstore:
+    container_name: coders-board-eventstore.
     image: eventstore/eventstore
     environment:
       - EVENTSTORE_CLUSTER_SIZE=1
