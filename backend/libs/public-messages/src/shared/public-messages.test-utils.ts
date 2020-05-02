@@ -14,12 +14,7 @@ export function expectOnlyPublishedEvent<T extends PublicEvent>(
   eventBusSpy: EventBusSpy,
   expected: ExpectedPublishEvent<T>,
 ) {
-  let publishedEvent;
-  //FIXME: Hack, but something is wrong with events publishing.
-  // ApplicantInvited domain events comes with wrong property types (not value objects, but plain strings) to event propagator
-  do {
-    publishedEvent = eventBusSpy.mock.calls.pop()[0];
-  } while (publishedEvent.eventId === undefined);
+  const publishedEvent = eventBusSpy.mock.calls.pop()[0]
   return expectEvent(publishedEvent, expected);
 }
 
