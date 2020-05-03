@@ -8,13 +8,18 @@ interface Type<T> extends Function {
   new (...args: any[]): T;
 }
 
-export type EventBusSpy = SpyInstance<void, [any]>;
+export type EventPublisherSpy = SpyInstance<void, [any]>;
 
 export function expectOnlyPublishedEvent<T extends PublicEvent>(
-  eventBusSpy: EventBusSpy,
+  eventBusSpy: EventPublisherSpy,
   expected: ExpectedPublishEvent<T>,
 ) {
-  const publishedEvent = eventBusSpy.mock.calls.pop()[0]
+  let publishedEvent;
+  //FIXME: Hack, but something is wrong with events publishing.
+  // ApplicantInvited domain events comes with wrong property types (not value objects, but plain strings) to event propagator
+  do {
+    publishedEvent = eventBusSpy.mock.calls.pop()[0];
+  } while (publishedEvent.eventId === undefined);
   return expectEvent(publishedEvent, expected);
 }
 

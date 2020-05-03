@@ -8,8 +8,8 @@ import {
 import { Inject } from '@nestjs/common';
 import {
   EXTERNAL_EVENT_PUBLISHER,
-  ExternalEventPublisher
-} from "../../shared-kernel/infrastructure/externaleventpublisher/external-event-publisher";
+  ExternalEventPublisher,
+} from '../../shared-kernel/application/external-event-publisher/external-event-publisher';
 
 /**
  * Each domain event which should be available for read-models and other context on the write-side need
@@ -21,7 +21,10 @@ export namespace EventPropagator {
   @EventsHandler(ApplicantInvited)
   class ApplicantInvited
     implements IEventHandler<ApplicantInvitationDomainEvent.ApplicantInvited> {
-    constructor(@Inject(EXTERNAL_EVENT_PUBLISHER) private readonly externalEventPublisher: ExternalEventPublisher) {}
+    constructor(
+      @Inject(EXTERNAL_EVENT_PUBLISHER)
+      private readonly externalEventPublisher: ExternalEventPublisher,
+    ) {}
 
     handle(event: ApplicantInvitationDomainEvent.ApplicantInvited) {
       //TODO: Saving in outbox and publishing after in batches
@@ -45,7 +48,8 @@ export namespace EventPropagator {
     implements
       IEventHandler<ApplicantInvitationDomainEvent.InvitationCancelled> {
     constructor(
-        @Inject(EXTERNAL_EVENT_PUBLISHER) private readonly externalEventPublisher: ExternalEventPublisher,
+      @Inject(EXTERNAL_EVENT_PUBLISHER)
+      private readonly externalEventPublisher: ExternalEventPublisher,
       @Inject(APPLICANT_INVITATION_REPOSITORY)
       private readonly applicantInvitationRepository: ApplicantInvitationRepository,
     ) {}

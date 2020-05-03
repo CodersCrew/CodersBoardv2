@@ -15,8 +15,8 @@ import { ApplicantInvitationRepository } from '../domain/applicant-invitation.re
 import { TIME_PROVIDER } from '@coders-board-library/time-provider';
 import {
   DOMAIN_EVENT_PUBLISHER,
-  DomainEventPublisher
-} from "../../shared-kernel/infrastructure/domaineventpublisher/domain-event-publisher";
+  DomainEventPublisher,
+} from '../../shared-kernel/infrastructure/domain-event-publisher/domain-event-publisher';
 
 @Injectable()
 export class ApplicantInvitationEventSourcedRepository

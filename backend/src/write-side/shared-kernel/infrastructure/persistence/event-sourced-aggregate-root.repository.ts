@@ -7,7 +7,7 @@ import { StorageEventEntry } from '@coders-board-library/event-sourcing/api/stor
 import { TimeProviderPort } from '../../domain/time-provider.port';
 import { EventStreamId } from '@coders-board-library/event-sourcing/api/event-stream-id.valueboject';
 import { EventStreamVersion } from '@coders-board-library/event-sourcing/api/event-stream-version.valueobject';
-import {DomainEventPublisher} from "../domaineventpublisher/domain-event-publisher";
+import { DomainEventPublisher } from '../domain-event-publisher/domain-event-publisher';
 
 export abstract class EventSourcedAggregateRootRepository<
   I extends AggregateId,
@@ -59,7 +59,9 @@ export abstract class EventSourcedAggregateRootRepository<
         uncommitedEvents,
         EventStreamVersion.exactly(aggregate.aggregateVersion.raw),
       )
-      .then(() => this.domainEventPublisher.publishAll(aggregate.getUncommittedEvents()))
+      .then(() =>
+        this.domainEventPublisher.publishAll(aggregate.getUncommittedEvents()),
+      )
       .then(() => aggregate.clearUncommittedEvents());
   }
 
