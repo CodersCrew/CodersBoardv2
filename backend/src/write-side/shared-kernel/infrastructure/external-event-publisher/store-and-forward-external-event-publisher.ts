@@ -14,7 +14,7 @@ export class StoreInEventStorageAndForwardExternalEventBus
   ) {}
 
   async publish<T extends PublicEvent>(event: T) {
-    if(event.eventId){
+    if (event.eventId) {
       return;
     }
     await this.eventStorage.store(
@@ -30,7 +30,9 @@ export class StoreInEventStorageAndForwardExternalEventBus
   }
 
   async publishAll(events: PublicEvent[]) {
-    return Promise.all([events.filter(e => e.eventId).map(e => this.publish(e))]);
+    return Promise.all([
+      events.filter(e => e.eventId).map(e => this.publish(e)),
+    ]);
   }
 
   private static toStoragePublicEventEntry(
