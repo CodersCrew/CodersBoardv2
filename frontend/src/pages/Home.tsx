@@ -5,6 +5,7 @@ import { useCounterState, useCounterActions } from '@store/counter';
 import { Button } from '@components/ant-design/Button';
 import { Box } from '@components/atoms/Box';
 import { Logo } from '@components/svg';
+import { Avatar } from '@components/ant-design/Avatar';
 
 export const Home = () => {
   const { t } = useTranslation('home');
@@ -47,6 +48,12 @@ export const Home = () => {
       >
         {t('hi')}
       </Box>
+      <Avatar 
+        bg="info.dark"
+        mt={20}
+        ml={20}
+        size={50}
+        />
     </>
   );
 };
