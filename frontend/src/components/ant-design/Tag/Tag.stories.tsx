@@ -32,32 +32,28 @@ export const Basic = () => (
 
 export const Colored = () => (
   <Box display="grid" gridGap={16} justifyItems="left">
-    <Tag color="#f50">#f50</Tag>
-    <Tag color="#2db7f5">#2db7f5</Tag>
-    <Tag color="#87d068">#87d068</Tag>
-    <Tag color="#108ee9">#108ee9</Tag>
+    <Tag color="primary.main" bg="primary.background">
+      primary
+    </Tag>
+    <Tag color="success.main" bg="success.background">
+      success
+    </Tag>
+    <Tag color="error.main" bg="error.background">
+      error
+    </Tag>
+    <Tag color="warning.main" bg="warning.background">
+      warning
+    </Tag>
   </Box>
 );
 
 export const WithIcon = () => (
   <Box display="grid" gridGap={16} justifyItems="left">
-    <Tag icon={<CheckCircleOutlined />} color="success">
-      success
-    </Tag>
-    <Tag icon={<SyncOutlined spin />} color="processing">
-      processing
-    </Tag>
-    <Tag icon={<CloseCircleOutlined />} color="error">
-      error
-    </Tag>
-    <Tag icon={<ExclamationCircleOutlined />} color="warning">
-      warning
-    </Tag>
-    <Tag icon={<ClockCircleOutlined />} color="default">
-      waiting
-    </Tag>
-    <Tag icon={<MinusCircleOutlined />} color="default">
-      stop
-    </Tag>
+    <Tag icon={<CheckCircleOutlined />}>success</Tag>
+    <Tag icon={<CloseCircleOutlined />}>error</Tag>
+    <Tag icon={<ExclamationCircleOutlined />}>warning</Tag>
+    <Tag icon={<SyncOutlined spin />}>processing</Tag>
+    <Tag icon={<ClockCircleOutlined />}>waiting</Tag>
+    <Tag icon={<MinusCircleOutlined />}>stop</Tag>
   </Box>
 );
