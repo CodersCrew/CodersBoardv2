@@ -7,6 +7,7 @@ import {
   MinusCircleOutlined,
   SyncOutlined,
 } from '@ant-design/icons/lib';
+import { action } from '@storybook/addon-actions';
 import { Box } from '@components/atoms/Box';
 import { Tag } from './Tag';
 
@@ -16,15 +17,11 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-const log: () => void = () => {
-  alert('Callback executed when tag is closed');
-};
-
 export const Basic = () => (
   <Box display="grid" gridGap={16} justifyItems="left">
     <Tag>Default</Tag>
     <Tag closable>Closable</Tag>
-    <Tag closable onClose={log}>
+    <Tag closable onClose={action('close-tag')}>
       Closable(onCLose)
     </Tag>
   </Box>
