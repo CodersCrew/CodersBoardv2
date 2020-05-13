@@ -1,4 +1,4 @@
-import {InternalCommand} from "./internal-command";
+import { InternalCommand } from './internal-command';
 
 export const INTERNAL_COMMAND_SENDER = Symbol('INTERNAL_COMMAND_SENDER');
 

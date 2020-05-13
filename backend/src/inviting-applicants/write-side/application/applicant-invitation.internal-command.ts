@@ -1,4 +1,4 @@
-import {InternalCommand} from "../../../shared-kernel/write-side/application/internal-command-sender/internal-command";
+import { InternalCommand } from '../../../shared-kernel/write-side/application/internal-command-sender/internal-command';
 
 export namespace ApplicantInvitationInternalCommand {
   export class InviteApplicantCommand implements InternalCommand {
