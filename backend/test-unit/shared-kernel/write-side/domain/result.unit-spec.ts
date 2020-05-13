@@ -1,4 +1,4 @@
-import { Result } from './result';
+import { Result } from '../../../../src/shared-kernel/write-side/domain/result';
 
 describe('Feature: Aggregate command result', () => {
   describe('Scenario: Result success', () => {
