@@ -1,14 +1,14 @@
-import { TimeProviderPort } from '../../../shared-kernel/write-side/domain/time-provider.port';
+import { TimeProviderPort } from '../../../../src/shared-kernel/write-side/domain/time-provider.port';
 import { SystemTimeProvider } from '@coders-board-library/time-provider/system-time-provider';
-import { PersonalEmail } from './personal-email.valueobject';
-import { FirstName } from './first-name.value-object';
-import { LastName } from './last-name.value-object';
-import { ApplicantInvitation } from './applicant-invitation.aggregate-root';
-import { ApplicantInvitationId } from './applicant-invitation-id.valueobject';
-import { ApplicantInvitationDomainEvent } from './applicant-invitation.domain-event';
+import { PersonalEmail } from '../../../../src/inviting-applicants/write-side/domain/personal-email.valueobject';
+import { FirstName } from '../../../../src/inviting-applicants/write-side/domain/first-name.value-object';
+import { LastName } from '../../../../src/inviting-applicants/write-side/domain/last-name.value-object';
+import { ApplicantInvitation } from '../../../../src/inviting-applicants/write-side/domain/applicant-invitation.aggregate-root';
+import { ApplicantInvitationId } from '../../../../src/inviting-applicants/write-side/domain/applicant-invitation-id.valueobject';
+import { ApplicantInvitationDomainEvent } from '../../../../src/inviting-applicants/write-side/domain/applicant-invitation.domain-event';
 import ApplicantInvited = ApplicantInvitationDomainEvent.ApplicantInvited;
 import InvitationCancelled = ApplicantInvitationDomainEvent.InvitationCancelled;
-import { expectDomainEvent } from '../../../shared-kernel/write-side/domain/aggregate-root.test-utils';
+import { expectDomainEvent } from '../../../../src/shared-kernel/write-side/domain/aggregate-root.test-utils';
 import InvitingApplicantFailed = ApplicantInvitationDomainEvent.InvitingApplicantFailed;
 import CancelingApplicantInvitationFailed = ApplicantInvitationDomainEvent.CancelingApplicantInvitationFailed;
 
