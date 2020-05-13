@@ -90,7 +90,6 @@
       "<rootDir>/test-e2e/",
       "<rootDir>/test-module/",
       "<rootDir>/test-unit/",
-      "<rootDir>/test-integration/",
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
