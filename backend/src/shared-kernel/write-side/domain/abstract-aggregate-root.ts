@@ -1,10 +1,9 @@
-import {DomainEvent} from './domain-event';
-import {AggregateId} from './aggregate-id.valueobject';
-import {TimeProviderPort} from './time-provider.port';
-import {AggregateVersion} from './aggregate-version.valueobject';
-import {Result} from "./result";
-import {AbstractSuccessDomainEvent} from "./abstract-success-domain-event";
-import {AbstractFailureDomainEvent} from "./abstract-failure-domain-event";
+import { DomainEvent } from './domain-event';
+import { AggregateId } from './aggregate-id.valueobject';
+import { TimeProviderPort } from './time-provider.port';
+import { AggregateVersion } from './aggregate-version.valueobject';
+import { Result } from './result';
+import { AbstractFailureDomainEvent } from './abstract-failure-domain-event';
 
 const INTERNAL_EVENTS = Symbol();
 
@@ -41,7 +40,7 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
 
   //TODO: Checking for aggregate currentVersion here! Because it can pass wrong command.
   executeCommand(executor: () => Result): Result {
-    const result = executor()
+    const result = executor();
     this.applyAll(result.events);
     return result;
   }
@@ -69,7 +68,7 @@ export abstract class AbstractAggregateRoot<I extends AggregateId> {
   }
 
   protected getEventName(event): string {
-    const {constructor} = Object.getPrototypeOf(event);
+    const { constructor } = Object.getPrototypeOf(event);
     return constructor.name as string;
   }
 
