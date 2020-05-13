@@ -8,7 +8,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "format": "prettier --write \\\"src/**/*.ts\\\" \\\"test-e2e/**/*.ts\\\" \\\"libs/**/*.ts\\\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:dev:eventstorage-inmemory": "cross-env EVENTSOURCING_MODE=inmemory nest start --watch",
@@ -30,7 +30,7 @@
     "test:unit:cov": "jest --coverage --config test-unit/jest-unit.json",
     "test:debug": "node --inspect-brk=0.0.0.0:9229 -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config test-e2e/jest-e2e.json --passWithNoTests",
-    "ci-format": "prettier -c \\\"src/**/*.ts\\\" \\\"test-e2e/**/*.ts\\\"",
+    "ci-format": "prettier -c \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "ci-lint": "eslint \"{src,apps,libs,test-e2e,test-module,test-unit}/**/*.ts\" --format codeframe"
   },
   "dependencies": {
