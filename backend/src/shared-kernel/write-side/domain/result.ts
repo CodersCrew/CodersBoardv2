@@ -1,9 +1,15 @@
-import {DomainEvent} from "./domain-event";
-import {AbstractFailureDomainEvent} from "./abstract-failure-domain-event";
+import { DomainEvent } from './domain-event';
+import { AbstractFailureDomainEvent } from './abstract-failure-domain-event';
 
 export abstract class Result {
-  static success(events: undefined | DomainEvent | DomainEvent[] = undefined): Result {
-    return events === undefined ? Success.empty() : (Array.isArray(events) ? Success.many(events) : Success.single(events));
+  static success(
+    events: undefined | DomainEvent | DomainEvent[] = undefined,
+  ): Result {
+    return events === undefined
+      ? Success.empty()
+      : Array.isArray(events)
+      ? Success.many(events)
+      : Success.single(events);
   }
 
   static failure(event: AbstractFailureDomainEvent): Result {
@@ -12,7 +18,7 @@ export abstract class Result {
 
   abstract failureReason(): string | undefined;
 
-  abstract get events(): DomainEvent[]
+  abstract get events(): DomainEvent[];
 
   isSuccess(): boolean {
     return this.failureReason() === undefined;
@@ -27,7 +33,7 @@ class Success extends Result {
   private readonly _events: DomainEvent[];
 
   private constructor(events: DomainEvent[]) {
-    super()
+    super();
     this._events = events;
   }
 
@@ -56,7 +62,7 @@ class Failure extends Result {
   private readonly reason: AbstractFailureDomainEvent;
 
   constructor(reason: AbstractFailureDomainEvent) {
-    super()
+    super();
     this.reason = reason;
   }
 
