@@ -1,14 +1,15 @@
-import { AbstractAggregateRoot } from '../../../shared-kernel/write-side/domain/abstract-aggregate-root';
-import { ApplicantInvitationId } from './applicant-invitation-id.valueobject';
-import { TimeProviderPort } from '../../../shared-kernel/write-side/domain/time-provider.port';
-import { PersonalEmail } from './personal-email.valueobject';
-import { FirstName } from './first-name.value-object';
-import { LastName } from './last-name.value-object';
-import { ApplicantInvitationDomainEvent } from './applicant-invitation.domain-event';
+import {AbstractAggregateRoot} from '../../../shared-kernel/write-side/domain/abstract-aggregate-root';
+import {ApplicantInvitationId} from './applicant-invitation-id.valueobject';
+import {TimeProviderPort} from '../../../shared-kernel/write-side/domain/time-provider.port';
+import {PersonalEmail} from './personal-email.valueobject';
+import {FirstName} from './first-name.value-object';
+import {LastName} from './last-name.value-object';
+import {ApplicantInvitationDomainEvent} from './applicant-invitation.domain-event';
+import {Result} from "../../../shared-kernel/write-side/domain/result";
+import InvitingApplicantFailed = ApplicantInvitationDomainEvent.InvitingApplicantFailed;
+import CancelingApplicantInvitationFailed = ApplicantInvitationDomainEvent.CancelingApplicantInvitationFailed;
 
-export class ApplicantInvitation extends AbstractAggregateRoot<
-  ApplicantInvitationId
-> {
+export class ApplicantInvitation extends AbstractAggregateRoot<ApplicantInvitationId> {
   private _status: InvitationStatus;
   private _personalEmail: PersonalEmail;
   private _firstName: FirstName;
@@ -18,24 +19,20 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
     super(timeProvider);
   }
 
-  invite(
-    id: ApplicantInvitationId,
-    command: {
-      personalEmail: PersonalEmail;
-      firstName: FirstName;
-      lastName: LastName;
-    },
-  ) {
-    if (this._status !== undefined) {
-      throw new Error('Applicant already invited!');
-    }
-    const event = ApplicantInvitationDomainEvent.ApplicantInvited.newFrom(
-      id,
-      this.currentDate,
-      { ...command },
-    );
-    this.apply(event);
-  }
+  invite = (
+      id: ApplicantInvitationId,
+      command: {
+        personalEmail: PersonalEmail;
+        firstName: FirstName;
+        lastName: LastName;
+      },
+  ): Result =>
+      this.executeCommand(() =>
+          this._status !== undefined
+              ? Result.failure(InvitingApplicantFailed.newFrom(id, this.currentDate, {reason: 'Applicant already invited!'}))
+              : Result.success(ApplicantInvitationDomainEvent.ApplicantInvited.newFrom(id, this.currentDate, {...command}))
+      )
+
 
   onApplicantInvited(event: ApplicantInvitationDomainEvent.ApplicantInvited) {
     this.id = event.aggregateId;
@@ -45,21 +42,15 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
     this._lastName = event.data.lastName;
   }
 
-  cancel() {
-    if (this._status === InvitationStatus.CANCELLED) {
-      throw new Error('Applicant invitation already cancelled!');
-    }
-    this.apply(
-      ApplicantInvitationDomainEvent.InvitationCancelled.newFrom(
-        this.id,
-        this.currentDate,
-        {},
-      ),
-    );
-  }
+  cancel = (): Result =>
+      this.executeCommand(() =>
+          this._status === InvitationStatus.CANCELLED
+              ? Result.failure(CancelingApplicantInvitationFailed.newFrom(this.id, this.currentDate, {reason: 'Applicant invitation already cancelled!'}))
+              : Result.success(ApplicantInvitationDomainEvent.InvitationCancelled.newFrom(this.id, this.currentDate, {}))
+      )
 
   onInvitationCancelled(
-    event: ApplicantInvitationDomainEvent.InvitationCancelled,
+      event: ApplicantInvitationDomainEvent.InvitationCancelled,
   ) {
     this.id = event.aggregateId;
     this._status = InvitationStatus.CANCELLED;
