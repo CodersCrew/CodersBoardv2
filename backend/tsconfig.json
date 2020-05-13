@@ -46,6 +46,12 @@
       ],
       "@coders-board-library/eventstore-projections/*": [
         "libs/eventstore-projections/src/*"
+      ],
+      "@coders-board-library/jest-utils": [
+        "libs/jest-utils/src"
+      ],
+      "@coders-board-library/jest-utils/*": [
+        "libs/jest-utils/src/*"
       ]
     }
   },

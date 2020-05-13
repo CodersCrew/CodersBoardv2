@@ -25,14 +25,14 @@ export class InMemoryEventStorage implements EventStorage {
     if (!foundStream) {
       if (expectedVersion && expectedVersion.raw !== 0) {
         return Promise.reject(
-          `Event stream for aggregate was modified! Expected version: ${expectedVersion.raw}, but actual is: ${aggregateEvents}`,
+          `Event stream for aggregate was modified concurrently!`,
         );
       }
       this.eventStreams[eventStreamId.raw] = [event];
     } else {
       if (expectedVersion && expectedVersion.raw !== aggregateEvents) {
         return Promise.reject(
-          `Event stream for aggregate was modified! Expected version: ${expectedVersion.raw}, but actual is: ${aggregateEvents}`,
+          `Event stream for aggregate was modified concurrently!`,
         );
       }
       this.eventStreams[eventStreamId.raw].push(event);

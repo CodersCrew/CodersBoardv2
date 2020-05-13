@@ -147,7 +147,7 @@ describe('Feature: In memory event storage', () => {
             EventStreamVersion.exactly(1),
           ),
         ).rejects.toMatch(
-          `Event stream for aggregate was modified! Expected version: 1, but actual is: 2`,
+          `Event stream for aggregate was modified concurrently!`,
         );
       });
     });

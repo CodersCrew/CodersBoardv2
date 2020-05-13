@@ -55,6 +55,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/eventstore-projections/tsconfig.lib.json"
       }
+    },
+    "jest-utils": {
+      "type": "library",
+      "root": "libs/jest-utils",
+      "entryFile": "index",
+      "sourceRoot": "libs/jest-utils/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/jest-utils/tsconfig.lib.json"
+      }
     }
   },
   "compilerOptions": {

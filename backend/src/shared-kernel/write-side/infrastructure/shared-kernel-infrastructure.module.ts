@@ -21,39 +21,21 @@ import { LoggingExternalEventPublisher } from './external-event-publisher/loggin
 import { NestJsExternalEventPublisher } from './external-event-publisher/nest-js-external-event-publisher';
 import { EXTERNAL_COMMAND_SENDER } from '../application/external-command-sender/external-command-sender';
 import { NestJsExternalCommandSender } from './external-command-sender/nestjs-external-command-sender';
-import { StoreInEventStorageAndForwardExternalEventBus } from './external-event-publisher/store-and-forward-external-event-publisher';
 import {
   EVENT_STORAGE,
   EventStorage,
 } from '@coders-board-library/event-sourcing/api/event-storage';
 
 const timeProviderModule = TimeProviderModule.register({ source: 'system' });
-const typeOrmEventSourcingModule = EventSourcingModule.registerTypeOrmAsync(
-  {
-    imports: [timeProviderModule],
-    inject: [TimeProvider],
-    useFactory: (timeProvider: TimeProvider) => {
-      return {
-        time: timeProvider.currentDate,
-      };
-    },
+const typeOrmEventSourcingModule = EventSourcingModule.registerTypeOrmAsync({
+  imports: [timeProviderModule],
+  inject: [TimeProvider],
+  useFactory: (timeProvider: TimeProvider) => {
+    return {
+      time: timeProvider.currentDate,
+    };
   },
-  {
-    type: 'postgres',
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT
-      ? parseInt(process.env.DATABASE_PORT, 10)
-      : 5002,
-    username: process.env.DATABASE_USERNAME
-      ? process.env.DATABASE_USERNAME
-      : 'postgres',
-    password: process.env.DATABASE_PASSWORD
-      ? process.env.DATABASE_PASSWORD
-      : 'postgres',
-    database: 'coders-board',
-    synchronize: true,
-  },
-);
+});
 const inMemoryEventSourcingModule = EventSourcingModule.registerInMemoryAsync({
   imports: [timeProviderModule],
   inject: [TimeProvider],

@@ -6,10 +6,15 @@
   ],
   "rootDir": ".",
   "testEnvironment": "node",
-  "testRegex": ".e2e-integration.ts$",
+  "testRegex": ".it-spec.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
+  "roots": [
+    "<rootDir>/../src/",
+    "<rootDir>/../libs/",
+    "<rootDir>"
+  ],
   "moduleNameMapper": {
     "@coders-board-library/event-sourcing/(.*)": "<rootDir>/../libs/event-sourcing/src/$1",
     "@coders-board-library/event-sourcing": "<rootDir>/../libs/event-sourcing/src",

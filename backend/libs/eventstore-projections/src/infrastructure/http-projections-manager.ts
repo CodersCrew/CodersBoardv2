@@ -82,14 +82,4 @@ export class HttpProjectionsManager implements ProjectionsManager {
       catchError(() => of(undefined)),
     );
   }
-
-  /**
-   * retryWhen(
-   this.rxJSUtilsService.genericRetryStrategy({
-          numberOfAttempts: 3,
-          delayTime: 200,
-          ignoredErrorCodes: [500],
-        }),
-   )
-   */
 }

@@ -4,13 +4,14 @@ import { HttpService } from '@nestjs/common';
 import { EventStreamVersion } from '../../api/event-stream-version.valueobject';
 import { StorageEventEntry } from '../../api/storage-event-entry';
 import { Time } from '../../time.type';
-import { catchError, flatMap } from 'rxjs/operators';
+import { catchError, flatMap, retryWhen } from 'rxjs/operators';
 import { EventStreamId } from '@coders-board-library/event-sourcing/api/event-stream-id.valueboject';
 import { axiosLoggingInterceptor } from '@coders-board-library/axios-utils';
 import { Observable, of, throwError } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import '../../common/extension-method/error';
 import { errorCausedBy } from '@coders-board-library/event-sourcing/common/extension-method/error';
+import { genericRetryStrategy } from '@coders-board-library/rxjs-utils';
 
 const EXPECTED_ANY_VERSION = -2;
 const EXPECTED_STREAM_NOT_EXISTS = -1;
@@ -26,7 +27,7 @@ export class EventStoreEventStorage implements EventStorage {
     const loggingInterceptor = axiosLoggingInterceptor(
       reqRes => console.log(reqRes),
       false,
-      true,
+      false,
     );
     this.httpService.axiosRef.interceptors.response.use(
       loggingInterceptor.onFulfilled,
@@ -37,16 +38,16 @@ export class EventStoreEventStorage implements EventStorage {
   async store(
     eventStreamId: EventStreamId,
     event: StorageEventEntry,
-    expectedVersion: EventStreamVersion | undefined = undefined,
+    expectedVersion:
+      | EventStreamVersion
+      | undefined = EventStreamVersion.newStream(),
   ): Promise<any> {
     const storageEventDto = EventStoreEventStorage.toStorageEventDto(event);
     return this.storeEventsInEventStore(
       expectedVersion,
       [storageEventDto],
       eventStreamId,
-    )
-      .toPromise()
-      .then();
+    ).toPromise();
   }
 
   private static toStorageEventDto(event: StorageEventEntry) {
@@ -80,17 +81,30 @@ export class EventStoreEventStorage implements EventStorage {
       expectedStreamVersion,
       newStreamVersion,
     );
-    return this.httpService
-      .post(`/streams/${eventStreamId.raw}`, eventsToStore, {
-        headers: {
+
+    const headers = newStreamVersion
+      ? {
           'ES-CurrentVersion': newStreamVersion,
           'ES-ExpectedVersion': expectedStreamVersion,
           'Content-Type': 'application/vnd.eventstore.events+json',
-        },
-      })
+        }
+      : {
+          'ES-ExpectedVersion': expectedStreamVersion,
+          'Content-Type': 'application/vnd.eventstore.events+json',
+        };
+
+    return this.httpService
+      .post(`/streams/${eventStreamId.raw}`, eventsToStore, { headers })
       .pipe(
         flatMap(response =>
           response.status == 201 ? of(response) : throwError(response),
+        ),
+        retryWhen(
+          genericRetryStrategy({
+            maxRetryAttempts: 3,
+            delayTime: 500,
+            ignoredErrorCodes: [500],
+          }),
         ),
         catchError(err => {
           const eventStreamModifiedConcurrent =
@@ -99,7 +113,9 @@ export class EventStoreEventStorage implements EventStorage {
           return eventStreamModifiedConcurrent
             ? throwError(
                 errorCausedBy(
-                  new Error('EventStream modified concurrently!'),
+                  new Error(
+                    `Event stream for aggregate was modified concurrently!`,
+                  ),
                   err,
                 ),
               )
@@ -123,7 +139,7 @@ export class EventStoreEventStorage implements EventStorage {
     eventsNumber: number,
   ) {
     return expectedStreamVersion === EXPECTED_ANY_VERSION
-      ? null
+      ? undefined
       : expectedStreamVersion == EXPECTED_STREAM_NOT_EXISTS
       ? 0
       : expectedStreamVersion + eventsNumber;
@@ -215,7 +231,7 @@ export class EventStoreEventStorage implements EventStorage {
       return {
         eventId: it.eventId,
         eventType: it.eventType,
-        occurredAt: new Date(it.updated),
+        occurredAt: new Date(JSON.parse(it.metaData).occurredAt),
         streamId: EventStreamId.fromRaw(it.streamId).streamId,
         streamGroup: EventStreamId.fromRaw(it.streamId).streamGroup,
         data: JSON.parse(it.data),
