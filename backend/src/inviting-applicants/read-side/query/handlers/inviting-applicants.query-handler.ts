@@ -31,7 +31,7 @@ export namespace InvitingApplicantsQueryHandler {
     implements
       IQueryHandler<
         InvitingApplicantsQuery.AllCancelledInvitations,
-          CancelledInvitation[]
+        CancelledInvitation[]
       > {
     constructor(
       @Inject(APPLICANT_INVITATION_REPOSITORY)
