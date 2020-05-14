@@ -28,6 +28,7 @@
     "test:unit": "jest  --config test-unit/jest-unit.json",
     "test:unit:watch": "jest --watch --config test-unit/jest-unit.json",
     "test:unit:cov": "jest --coverage --config test-unit/jest-unit.json",
+    "test:integration": "jest  --config test-integration/jest-integration.json",
     "test:debug": "node --inspect-brk=0.0.0.0:9229 -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config test-e2e/jest-e2e.json --passWithNoTests",
     "ci-format": "prettier -c \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
