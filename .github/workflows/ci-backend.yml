@@ -160,7 +160,7 @@ jobs:
         run: npm install
         working-directory: ${{ env.working-directory }}
         
-      - name: Run module tests
+      - name: Run tests
         run: npm run test:unit:cov
         working-directory: ${{ env.working-directory }}
 
@@ -199,7 +199,7 @@ jobs:
         run: npm install
         working-directory: ${{ env.working-directory }}
 
-      - name: Run module tests
+      - name: Run tests
         run: npm run test:module:cov
         working-directory: ${{ env.working-directory }}
 
@@ -238,7 +238,7 @@ jobs:
         run: npm install
         working-directory: ${{ env.working-directory }}
 
-      - name: Run e2e tests
+      - name: Run tests
         run: npm run test:integration:docker
         working-directory: ${{ env.working-directory }}
 
@@ -277,7 +277,7 @@ jobs:
         run: npm install
         working-directory: ${{ env.working-directory }}
         
-      - name: Run e2e tests
+      - name: Run tests
         run: npm run test:e2e
         working-directory: ${{ env.working-directory }}
         

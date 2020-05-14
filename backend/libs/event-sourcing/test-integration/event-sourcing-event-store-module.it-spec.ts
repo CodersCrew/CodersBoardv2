@@ -1,10 +1,10 @@
-import {EVENT_STORAGE, EventStorage} from '@coders-board-library/event-sourcing/api/event-storage';
-import {Test, TestingModule} from '@nestjs/testing';
-import {EventSourcingModule} from '@coders-board-library/event-sourcing';
+import { EVENT_STORAGE, EventStorage } from '@coders-board-library/event-sourcing/api/event-storage';
+import { Test, TestingModule } from '@nestjs/testing';
+import { EventSourcingModule } from '@coders-board-library/event-sourcing';
 import * as moment from 'moment';
-import {EventStreamVersion} from '@coders-board-library/event-sourcing/api/event-stream-version.valueobject';
-import {EventStreamName} from '@coders-board-library/event-sourcing/api/event-stream-name.valueboject';
-import {v4 as uuid} from 'uuid';
+import { EventStreamVersion } from '@coders-board-library/event-sourcing/api/event-stream-version.valueobject';
+import { EventStreamName } from '@coders-board-library/event-sourcing/api/event-stream-name.valueboject';
+import { v4 as uuid } from 'uuid';
 
 const time = {
   15_00: moment.utc(new Date(2020, 4, 7, 15, 0)).toDate(),
@@ -26,7 +26,7 @@ const events = {
       streamId: aggregate1id,
       streamGroup: 'aggregateType1',
       occurredAt: time['1530'],
-      data: {value: 'value'},
+      data: { value: 'value' },
     },
     event2: {
       eventId: uuid(),
@@ -46,7 +46,7 @@ const events = {
       streamId: aggregate2id,
       streamGroup: 'aggregateType2',
       occurredAt: time['1530'],
-      data: {value: 'value'},
+      data: { value: 'value' },
     },
     event2: {
       eventId: uuid(),
@@ -72,9 +72,9 @@ describe('Feature: Event Storage', () => {
   };
 
   [
-    {name: 'TypeORM', impl: EventSourcingModule.registerTypeOrmAsync(eventSourcingModuleConfig)},
-    {name: 'EventStorage', impl: EventSourcingModule.registerInMemoryAsync(eventSourcingModuleConfig)},
-    {name: 'in memory', impl: EventSourcingModule.registerInMemoryAsync(eventSourcingModuleConfig)},
+    { name: 'TypeORM', impl: EventSourcingModule.registerTypeOrmAsync(eventSourcingModuleConfig) },
+    { name: 'EventStorage', impl: EventSourcingModule.registerInMemoryAsync(eventSourcingModuleConfig) },
+    { name: 'in memory', impl: EventSourcingModule.registerInMemoryAsync(eventSourcingModuleConfig) },
   ].forEach(testCase => {
     describe(`Scenario: Event Store module with ${testCase.name} implementation`, () => {
       beforeAll(async () => {
@@ -89,24 +89,24 @@ describe('Feature: Event Storage', () => {
         describe(`${testCase.name} | When: store the events`, () => {
           beforeAll(async done => {
             await eventStorage.store(
-                events.aggregate1.eventStreamName,
-                events.aggregate1.event1,
-                EventStreamVersion.newStream(),
+              events.aggregate1.eventStreamName,
+              events.aggregate1.event1,
+              EventStreamVersion.newStream(),
             );
             await eventStorage.store(
-                events.aggregate2.eventStreamName,
-                events.aggregate2.event1,
-                EventStreamVersion.newStream(),
+              events.aggregate2.eventStreamName,
+              events.aggregate2.event1,
+              EventStreamVersion.newStream(),
             );
             await eventStorage.store(
-                events.aggregate1.eventStreamName,
-                events.aggregate1.event2,
-                EventStreamVersion.exactly(1),
+              events.aggregate1.eventStreamName,
+              events.aggregate1.event2,
+              EventStreamVersion.exactly(1),
             );
             await eventStorage.store(
-                events.aggregate2.eventStreamName,
-                events.aggregate2.event2,
-                EventStreamVersion.exactly(1),
+              events.aggregate2.eventStreamName,
+              events.aggregate2.event2,
+              EventStreamVersion.exactly(1),
             );
             done();
           });
@@ -122,14 +122,14 @@ describe('Feature: Event Storage', () => {
           it(`${testCase.name} | Then: The event should be queryable by time`, async done => {
             expect(await eventStorage.readEvents(events.aggregate1.eventStreamName, time['1520'])).toStrictEqual([]);
             expect(await eventStorage.readEvents(events.aggregate1.eventStreamName, time['1530'])).toContainsInArray(
-                events.aggregate1.event1,
+              events.aggregate1.event1,
             );
 
             expect(await eventStorage.readEvents(events.aggregate1.eventStreamName, time['1540'])).toContainsInArray(
-                events.aggregate1.event1,
+              events.aggregate1.event1,
             );
             expect(await eventStorage.readEvents(events.aggregate1.eventStreamName, time['1540'])).toContainsInArray(
-                events.aggregate1.event2,
+              events.aggregate1.event2,
             );
             done();
           });
@@ -144,7 +144,7 @@ describe('Feature: Event Storage', () => {
               data: {},
             };
             await expect(
-                eventStorage.store(events.aggregate1.eventStreamName, anotherEvent2, EventStreamVersion.exactly(1)),
+              eventStorage.store(events.aggregate1.eventStreamName, anotherEvent2, EventStreamVersion.exactly(1)),
             ).rejects.toEqual(new Error(`Event stream for aggregate was modified concurrently!`));
           });
 
@@ -175,13 +175,13 @@ expect.extend({
     if (pass) {
       return {
         message: () =>
-            `expected ${this.utils.printReceived(received)} not to contain object ${this.utils.printExpected(argument)}`,
+          `expected ${this.utils.printReceived(received)} not to contain object ${this.utils.printExpected(argument)}`,
         pass: true,
       };
     } else {
       return {
         message: () =>
-            `expected ${this.utils.printReceived(received)} to contain object ${this.utils.printExpected(argument)}`,
+          `expected ${this.utils.printReceived(received)} to contain object ${this.utils.printExpected(argument)}`,
         pass: false,
       };
     }
