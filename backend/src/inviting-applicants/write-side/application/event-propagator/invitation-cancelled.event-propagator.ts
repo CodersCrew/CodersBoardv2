@@ -1,5 +1,7 @@
 import {EventsHandler, IEventHandler} from '@nestjs/cqrs';
-import {ApplicantInvitationPublicEvent} from '@coders-board-library/public-messages';
+import {
+  ApplicantInvitationCancelledPublicEvent,
+} from '@coders-board-library/public-messages';
 import {Inject} from '@nestjs/common';
 import {
   EXTERNAL_EVENT_PUBLISHER,
@@ -8,7 +10,7 @@ import {
 import {InvitationCancelled} from "../../domain/event/invitation-cancelled.domain-events";
 
 @EventsHandler(InvitationCancelled)
-class InvitationCancelledEventPropagator
+export class InvitationCancelledEventPropagator
     implements IEventHandler<InvitationCancelled> {
   constructor(
       @Inject(EXTERNAL_EVENT_PUBLISHER)
@@ -18,7 +20,7 @@ class InvitationCancelledEventPropagator
 
   async handle(event: InvitationCancelled) {
     return this.externalEventPublisher.publish(
-        new ApplicantInvitationPublicEvent.ApplicantInvitationCancelledPublicEvent(
+        new ApplicantInvitationCancelledPublicEvent(
             event.eventId.raw,
             event.occurredAt,
             event.aggregateId.raw,

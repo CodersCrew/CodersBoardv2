@@ -1,4 +1,5 @@
 import {ApplicantInvitedEventPropagator} from "./applicant-invited.event-propagator";
+import {InvitationCancelledEventPropagator} from "./invitation-cancelled.event-propagator";
 
 /**
  * Each domain event which should be available for read-models and other context on the write-side need

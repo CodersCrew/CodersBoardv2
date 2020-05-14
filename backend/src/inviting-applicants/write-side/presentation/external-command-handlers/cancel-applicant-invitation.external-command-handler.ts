@@ -1,17 +1,17 @@
 import {CommandHandler, ICommandHandler} from "@nestjs/cqrs";
-import {ApplicantInvitationPublicCommand} from "@coders-board-library/public-messages";
 import {Inject} from "@nestjs/common";
 import {
   INTERNAL_COMMAND_SENDER,
   InternalCommandSender
 } from "../../../../shared-kernel/write-side/application/internal-command-sender/internal-command-sender";
 import {CancelApplicantInvitation} from "../../application/internal-command/cancel-applicant-invitation.internal-command";
+import {CancelApplicantInvitationPublicCommand} from "@coders-board-library/public-messages";
 
 @CommandHandler(
-    ApplicantInvitationPublicCommand.CancelApplicantInvitationCommand,
+    CancelApplicantInvitationPublicCommand,
 )
 export class CancelApplicantInvitationExternalCommandHandler
-    implements ICommandHandler<ApplicantInvitationPublicCommand.CancelApplicantInvitationCommand> {
+    implements ICommandHandler<CancelApplicantInvitationPublicCommand> {
   constructor(
       @Inject(INTERNAL_COMMAND_SENDER)
       private readonly internalCommandSender: InternalCommandSender,
@@ -20,7 +20,7 @@ export class CancelApplicantInvitationExternalCommandHandler
 
   async execute({
                   applicantInvitationId,
-                }: ApplicantInvitationPublicCommand.CancelApplicantInvitationCommand) {
+                }: CancelApplicantInvitationPublicCommand) {
     return this.internalCommandSender.sendAndWait(
         new CancelApplicantInvitation(
             applicantInvitationId,

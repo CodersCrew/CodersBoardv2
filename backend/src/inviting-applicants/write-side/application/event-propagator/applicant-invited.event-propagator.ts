@@ -5,7 +5,7 @@ import {
   EXTERNAL_EVENT_PUBLISHER,
   ExternalEventPublisher
 } from "../../../../shared-kernel/write-side/application/external-event-publisher/external-event-publisher";
-import {ApplicantInvitationPublicEvent} from "@coders-board-library/public-messages";
+import {ApplicantInvitedPublicEvent} from "@coders-board-library/public-messages";
 
 @EventsHandler(ApplicantInvited)
 export class ApplicantInvitedEventPropagator
@@ -19,7 +19,7 @@ export class ApplicantInvitedEventPropagator
   handle(event: ApplicantInvited) {
     //TODO: Saving in outbox and publishing after in batches
     return this.externalEventPublisher.publish(
-        new ApplicantInvitationPublicEvent.ApplicantInvitedPublicEvent(
+        new ApplicantInvitedPublicEvent(
             event.eventId.raw,
             event.occurredAt,
             event.aggregateId.raw,
