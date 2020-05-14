@@ -17,8 +17,8 @@ import {
   ApiNoContentResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import {InviteApplicant} from "../../../application/internal-command/invite-applicant.internal-command";
-import {CancelApplicantInvitation} from "../../../application/internal-command/cancel-applicant-invitation.internal-command";
+import { InviteApplicant } from '../../../application/internal-command/invite-applicant.internal-command';
+import { CancelApplicantInvitation } from '../../../application/internal-command/cancel-applicant-invitation.internal-command';
 
 @ApiTags('inviting-applicants')
 @Controller('/rest-api/v1/applicant-invitations')

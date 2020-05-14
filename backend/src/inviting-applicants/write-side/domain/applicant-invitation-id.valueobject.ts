@@ -1,4 +1,4 @@
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { AggregateId } from '../../../shared-kernel/write-side/domain/aggregate-id.valueobject';
 
 export class ApplicantInvitationId implements AggregateId {

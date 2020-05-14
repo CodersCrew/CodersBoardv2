@@ -5,10 +5,10 @@ import { PersonalEmail } from './personal-email.valueobject';
 import { FirstName } from './first-name.value-object';
 import { LastName } from './last-name.value-object';
 import { Result } from '../../../shared-kernel/write-side/domain/result';
-import {ApplicantInvited} from "./event/applicant-invited.domain-event";
-import {InvitationCancelled} from "./event/invitation-cancelled.domain-events";
-import {CancelingApplicantInvitationFailed} from "./event/cancelling-applicant-invitation-failed.domain-event";
-import {InvitingApplicantFailed} from "./event/inviting-applicant-failed.domain-event";
+import { ApplicantInvited } from './event/applicant-invited.domain-event';
+import { InvitationCancelled } from './event/invitation-cancelled.domain-events';
+import { CancelingApplicantInvitationFailed } from './event/cancelling-applicant-invitation-failed.domain-event';
+import { InvitingApplicantFailed } from './event/inviting-applicant-failed.domain-event';
 
 export class ApplicantInvitation extends AbstractAggregateRoot<
   ApplicantInvitationId
@@ -38,11 +38,7 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
             }),
           )
         : Result.success(
-            ApplicantInvited.newFrom(
-              id,
-              this.currentDate,
-              { ...command },
-            ),
+            ApplicantInvited.newFrom(id, this.currentDate, { ...command }),
           ),
     );
 
@@ -65,21 +61,14 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
             ),
           )
         : Result.success(
-            InvitationCancelled.newFrom(
-              this.id,
-              this.currentDate,
-              {},
-            ),
+            InvitationCancelled.newFrom(this.id, this.currentDate, {}),
           ),
     );
 
-  onInvitationCancelled(
-    event: InvitationCancelled,
-  ) {
+  onInvitationCancelled(event: InvitationCancelled) {
     this.id = event.aggregateId;
     this._status = InvitationStatus.CANCELLED;
   }
-
 }
 
 enum InvitationStatus {
