@@ -4,10 +4,11 @@ import { TimeProviderPort } from '../../../shared-kernel/write-side/domain/time-
 import { PersonalEmail } from './personal-email.valueobject';
 import { FirstName } from './first-name.value-object';
 import { LastName } from './last-name.value-object';
-import { ApplicantInvitationDomainEvent } from './applicant-invitation.domain-event';
 import { Result } from '../../../shared-kernel/write-side/domain/result';
-import InvitingApplicantFailed = ApplicantInvitationDomainEvent.InvitingApplicantFailed;
-import CancelingApplicantInvitationFailed = ApplicantInvitationDomainEvent.CancelingApplicantInvitationFailed;
+import {ApplicantInvited} from "./event/applicant-invited.domain-event";
+import {InvitationCancelled} from "./event/invitation-cancelled.domain-events";
+import {CancelingApplicantInvitationFailed} from "./event/cancelling-applicant-invitation-failed.domain-event";
+import {InvitingApplicantFailed} from "./event/inviting-applicant-failed.domain-event";
 
 export class ApplicantInvitation extends AbstractAggregateRoot<
   ApplicantInvitationId
@@ -37,7 +38,7 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
             }),
           )
         : Result.success(
-            ApplicantInvitationDomainEvent.ApplicantInvited.newFrom(
+            ApplicantInvited.newFrom(
               id,
               this.currentDate,
               { ...command },
@@ -45,7 +46,7 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
           ),
     );
 
-  onApplicantInvited(event: ApplicantInvitationDomainEvent.ApplicantInvited) {
+  onApplicantInvited(event: ApplicantInvited) {
     this.id = event.aggregateId;
     this._status = InvitationStatus.INVITED;
     this._personalEmail = event.data.personalEmail;
@@ -64,7 +65,7 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
             ),
           )
         : Result.success(
-            ApplicantInvitationDomainEvent.InvitationCancelled.newFrom(
+            InvitationCancelled.newFrom(
               this.id,
               this.currentDate,
               {},
@@ -73,27 +74,12 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
     );
 
   onInvitationCancelled(
-    event: ApplicantInvitationDomainEvent.InvitationCancelled,
+    event: InvitationCancelled,
   ) {
     this.id = event.aggregateId;
     this._status = InvitationStatus.CANCELLED;
   }
 
-  get status(): InvitationStatus {
-    return this._status;
-  }
-
-  get personalEmail(): PersonalEmail {
-    return this._personalEmail;
-  }
-
-  get firstName(): FirstName {
-    return this._firstName;
-  }
-
-  get lastName(): LastName {
-    return this._lastName;
-  }
 }
 
 enum InvitationStatus {

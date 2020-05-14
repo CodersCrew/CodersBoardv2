@@ -1,14 +1,12 @@
-import { AbstractPublicEvent } from '@coders-board-library/public-messages/shared/event/public-event';
+import {AbstractPublicEvent} from '@coders-board-library/public-messages/shared/event/public-event';
 
 export namespace ApplicantInvitationPublicEvent {
-  export abstract class ApplicantInvitationAbstractPublicEvent<
-    P extends any = any
-  > extends AbstractPublicEvent<P> {
+  export abstract class ApplicantInvitationAbstractPublicEvent<P extends any = any> extends AbstractPublicEvent<P> {
     constructor(
-      eventId: string,
-      occurredAt: Date,
-      aggregateId: string,
-      data: P,
+        eventId: string,
+        occurredAt: Date,
+        aggregateId: string,
+        data: P,
     ) {
       super(eventId, occurredAt, aggregateId, data);
     }
@@ -23,32 +21,24 @@ export namespace ApplicantInvitationPublicEvent {
     firstName: string;
     lastName: string;
   };
-  export class ApplicantInvitedPublicEvent extends ApplicantInvitationAbstractPublicEvent<
-    ApplicantInvitedData
-  > {
+
+  export class ApplicantInvitedPublicEvent extends ApplicantInvitationAbstractPublicEvent<ApplicantInvitedData> {
     constructor(
-      eventId: string,
-      occurredAt: Date,
-      aggregateId: string,
-      data: ApplicantInvitationPublicEvent.ApplicantInvitedData,
+        eventId: string,
+        occurredAt: Date,
+        aggregateId: string,
+        data: ApplicantInvitationPublicEvent.ApplicantInvitedData,
     ) {
       super(eventId, occurredAt, aggregateId, data);
     }
   }
 
-  export type ApplicantInvitationCancelledData = {
-    personalEmail: string;
-    firstName: string;
-    lastName: string;
-  };
-  export class ApplicantInvitationCancelledPublicEvent extends ApplicantInvitationAbstractPublicEvent<
-    ApplicantInvitationCancelledData
-  > {
+  export class ApplicantInvitationCancelledPublicEvent extends ApplicantInvitationAbstractPublicEvent<{}> {
     constructor(
-      eventId: string,
-      occurredAt: Date,
-      aggregateId: string,
-      data: ApplicantInvitationPublicEvent.ApplicantInvitationCancelledData,
+        eventId: string,
+        occurredAt: Date,
+        aggregateId: string,
+        data: {},
     ) {
       super(eventId, occurredAt, aggregateId, data);
     }

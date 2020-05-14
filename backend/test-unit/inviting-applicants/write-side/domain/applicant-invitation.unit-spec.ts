@@ -5,7 +5,7 @@ import { FirstName } from '../../../../src/inviting-applicants/write-side/domain
 import { LastName } from '../../../../src/inviting-applicants/write-side/domain/last-name.value-object';
 import { ApplicantInvitation } from '../../../../src/inviting-applicants/write-side/domain/applicant-invitation.aggregate-root';
 import { ApplicantInvitationId } from '../../../../src/inviting-applicants/write-side/domain/applicant-invitation-id.valueobject';
-import { ApplicantInvitationDomainEvent } from '../../../../src/inviting-applicants/write-side/domain/applicant-invitation.domain-event';
+import { ApplicantInvitationDomainEvent } from '../../../../src/inviting-applicants/write-side/domain/event/applicant-invitation.abstract-domain-event';
 import ApplicantInvited = ApplicantInvitationDomainEvent.ApplicantInvited;
 import InvitationCancelled = ApplicantInvitationDomainEvent.InvitationCancelled;
 import { expectDomainEvent } from '../../../../src/shared-kernel/write-side/domain/aggregate-root.test-utils';
