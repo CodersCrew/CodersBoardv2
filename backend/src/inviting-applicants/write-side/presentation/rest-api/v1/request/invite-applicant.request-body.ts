@@ -1,15 +1,19 @@
 import { IsDefined, IsEmail, IsNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class InviteApplicantRequestBody {
+  @ApiProperty()
   @IsDefined()
   @IsNotEmpty()
   @IsEmail()
   readonly personalEmail: string;
 
+  @ApiProperty()
   @IsDefined()
   @IsNotEmpty()
   readonly firstName: string;
 
+  @ApiProperty()
   @IsDefined()
   @IsNotEmpty()
   readonly lastName: string;

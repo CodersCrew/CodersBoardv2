@@ -14,12 +14,10 @@ import { FirstName } from '../domain/first-name.value-object';
 import { LastName } from '../domain/last-name.value-object';
 
 export namespace ApplicantInvitationInternalCommandHandler {
-  @CommandHandler(ApplicantInvitationInternalCommand.InviteApplicantCommand)
+  @CommandHandler(ApplicantInvitationInternalCommand.InviteApplicant)
   class InviteApplicantToAssociation
     implements
-      ICommandHandler<
-        ApplicantInvitationInternalCommand.InviteApplicantCommand
-      > {
+      ICommandHandler<ApplicantInvitationInternalCommand.InviteApplicant> {
     constructor(
       @Inject(TIME_PROVIDER) private readonly timeProvider: TimeProviderPort,
       @Inject(APPLICANT_INVITATION_REPOSITORY)
@@ -30,9 +28,7 @@ export namespace ApplicantInvitationInternalCommandHandler {
       firstName,
       lastName,
       personalEmail,
-    }: ApplicantInvitationInternalCommand.InviteApplicantCommand): Promise<
-      string
-    > {
+    }: ApplicantInvitationInternalCommand.InviteApplicant): Promise<string> {
       const invitation = new ApplicantInvitation(this.timeProvider);
       const id = ApplicantInvitationId.generate();
       invitation.invite(id, {
@@ -44,13 +40,11 @@ export namespace ApplicantInvitationInternalCommandHandler {
     }
   }
 
-  @CommandHandler(
-    ApplicantInvitationInternalCommand.CancelApplicantInvitationCommand,
-  )
+  @CommandHandler(ApplicantInvitationInternalCommand.CancelApplicantInvitation)
   class CancelApplicantInvitation
     implements
       ICommandHandler<
-        ApplicantInvitationInternalCommand.CancelApplicantInvitationCommand
+        ApplicantInvitationInternalCommand.CancelApplicantInvitation
       > {
     constructor(
       @Inject(APPLICANT_INVITATION_REPOSITORY)
@@ -59,7 +53,7 @@ export namespace ApplicantInvitationInternalCommandHandler {
 
     async execute({
       applicantInvitationId,
-    }: ApplicantInvitationInternalCommand.CancelApplicantInvitationCommand) {
+    }: ApplicantInvitationInternalCommand.CancelApplicantInvitation) {
       return executeCommand(
         this.repository,
         ApplicantInvitationId.of(applicantInvitationId),

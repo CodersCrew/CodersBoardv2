@@ -28,6 +28,7 @@ import {
  */
 
 //TODO: When communication between components will be more stable we can introduce special DSL to reduce boilerplate in tests
+//TODO: Internal or external command sender in test?
 const person = {
   janKowalski: {
     personalEmail: 'jan.kowalski@gmail.com',

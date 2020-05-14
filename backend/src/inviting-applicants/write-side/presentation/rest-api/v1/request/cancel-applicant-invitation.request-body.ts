@@ -1,7 +1,7 @@
 import { IsDefined, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class InviteApplicantResponseBody {
+export class CancelApplicantInvitationRequestBody {
   @ApiProperty()
   @IsDefined()
   @IsNotEmpty()

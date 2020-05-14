@@ -5,7 +5,11 @@ import { InternalCommand } from '../../application/internal-command-sender/inter
 export class NestJsInternalCommandSender implements InternalCommandSender {
   constructor(private readonly commandBus: CommandBus) {}
 
-  send<T extends InternalCommand>(command: T) {
+  sendAndWait<R>(command: InternalCommand): Promise<R> {
     return this.commandBus.execute(command);
+  }
+
+  sendAndForget<T extends InternalCommand>(command: T) {
+    this.commandBus.execute(command).then();
   }
 }

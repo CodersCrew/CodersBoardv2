@@ -27,8 +27,8 @@ export namespace ApplicantInvitationExternalCommandHandler {
     }: ApplicantInvitationPublicCommand.InviteApplicantCommand): Promise<
       string
     > {
-      return this.internalCommandSender.send(
-        new ApplicantInvitationInternalCommand.InviteApplicantCommand(
+      return this.internalCommandSender.sendAndWait(
+        new ApplicantInvitationInternalCommand.InviteApplicant(
           personalEmail,
           firstName,
           lastName,
@@ -53,8 +53,8 @@ export namespace ApplicantInvitationExternalCommandHandler {
     async execute({
       applicantInvitationId,
     }: ApplicantInvitationPublicCommand.CancelApplicantInvitationCommand) {
-      return this.internalCommandSender.send(
-        new ApplicantInvitationInternalCommand.CancelApplicantInvitationCommand(
+      return this.internalCommandSender.sendAndWait(
+        new ApplicantInvitationInternalCommand.CancelApplicantInvitation(
           applicantInvitationId,
         ),
       );

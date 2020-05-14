@@ -1,7 +1,7 @@
 import { InternalCommand } from '../../../shared-kernel/write-side/application/internal-command-sender/internal-command';
 
 export namespace ApplicantInvitationInternalCommand {
-  export class InviteApplicantCommand implements InternalCommand {
+  export class InviteApplicant implements InternalCommand {
     constructor(
       readonly personalEmail: string,
       readonly firstName: string,
@@ -9,7 +9,7 @@ export namespace ApplicantInvitationInternalCommand {
     ) {}
   }
 
-  export class CancelApplicantInvitationCommand implements InternalCommand {
+  export class CancelApplicantInvitation implements InternalCommand {
     constructor(readonly applicantInvitationId: string) {}
   }
 }

@@ -21,7 +21,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   setupValidationPipe(app);
   setupSwagger(app);
-  await app.listen(3000);
+  await app.listen(process.env.CODERSBOARD_SERVER_PORT || 4000);
 }
 
 bootstrap();
