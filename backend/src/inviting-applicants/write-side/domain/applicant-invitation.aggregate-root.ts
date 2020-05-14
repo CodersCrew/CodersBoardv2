@@ -21,7 +21,7 @@ export class ApplicantInvitation extends AbstractAggregateRoot<
     super(timeProvider);
   }
 
-  invite = (
+  forApplicant = (
     id: ApplicantInvitationId,
     command: {
       personalEmail: PersonalEmail;

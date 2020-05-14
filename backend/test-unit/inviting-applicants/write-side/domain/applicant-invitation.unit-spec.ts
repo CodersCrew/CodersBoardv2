@@ -33,7 +33,7 @@ describe('Feature: Applicant invitation', () => {
     describe('Given: An applicant to invite', () => {
       describe('When: Try to invite an applicant', () => {
         beforeEach(() => {
-          applicantInvitation.invite(applicantInvitationId, {
+          applicantInvitation.forApplicant(applicantInvitationId, {
             ...person.janKowalski,
           });
         });
@@ -62,7 +62,7 @@ describe('Feature: Applicant invitation', () => {
 
       describe('When: Try to invite an applicant', () => {
         beforeEach(() => {
-          applicantInvitation.invite(applicantInvitationId, {
+          applicantInvitation.forApplicant(applicantInvitationId, {
             ...person.janKowalski,
           });
         });

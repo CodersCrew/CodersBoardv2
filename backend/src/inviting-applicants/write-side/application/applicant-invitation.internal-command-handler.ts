@@ -31,7 +31,7 @@ export namespace ApplicantInvitationInternalCommandHandler {
     }: ApplicantInvitationInternalCommand.InviteApplicant): Promise<string> {
       const invitation = new ApplicantInvitation(this.timeProvider);
       const id = ApplicantInvitationId.generate();
-      invitation.invite(id, {
+      invitation.forApplicant(id, {
         personalEmail: PersonalEmail.from(personalEmail),
         firstName: FirstName.from(firstName),
         lastName: LastName.from(lastName),
