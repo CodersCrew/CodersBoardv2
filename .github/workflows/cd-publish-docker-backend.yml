@@ -24,4 +24,4 @@ jobs:
           tags: draft
           tag_with_sha: true
           push: true
-          target: productio
+          target: production
