@@ -26,4 +26,5 @@ jobs:
           push: true
           target: production
           dockerfile: backend/Dockerfile
+          path: backend/
           #  tag_with_ref: true TODO: When config will be done
