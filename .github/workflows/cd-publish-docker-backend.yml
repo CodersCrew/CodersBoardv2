@@ -2,7 +2,7 @@ name: Publish CodersBoard backend Docker image
 on:
   push:
     branches:
-      - docker
+      - publish-docker
 defaults:
   run:
     working-directory: ./backend/
