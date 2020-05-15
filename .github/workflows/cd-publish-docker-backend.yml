@@ -5,7 +5,7 @@ on:
       - docker
 defaults:
   run:
-    working-directory: backend/
+    working-directory: ./backend/
 jobs:
   push_to_registry:
     name: Push Docker image to GitHub Packages
