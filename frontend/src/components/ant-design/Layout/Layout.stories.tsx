@@ -1,16 +1,6 @@
 import React from 'react';
 import { Box } from '@components/atoms/Box';
-// import  * as Layout from './Layout'
-// import { Button } from '../Button';
-import { theme } from '../../../services/theme/theme';
-import { colorStyle } from 'styled-system';
-import { Layout  } from 'antd';
-const {Header, Sider, Footer, Content } = Layout;
-import {Button } from 'antd';
-import { InputNumber } from 'antd';
-import { TimePicker } from 'antd';
-import moment from 'moment';
-
+import  * as Layout from './Layout'
 export default {
     component: Layout,
     title: 'Layout',
@@ -20,16 +10,47 @@ export default {
   
 
   export const Structer = () => (
-    <div>
-          <Layout   style={{ textAlign: 'center',color:'black', }}>
-            <Header   style={{ background: 'lightblue', }} >Header</Header>
-            <Layout>
-              <Sider  style={{ background: 'blue', }}> Sider</Sider>
-              <Content style={{ background: 'lightblue', }} >Content</Content>
-            </Layout>
-              <Footer>Footer</Footer>
-          </Layout>
-    </div>
+    <Box>
+         <Box>
+          <Layout.Layout   style={{ textAlign: 'center' }}>
+            <Layout.Header   style={{ background: '#7dbceb', }} >Header</Layout.Header>
+            <Layout.Content  pt={50} height={120} style={{  textAlign: 'center',background: '#108ee9', }}>Content</Layout.Content>
+            <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+          </Layout.Layout>
+          </Box>
+          <Box mt ={30}>
+            <Layout.Layout   style={{ textAlign: 'center' }}>
+              <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
+              <Layout.Layout>
+                <Layout.Sider pt={50} style={{  textAlign: 'center',background: '#3ba0e9', }}>Sider</Layout.Sider>
+                <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
+              </Layout.Layout>
+              <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+            </Layout.Layout>
+          </Box>
+          
+          <Box mt ={30}>
+            <Layout.Layout   style={{ textAlign: 'center' }}>
+              <Layout.Header   style={{ background: '#7dbceb', }} >Header</Layout.Header>
+              <Layout.Layout>
+                <Layout.Content  pt={50} height={120} style={{  textAlign: 'center',background: '#108ee9', }}>Content</Layout.Content>
+                <Layout.Sider pt={50} style={{  textAlign: 'center',background: '#3ba0e9', }}>Sider</Layout.Sider>
+              </Layout.Layout>
+              <Layout.Footer   style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+            </Layout.Layout>
+          </Box>
+
+          <Box mt ={30}>
+            <Layout.Layout   style={{ textAlign: 'center' }}>
+            <Layout.Sider pt={100}  style={{  textAlign: 'center',background: '#3ba0e9', }}>Sider</Layout.Sider>
+              <Layout.Layout>
+                <Layout.Header   style={{ background: '#7dbceb', }} >Header</Layout.Header>
+                <Layout.Content  pt={50} height={120} style={{  textAlign: 'center',background: '#108ee9', }}>Content</Layout.Content>
+                <Layout.Footer   style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+              </Layout.Layout>
+            </Layout.Layout>
+          </Box>
+    </Box>
   )
 
 
