@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box } from '@components/atoms/Box';
 import  * as Layout from './Layout'
+
+
 export default {
     component: Layout,
     title: 'Layout',
@@ -28,7 +30,6 @@ export default {
               <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
             </Layout.Layout>
           </Box>
-          
           <Box mt ={30}>
             <Layout.Layout   style={{ textAlign: 'center' }}>
               <Layout.Header   style={{ background: '#7dbceb', }} >Header</Layout.Header>
@@ -39,7 +40,6 @@ export default {
               <Layout.Footer   style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
             </Layout.Layout>
           </Box>
-
           <Box mt ={30}>
             <Layout.Layout   style={{ textAlign: 'center' }}>
             <Layout.Sider pt={100}  style={{  textAlign: 'center',background: '#3ba0e9', }}>Sider</Layout.Sider>

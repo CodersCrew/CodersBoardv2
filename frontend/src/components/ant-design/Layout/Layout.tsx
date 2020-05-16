@@ -2,8 +2,9 @@ import React, { ComponentProps } from 'react';
 import { compose, space, layout, flexbox  } from 'styled-system';
 import { Layout as AntLayoute } from 'antd';
 import { LayoutProps as AntLayouteProps, SiderProps } from 'antd/lib/layout';
-import 'antd/lib/button/style/css';
+import 'antd/lib/layout/style/css';
 import { styled, SpaceProps, LayoutProps, FlexboxProps,} from '@services/theme';
+
 
 
 
