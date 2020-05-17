@@ -14,19 +14,9 @@ import {
 } from '@services/theme';
 
 export type CardProps = AntCardProps & MarginProps & LayoutProps & PositionProps;
-export type CardBodyProps = AntCardProps & PaddingProps & DisplayProps & FlexboxProps;
+export type CardBodyProps = PaddingProps & DisplayProps & FlexboxProps;
 
 const StyledCard = styled(AntCard)(margin, layout, position);
-const styledSystem = compose(padding, display, flexbox);
 
 export const Card = (props: CardProps) => <StyledCard {...props} />;
-export const CardBody = styled(AntCard)<CardBodyProps>((props) => {
-  return {
-    border: 'none',
-
-    'div.ant-card-body': {
-      padding: 'unset',
-      ...styledSystem(props),
-    },
-  };
-});
+export const CardBody = styled('div')<CardBodyProps>(compose(padding, display, flexbox));
