@@ -9,6 +9,7 @@ import {
   PositionProps as SystemPositionProps,
   GridProps as SystemGridProps,
   ShadowProps as SystemShadowProps,
+  DisplayProps as SystemDisplayProps,
 } from 'styled-system';
 
 export type Theme = typeof import('./theme').theme;
@@ -63,3 +64,4 @@ export type BackgroundProps = SystemBackgroundProps<Theme>;
 export type PositionProps = SystemPositionProps<Theme>;
 export type GridProps = SystemGridProps<Theme>;
 export type ShadowProps = SystemShadowProps<Theme>;
+export type DisplayProps = SystemDisplayProps<Theme>;
