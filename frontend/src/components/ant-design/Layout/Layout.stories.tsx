@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box } from '@components/atoms/Box';
 import  * as Layout from './Layout'
-
-
+import { DoubleRightOutlined, RightCircleOutlined  } from '@ant-design/icons';
 export default {
     component: Layout,
     title: 'Layout',
@@ -56,10 +55,10 @@ export default {
 
 
   
-  export const LayoutType= () => (
+  export const LayoutHasSider = () => (
     <Box>
-      <Box style={{ textAlignLast: 'center', }}>
-       <h2>hasSider</h2>
+      <Box style={{ textAlignLast: 'left', }}>
+       <h1>true</h1>
       </Box>
       <Box mt ={30}>
         <Layout.Layout  hasSider ={true} style={{ textAlign: 'center' }}>
@@ -77,80 +76,113 @@ export default {
     
   export const SiderBreakpoint= () => (
     <Box>
-      <Box  >
-        <Box style={{ textAlignLast: 'center', }}>
-        <h2>Breakpoint</h2>
-        </Box>
-        <Box mt ={30} >
+        <Box mt ={10} mb ={10} >
+          <Box mb ={10} style={{ textAlignLast: 'left', }}>
+            <h1>XS </h1>
+            <h2>{'<'} 576px</h2>
+          </Box>
           <Layout.Layout   style={{ textAlign: 'center' }}>
             <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
             <Layout.Layout >
-              <Layout.Sider  breakpoint ={'xs'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}><p style = {{fontSize : '20px'}}>XS {'<'} 576px</p>Sider</Layout.Sider>
+              <Layout.Sider  breakpoint ={'xs'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}>
+                Sider
+              </Layout.Sider>
+              <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
+            </Layout.Layout>
+            <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+          </Layout.Layout>
+        </Box>
+        <Box   mt ={40} mb = {20}>
+          <Box mb = {10} style={{ textAlignLast: 'left', }}>
+              <h1>SM </h1>
+              <h2>{'≥'} 576px</h2>
+          </Box>
+          <Layout.Layout   style={{ textAlign: 'center' }}>
+            <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
+            <Layout.Layout >
+              <Layout.Sider  breakpoint ={'sm'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}>
+                Sider
+              </Layout.Sider>
               <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
             </Layout.Layout>
             <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
           </Layout.Layout>
         </Box>
         <Box mt ={30}>
+          <Box mb = {10} style={{ textAlignLast: 'left', }}>
+              <h1>MD </h1>
+              <h2>{'≥'} 768px</h2>
+          </Box>
           <Layout.Layout   style={{ textAlign: 'center' }}>
             <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
             <Layout.Layout >
-              <Layout.Sider  breakpoint ={'sm'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}><p style = {{fontSize : '20px'}}>SM {'≥'} 576px</p>Sider</Layout.Sider>
+              <Layout.Sider  breakpoint ={'md'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}>
+                Sider
+              </Layout.Sider>
               <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
             </Layout.Layout>
             <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
           </Layout.Layout>
         </Box>
         <Box mt ={30}>
+          <Box mb = {10} style={{ textAlignLast: 'left', }}>
+              <h1>LG </h1>
+              <h2>{'≥'} 992px</h2>
+          </Box>
           <Layout.Layout   style={{ textAlign: 'center' }}>
             <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
             <Layout.Layout >
-              <Layout.Sider  breakpoint ={'md'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}><p style = {{fontSize : '20px'}}>MD {'≥'} 768px</p>Sider</Layout.Sider>
+              <Layout.Sider  breakpoint ={'lg'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}>
+                Sider
+              </Layout.Sider>
               <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
             </Layout.Layout>
             <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
           </Layout.Layout>
         </Box>
         <Box mt ={30}>
+          <Box mb = {10} style={{ textAlignLast: 'left', }}>
+              <h1>XL </h1>
+              <h2>{'≥'} 1200px</h2>
+          </Box>
           <Layout.Layout   style={{ textAlign: 'center' }}>
             <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
             <Layout.Layout >
-              <Layout.Sider  breakpoint ={'lg'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}><p style = {{fontSize : '20px'}}>LG {'≥'} 992px</p>Sider</Layout.Sider>
+              <Layout.Sider  breakpoint ={'xl'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}>
+                Sider
+              </Layout.Sider>
               <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
             </Layout.Layout>
             <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
           </Layout.Layout>
         </Box>
         <Box mt ={30}>
+          <Box mb = {10} style={{ textAlignLast: 'left', }}>
+              <h1>XXL </h1>
+              <h2>{'≥'} 1600px</h2>
+          </Box>
           <Layout.Layout   style={{ textAlign: 'center' }}>
             <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
             <Layout.Layout >
-              <Layout.Sider  breakpoint ={'xl'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}><p style = {{fontSize : '20px'}}>XL {'≥'} 1200px</p>Sider</Layout.Sider>
-              <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
-            </Layout.Layout>
-            <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
-          </Layout.Layout>
-        </Box>
-        <Box mt ={30}>
-          <Layout.Layout   style={{ textAlign: 'center' }}>
-            <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
-            <Layout.Layout >
-              <Layout.Sider  breakpoint ={'xxl'} pt={40} style={{  textAlign: 'center',background: '#3ba0e9',}}><p style = {{fontSize : '20px'}}>XXL {'≥'} 1600px</p>Sider</Layout.Sider>
+              <Layout.Sider  breakpoint ={'xxl'} pt={40} 
+                              style={{  textAlign: 'center',background: '#3ba0e9',}}>
+                Sider
+              </Layout.Sider>
               <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
             </Layout.Layout>
             <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
           </Layout.Layout>
         </Box>
       </Box>
-    </Box>
+    
   )
 
 
   export const SiderColapsed= () => (
     <Box>
       <Box>
-        <Box style={{ textAlignLast: 'center', }}>
-        <h2>Colapsed true</h2>
+        <Box style={{ textAlignLast: 'left', }}>
+        <h1> true</h1>
         </Box>
         <Box mt ={30}>
           <Layout.Layout  style={{ textAlign: 'center' }}>
@@ -164,8 +196,8 @@ export default {
         </Box>
       </Box>
       <Box>
-        <Box mt ={30} style={{ textAlignLast: 'center', } }>
-        <h2>Colapsed false</h2>
+        <Box mt ={30} style={{ textAlignLast: 'left', } }>
+        <h1> false</h1>
         </Box>
         <Box mt ={30}>
           <Layout.Layout  style={{ textAlign: 'center' }}>
@@ -178,6 +210,165 @@ export default {
           </Layout.Layout>
         </Box>
       </Box>
+      
      
     </Box>
   )
+
+  export const SiderCollapsible = () => (
+    <Box>
+        <Box  style={{ textAlignLast: 'left', } }>
+        <h1> true</h1>
+        </Box>
+        <Box mt ={30}>
+          <Layout.Layout  style={{ textAlign: 'center' }}>
+            <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
+            <Layout.Layout >
+              <Layout.Sider   collapsible={true}  pt={50} 
+                              style={{  textAlign: 'center',background: '#3ba0e9', }}>
+                Sider
+              </Layout.Sider>
+              <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
+            </Layout.Layout>
+            <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+          </Layout.Layout>
+        </Box>
+      </Box>
+  );
+
+  export const SiderDefaultCollapsed = () => (
+    <Box>
+        <Box  style={{ textAlignLast: 'left', } }>
+        <h1 >  true</h1>
+        </Box>
+        <Box mt ={30}>
+          <Layout.Layout  style={{ textAlign: 'center' }}>
+            <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
+            <Layout.Layout >
+              <Layout.Sider   defaultCollapsed={true} collapsible={true}  
+                              pt={50} style={{  textAlign: 'center',background: '#3ba0e9', }}>
+                Sider
+              </Layout.Sider>
+              <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
+            </Layout.Layout>
+            <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+          </Layout.Layout>
+        </Box>
+      </Box>
+  );
+
+
+  export const SiderCollapsedWidth = () => (
+    <Box>
+        <Box mt ={30}>
+          <Box mb={10} style={{ textAlignLast: 'left', } }>
+            <h1 >  50px</h1>
+          </Box>
+          <Layout.Layout  style={{ textAlign: 'center' }}>
+            <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
+            <Layout.Layout >
+              <Layout.Sider  defaultCollapsed={true} collapsedWidth={50} 
+                            pt={50} style={{  textAlign: 'center',background: '#3ba0e9', }}>
+                Sider
+              </Layout.Sider>
+              <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
+            </Layout.Layout>
+            <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+          </Layout.Layout>
+        </Box>
+        <Box mt ={30}>
+          <Box mb={10} style={{ textAlignLast: 'left', } }>
+            <h1 >  100px</h1>
+          </Box>
+          <Layout.Layout  style={{ textAlign: 'center' }}>
+            <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
+            <Layout.Layout >
+              <Layout.Sider  defaultCollapsed={true} 
+                            collapsedWidth={100} pt={50} 
+                            style={{  textAlign: 'center',background: '#3ba0e9', }}>
+                Sider
+              </Layout.Sider>
+              <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
+            </Layout.Layout>
+            <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+          </Layout.Layout>
+        </Box>
+        <Box mt ={30}>
+          <Box mb={10} style={{ textAlignLast: 'left', } }>
+            <h1 >  150px</h1>
+          </Box>
+          <Layout.Layout  style={{ textAlign: 'center' }}>
+            <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
+            <Layout.Layout >
+              <Layout.Sider  defaultCollapsed={true} collapsedWidth={150} 
+                            pt={50} style={{  textAlign: 'center',background: '#3ba0e9', }}>
+                Sider
+              </Layout.Sider>
+              <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
+            </Layout.Layout>
+            <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+          </Layout.Layout>
+        </Box>
+        
+      </Box>
+  );
+
+  
+  export const SiderTrigger= () => (
+    <Box>
+        <Box  style={{ textAlignLast: 'left', } }>
+        <h1> Icon  </h1>
+        </Box>
+        <Box mt ={30}>
+          <Layout.Layout  style={{ textAlign: 'center' }}>
+            <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
+            <Layout.Layout >
+              <Layout.Sider  trigger={<RightCircleOutlined /> } 
+                              defaultCollapsed={true} collapsible={true}  
+                              pt={50} style={{  textAlign: 'center',background: '#3ba0e9', }}>   
+                Sider
+              </Layout.Sider>
+              <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
+            </Layout.Layout>
+            <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+          </Layout.Layout>
+        </Box>
+      </Box>
+  );
+
+
+
+  export const SiderZeroWidthTriggerStyle= () => (
+    <Box>
+      <Box mt ={30}>
+          <h1> default </h1>
+          <Layout.Layout mt ={10} style={{ textAlign: 'center' }}>
+            <Layout.Sider  collapsedWidth={0} zeroWidthTriggerStyle={{}} 
+                            defaultCollapsed={true} collapsible={true}  pt={50} 
+                            style={{  textAlign: 'center',background: '#3ba0e9', }}>  
+              Sider
+            </Layout.Sider>
+            <Layout.Layout >
+            <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
+              <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
+              <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+            </Layout.Layout>
+          </Layout.Layout>
+        </Box>
+        <Box mt ={30}>
+          <h1> top: 0  </h1>
+          <Layout.Layout mt ={10} style={{ textAlign: 'center' }}>
+            <Layout.Sider   collapsedWidth={0} zeroWidthTriggerStyle={{top:'0'}} 
+                            defaultCollapsed={true} collapsible={true}  pt={50} 
+                            style={{  textAlign: 'center',background: '#3ba0e9', }}>  
+              Sider
+            </Layout.Sider>
+            <Layout.Layout >
+            <Layout.Header  height={60} style={{ background: '#7dbceb', }} >Header</Layout.Header>
+              <Layout.Content  pt={50} height={120}  style={{ background: '#108ee9', }}>Content</Layout.Content>
+              <Layout.Footer  style={{ background:  '#7dbceb', }}>Footer</Layout.Footer  >
+            </Layout.Layout>
+          </Layout.Layout>
+        </Box>
+      </Box>
+  );
