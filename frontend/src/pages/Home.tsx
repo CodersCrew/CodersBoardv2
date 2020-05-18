@@ -6,6 +6,7 @@ import { Button } from '@components/ant-design/Button';
 import { Box } from '@components/atoms/Box';
 import { Logo } from '@components/svg';
 import { Avatar } from '@components/ant-design/Avatar';
+import { UserOutlined } from '@ant-design/icons';
 
 export const Home = () => {
   const { t } = useTranslation('home');
@@ -52,7 +53,7 @@ export const Home = () => {
         bg="info.dark"
         mt={20}
         ml={20}
-        size={50}
+        icon={<UserOutlined/>}
         />
     </>
   );
