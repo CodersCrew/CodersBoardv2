@@ -13,16 +13,16 @@ export default {
 export const Colors = () => (
   <Box display="grid" gridGap={16} justifyItems="left">
     <Box>
-      <Avatar size={64} bg="primary.main" icon={<UserOutlined/>}/>
+      <Avatar size={40} bg="primary.main" icon={<UserOutlined/>}/>
     </Box>
     <Box>
-      <Avatar size={64} bg="info.main" icon={<UserOutlined/>}/>
+      <Avatar size={40} bg="info.main" icon={<UserOutlined/>}/>
     </Box>
     <Box>
-      <Avatar size={64} bg="success.main" icon={<UserOutlined/>}/>
+      <Avatar size={40} bg="success.main" icon={<UserOutlined/>}/>
     </Box>
     <Box>
-      <Avatar size={64} bg="warning.main" icon={<UserOutlined/>}/>
+      <Avatar size={40} bg="warning.main" icon={<UserOutlined/>}/>
     </Box>
   </Box>
 )
