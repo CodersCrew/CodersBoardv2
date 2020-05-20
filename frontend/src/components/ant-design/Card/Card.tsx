@@ -1,4 +1,3 @@
-import React from 'react';
 import { margin, layout, position, padding, display, flexbox, compose } from 'styled-system';
 import { Card as AntCard } from 'antd';
 import { CardProps as AntCardProps } from 'antd/lib/card';
