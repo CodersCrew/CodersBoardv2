@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@components/atoms/Box';
 import { action } from '@storybook/addon-actions';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import { Card, CardBody } from './Card';
+import { Card } from './Card';
 
 export default {
   component: Card,
@@ -70,32 +70,14 @@ export const WithActions = () => (
 export const CustomContent = () => (
   <Box display="grid" gridGap={16} justifyItems="left">
     <Card width={500} title="Card title">
-      <CardBody>
-        <p>Card content</p>
-        <p>Card content</p>
-        <p>Card content</p>
-      </CardBody>
+      <p>Card content</p>
+      <p>Card content</p>
+      <p>Card content</p>
     </Card>
-    <Card width={500} title="Card title">
-      <CardBody p={20}>
-        <p>Card content</p>
-        <p>Card content</p>
-        <p>Card content</p>
-      </CardBody>
-    </Card>
-    <Card width={500} title="Card title">
-      <CardBody p={20} display="flex">
-        <p>Card content</p>
-        <p>Card content</p>
-        <p>Card content</p>
-      </CardBody>
-    </Card>
-    <Card width={500} title="Card title">
-      <CardBody p={20} display="flex" justifyContent="space-between">
-        <p>Card content</p>
-        <p>Card content</p>
-        <p>Card content</p>
-      </CardBody>
+    <Card width={500} title="Card title" display="flex" justifyContent="space-between">
+      <p>Card content</p>
+      <p>Card content</p>
+      <p>Card content</p>
     </Card>
   </Box>
 );

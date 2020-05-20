@@ -13,10 +13,26 @@ import {
   FlexboxProps,
 } from '@services/theme';
 
-export type CardProps = AntCardProps & MarginProps & LayoutProps & PositionProps;
-export type CardBodyProps = PaddingProps & DisplayProps & FlexboxProps;
+export type CardProps = AntCardProps &
+  MarginProps &
+  LayoutProps &
+  PositionProps &
+  PaddingProps &
+  DisplayProps &
+  FlexboxProps;
 
-const StyledCard = styled(AntCard)(margin, layout, position);
+const styledSystemCard = compose(margin, layout, position);
+const styledSystemCardBody = compose(padding, display, flexbox);
 
-export const Card = (props: CardProps) => <StyledCard {...props} />;
-export const CardBody = styled('div')<CardBodyProps>(compose(padding, display, flexbox));
+export const Card = styled(AntCard)<CardProps>((props) => {
+  return {
+    '&.ant-card': {
+      ...styledSystemCard(props),
+      display: 'unset',
+    },
+
+    '.ant-card-body': {
+      ...styledSystemCardBody(props),
+    },
+  };
+});
