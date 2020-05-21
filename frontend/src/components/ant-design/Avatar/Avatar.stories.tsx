@@ -1,8 +1,7 @@
 import React from 'react';
-import { Avatar } from './Avatar';
 import { Box } from '@components/atoms/Box';
 import { UserOutlined } from '@ant-design/icons';
-
+import { Avatar, AvatarProps } from './Avatar';
 
 export default {
   component: Avatar,
@@ -10,34 +9,30 @@ export default {
   excludeStories: /.*Data$/,
 };
 
+const defaultAvatarPropsData: AvatarProps = {
+  size: 40,
+  icon: <UserOutlined />,
+  bg: 'primary.dark',
+};
+
+const getAvatarPropsData = (overwrite: Partial<typeof defaultAvatarPropsData> = {}) => ({
+  ...defaultAvatarPropsData,
+  ...overwrite,
+});
+
 export const Colors = () => (
   <Box display="grid" gridGap={16} justifyItems="left">
-    <Box>
-      <Avatar size={40} bg="primary.main" icon={<UserOutlined/>}/>
-    </Box>
-    <Box>
-      <Avatar size={40} bg="info.main" icon={<UserOutlined/>}/>
-    </Box>
-    <Box>
-      <Avatar size={40} bg="success.main" icon={<UserOutlined/>}/>
-    </Box>
-    <Box>
-      <Avatar size={40} bg="warning.main" icon={<UserOutlined/>}/>
-    </Box>
+    <Avatar {...getAvatarPropsData({ bg: 'primary.main' })} />
+    <Avatar {...getAvatarPropsData({ bg: 'info.main' })} />
+    <Avatar {...getAvatarPropsData({ bg: 'success.main' })} />
+    <Avatar {...getAvatarPropsData({ bg: 'warning.main' })} />
   </Box>
-)
+);
 
 export const Sizes = () => (
   <Box display="grid" gridGap={16} justifyItems="left">
-    <Box>
-      <Avatar size={32} bg="primary.dark"  icon={<UserOutlined/>} />
-    </Box>
-    <Box>
-      <Avatar size={40} bg="primary.dark" icon={<UserOutlined/>} />
-    </Box>
-    <Box>
-      <Avatar size={160} bg="primary.dark" icon={<UserOutlined/>} />
-    </Box>
+    <Avatar {...getAvatarPropsData({ size: 32 })} />
+    <Avatar {...getAvatarPropsData({ size: 40 })} />
+    <Avatar {...getAvatarPropsData({ size: 160 })} />
   </Box>
-)
-
+);
