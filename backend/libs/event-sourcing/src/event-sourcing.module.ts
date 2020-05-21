@@ -1,56 +1,62 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
-import { EVENT_STORAGE, EventStorage } from './event-storage/event-storage';
+import { DynamicModule, HttpModule, HttpService, Module, Provider } from '@nestjs/common';
+import { EVENT_STORAGE } from './api/event-storage';
 import { TypeOrmEventStorage } from './event-storage/typeorm/event-storage.typeorm';
 import { InMemoryEventStorage } from './event-storage/in-memory/event-storage.in-memory';
 import { DomainEventEntity } from './event-storage/typeorm/event.typeorm-entity';
 import { EventSourcingModuleConfig } from './event-sourcing.module-config';
-import { Repository } from 'typeorm';
+import { Connection, createConnection } from 'typeorm';
 import { EventSourcingModuleAsyncConfig } from '@coders-board-library/event-sourcing/event-sourcing.module-async-config';
-import { Time } from '@coders-board-library/event-sourcing/time.type';
 import { EventSourcingModuleConfigFactory } from '@coders-board-library/event-sourcing/event-sourcing.module-config-factory';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { EventStoreEventStorage } from '@coders-board-library/event-sourcing/event-storage/eventstore/event-storage.eventstore';
+import uuid = require('uuid');
 
 const EVENT_SOURCING_CONFIG = Symbol();
+const DEFAULT_EVENT_STORAGE_NAME = 'public';
 
 @Module({})
 export class EventSourcingModule {
-  static register(config: EventSourcingModuleConfig): DynamicModule {
-    const configProvider: Provider = {
-      provide: EVENT_SOURCING_CONFIG,
-      useValue: config,
-    };
-    if (config.eventStorage === 'typeorm') {
-      const optionalImports = [];
-      optionalImports.push(config.typeOrmModule);
-      return {
-        module: EventSourcingModule,
-        imports: [...optionalImports],
-        providers: [
-          {
-            provide: EVENT_STORAGE,
-            useFactory: (typeOrmRepository: Repository<DomainEventEntity>) =>
-              new TypeOrmEventStorage(config.time, typeOrmRepository),
-          },
-        ],
-        exports: [EVENT_STORAGE],
-      };
-    }
-
+  static registerTypeOrmAsync(
+    config: EventSourcingModuleAsyncConfig,
+    databaseConnectionOptions: Omit<PostgresConnectionOptions, 'schema' | 'entities'> = {
+      type: 'postgres',
+      host: process.env.DATABASE_HOST,
+      port: process.env.DATABASE_PORT ? parseInt(process.env.DATABASE_PORT, 10) : 5002,
+      username: process.env.DATABASE_USERNAME ? process.env.DATABASE_USERNAME : 'postgres',
+      password: process.env.DATABASE_PASSWORD ? process.env.DATABASE_PASSWORD : 'postgres',
+      database: 'coders-board',
+      synchronize: true,
+    },
+  ): DynamicModule {
+    const TYPE_ORM_EVENT_STORAGE_DATABASE_CONNECTION = Symbol('TYPE_ORM_EVENT_STORAGE_DATABASE_CONNECTION');
     return {
       module: EventSourcingModule,
+      imports: config.imports || [],
       providers: [
-        configProvider,
+        this.createAsyncProviders(config),
+        {
+          provide: TYPE_ORM_EVENT_STORAGE_DATABASE_CONNECTION,
+          inject: [EVENT_SOURCING_CONFIG],
+          useFactory: async (config: EventSourcingModuleConfig) =>
+            await createConnection({
+              ...databaseConnectionOptions,
+              schema: config.eventStorageName || DEFAULT_EVENT_STORAGE_NAME,
+              entities: [DomainEventEntity],
+              name: `typeorm-event-store=${uuid.v4()}`,
+            }),
+        },
         {
           provide: EVENT_STORAGE,
-          useFactory: (config: EventSourcingModuleConfig) =>
-            new InMemoryEventStorage(config.time),
-          inject: [EVENT_SOURCING_CONFIG],
+          inject: [EVENT_SOURCING_CONFIG, TYPE_ORM_EVENT_STORAGE_DATABASE_CONNECTION],
+          useFactory: (config: EventSourcingModuleConfig, connection: Connection) =>
+            new TypeOrmEventStorage(config.time, connection.getRepository<DomainEventEntity>(DomainEventEntity)),
         },
       ],
       exports: [EVENT_STORAGE],
     };
   }
 
-  static registerAsync(config: EventSourcingModuleAsyncConfig): DynamicModule {
+  static registerInMemoryAsync(config: EventSourcingModuleAsyncConfig): DynamicModule {
     return {
       module: EventSourcingModule,
       imports: config.imports || [],
@@ -58,8 +64,7 @@ export class EventSourcingModule {
         this.createAsyncProviders(config),
         {
           provide: EVENT_STORAGE,
-          useFactory: (config: EventSourcingModuleConfig) =>
-            new InMemoryEventStorage(config.time),
+          useFactory: (config: EventSourcingModuleConfig) => new InMemoryEventStorage(config.time),
           inject: [EVENT_SOURCING_CONFIG],
         },
       ],
@@ -67,9 +72,32 @@ export class EventSourcingModule {
     };
   }
 
-  private static createAsyncProviders(
-    config: EventSourcingModuleAsyncConfig,
-  ): Provider {
+  static registerEventStoreAsync(config: EventSourcingModuleAsyncConfig): DynamicModule {
+    const eventStoreHttpModule = HttpModule.register({
+      baseURL: process.env.EVENTSTORE_URL || 'http://127.0.0.1:2113',
+      withCredentials: true,
+      auth: {
+        username: process.env.EVENTSTORE_USERNAME || 'admin',
+        password: process.env.EVENTSTORE_PASSWORD || 'changeit',
+      },
+    });
+    return {
+      module: EventSourcingModule,
+      imports: [...(config.imports || []), eventStoreHttpModule] || [],
+      providers: [
+        this.createAsyncProviders(config),
+        {
+          provide: EVENT_STORAGE,
+          useFactory: (config: EventSourcingModuleConfig, httpService: HttpService) =>
+            new EventStoreEventStorage(config.time, httpService),
+          inject: [EVENT_SOURCING_CONFIG, HttpService],
+        },
+      ],
+      exports: [EVENT_STORAGE],
+    };
+  }
+
+  private static createAsyncProviders(config: EventSourcingModuleAsyncConfig): Provider {
     if (config) {
       if (config.useFactory) {
         return {
@@ -80,9 +108,8 @@ export class EventSourcingModule {
       } else {
         return {
           provide: EVENT_SOURCING_CONFIG,
-          useFactory: async (
-            optionsFactory: EventSourcingModuleConfigFactory,
-          ) => await optionsFactory.createModuleConfig(),
+          useFactory: async (optionsFactory: EventSourcingModuleConfigFactory) =>
+            await optionsFactory.createModuleConfig(),
           inject: [config.useExisting || config.useClass],
         };
       }
