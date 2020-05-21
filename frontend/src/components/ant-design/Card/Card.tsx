@@ -27,7 +27,7 @@ export const Card = styled(AntCard)<CardProps>((props) => {
   return {
     '&.ant-card': {
       ...styledSystemCard(props),
-      display: 'unset',
+      display: 'block',
     },
 
     '.ant-card-body': {
