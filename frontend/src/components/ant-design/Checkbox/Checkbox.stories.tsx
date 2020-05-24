@@ -23,9 +23,9 @@ const optionsWithDisabled = [
 export const Types = () => (
   <Box display="grid" gridGap={16} justifyItems="left">
     <Checkbox>Unchecked-Enabled</Checkbox>
-    <Checkbox defaultChecked={true}>Checked-Enabled</Checkbox>
+    <Checkbox defaultChecked>Checked-Enabled</Checkbox>
     <Checkbox disabled>Unchecked-Disabled</Checkbox>
-    <Checkbox defaultChecked={true} disabled>
+    <Checkbox defaultChecked disabled>
       Checked-Disabled
     </Checkbox>
   </Box>
