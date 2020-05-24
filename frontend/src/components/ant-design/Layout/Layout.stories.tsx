@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from '@components/atoms/Box';
 import { RightCircleOutlined } from '@ant-design/icons';
 import { Layout } from './Layout';
+
 const { Header, Content, Footer, Sider } = Layout;
 
 export default {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { compose, space, layout, flexbox } from 'styled-system';
 import { Layout as AntLayoute } from 'antd';
 import { LayoutProps as AntLayoutProps, SiderProps as AntSiderProps } from 'antd/lib/layout';
