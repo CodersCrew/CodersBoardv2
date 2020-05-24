@@ -6,10 +6,10 @@ import 'antd/lib/checkbox/style/css';
 import { styled, SpaceProps, LayoutProps, FlexboxProps } from '@services/theme';
 
 export type CheckboxProps = AntCheckboxProps & SpaceProps;
-export type CheckboxGroupProps = AntCheckboxGroupProps & LayoutProps & FlexboxProps;
+export type CheckboxGroupProps = AntCheckboxGroupProps & SpaceProps & LayoutProps & FlexboxProps;
 
 const StyledCheckbox = styled(AntCheckbox)(space);
-const StyledCheckboxGroup = styled(AntCheckbox.Group)(layout, flexbox);
+const StyledCheckboxGroup = styled(AntCheckbox.Group)(space, layout, flexbox);
 
 export const Checkbox = (props: CheckboxProps) => <StyledCheckbox {...props} />;
 Checkbox.Group = (props: CheckboxGroupProps) => <StyledCheckboxGroup {...props} />;
