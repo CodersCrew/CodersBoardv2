@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@components/atoms/Box';
-import { Checkbox, CheckboxGroup } from './Checkbox';
+import { Checkbox } from './Checkbox';
 
 export default {
   component: Checkbox,
@@ -33,8 +33,8 @@ export const Types = () => (
 
 export const Group = () => (
   <Box display="grid" gridGap={32} justifyItems="left">
-    <CheckboxGroup options={plainOptions} defaultValue={['Apple']} />
-    <CheckboxGroup options={options} defaultValue={['Pear']} />
-    <CheckboxGroup options={optionsWithDisabled} disabled defaultValue={['Apple']} />
+    <Checkbox.Group options={plainOptions} defaultValue={['Apple']} />
+    <Checkbox.Group options={options} defaultValue={['Pear']} />
+    <Checkbox.Group options={optionsWithDisabled} disabled defaultValue={['Apple']} />
   </Box>
 );

@@ -1,13 +1,15 @@
 import React from 'react';
-import { space } from 'styled-system';
+import { space, layout, flexbox } from 'styled-system';
 import { Checkbox as AntCheckbox } from 'antd';
-import { CheckboxProps as AntCheckboxProps, CheckboxGroupProps } from 'antd/lib/checkbox';
+import { CheckboxProps as AntCheckboxProps, CheckboxGroupProps as AntCheckboxGroupProps } from 'antd/lib/checkbox';
 import 'antd/lib/checkbox/style/css';
-import { styled, SpaceProps } from '@services/theme';
+import { styled, SpaceProps, LayoutProps, FlexboxProps } from '@services/theme';
 
 export type CheckboxProps = AntCheckboxProps & SpaceProps;
+export type CheckboxGroupProps = AntCheckboxGroupProps & LayoutProps & FlexboxProps;
 
 const StyledCheckbox = styled(AntCheckbox)(space);
+const StyledCheckboxGroup = styled(AntCheckbox.Group)(layout, flexbox);
 
 export const Checkbox = (props: CheckboxProps) => <StyledCheckbox {...props} />;
-export const CheckboxGroup = (props: CheckboxGroupProps) => <AntCheckbox.Group {...props} />;
+Checkbox.Group = (props: CheckboxGroupProps) => <StyledCheckboxGroup {...props} />;
